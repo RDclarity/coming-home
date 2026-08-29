@@ -19,10 +19,53 @@
   transition:
     background 0.3s ease,
     border-color 0.3s ease;
+  /* Der Button "atmet" durchgehend, unabhängig davon, ob Musik läuft – ein
+     ruhiger, eigener Herzschlag der Seite statt eines reinen Play-Icons. */
+  animation: btnBreathe 5.6s ease-in-out infinite;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--c-key1);
+  opacity: 0;
+  pointer-events: none;
+  animation: btnBreatheRing 5.6s ease-in-out infinite;
 }
 
 .btn:hover {
   border-color: var(--c-key1);
+}
+
+@keyframes btnBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45%,
+  58% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes btnBreatheRing {
+  0%,
+  15% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.55;
+  }
+  75% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .note {
@@ -51,7 +94,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn::after,
   .playing .note {
     animation: none;
+  }
+
+  .btn::after {
+    display: none;
   }
 }

@@ -1,0 +1,51 @@
+.wrap {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: clamp(2.5rem, 7vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.line {
+  width: 1px;
+  height: 3.2rem;
+  background: linear-gradient(to bottom, transparent, #f0e9dd5a);
+}
+
+.word {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-header);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  letter-spacing: 0.05em;
+  color: var(--c-light);
+  opacity: 0.75;
+  animation: wordFade 1s ease;
+}
+
+@keyframes wordFade {
+  from {
+    opacity: 0;
+    transform: rotate(180deg) translateY(8px);
+  }
+  to {
+    opacity: 0.75;
+    transform: rotate(180deg) translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
+}

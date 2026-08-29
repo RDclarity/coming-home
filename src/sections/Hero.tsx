@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '../components/Button'
+import { CyclingWord } from '../components/CyclingWord'
 import { Reveal } from '../components/Reveal'
 import { hero, site } from '../data/site'
 import { withBase } from '../lib/url'
@@ -92,6 +93,8 @@ export function Hero() {
             ))}
           </Reveal>
         </div>
+
+        <CyclingWord />
       </div>
     </section>
   )
