@@ -4,7 +4,7 @@ import { categoryLabels, services, type Service } from '../../data/services'
 import { withBase } from '../../lib/url'
 import styles from './BegleitungenIndex.module.css'
 
-const ORDER: Service['category'][] = ['einzelsession', 'begleitung', 'workshop', 'gruppe', 'retreat']
+const ORDER: Service['category'][] = ['einzelsession', 'begleitung', 'workshop']
 
 export function BegleitungenIndex() {
   return (

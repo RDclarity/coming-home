@@ -42,7 +42,7 @@ export const articles: Article[] = [
     metaDescription:
       'Was ist Breathwork wirklich? Ablauf, Wirkung auf das Nervensystem, Unterschiede zwischen Gruppen- und Einzelsession, und für wen es geeignet ist.',
     relatedSlugs: ['nervensystemregulation-verstehen', 'erste-session-was-dich-erwartet', 'wann-breathwork-nicht-geeignet-ist'],
-    relatedServiceSlugs: ['breathwork-einzelsession', 'breathwork-journey-gruppe'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -92,7 +92,7 @@ export const articles: Article[] = [
     metaDescription:
       'Was Nervensystemregulation bedeutet, warum Entspannung sich nicht erzwingen lässt und welche Rolle Körperarbeit und Atem dabei spielen.',
     relatedSlugs: ['was-ist-breathwork', 'cranio-sacrale-impulsarbeit-erklaert', 'humanenergetik-vs-psychotherapie'],
-    relatedServiceSlugs: ['cranio-sacrale-impulsarbeit', 'prozessbegleitung-mentoring'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -138,7 +138,7 @@ export const articles: Article[] = [
     metaDescription:
       'Holistic Bodywork erklärt: wie es abläuft, was es von klassischer Massage unterscheidet und für wen es besonders geeignet ist.',
     relatedSlugs: ['achtsame-beruehrung-erklaert', 'cranio-sacrale-impulsarbeit-erklaert'],
-    relatedServiceSlugs: ['holistic-bodywork', 'cranio-sacrale-impulsarbeit'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -176,7 +176,7 @@ export const articles: Article[] = [
     metaDescription:
       'Cranio-Sacrale Impulsarbeit erklärt: Ablauf, Wirkung auf das Nervensystem und für wen die sanfte Körperarbeit besonders geeignet ist.',
     relatedSlugs: ['nervensystemregulation-verstehen', 'was-ist-holistic-bodywork'],
-    relatedServiceSlugs: ['cranio-sacrale-impulsarbeit', 'holistic-bodywork'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -218,7 +218,7 @@ export const articles: Article[] = [
     metaDescription:
       'Was achtsame Berührung konkret bedeutet: Prinzipien, Grenzen und der Unterschied zu unangekündigter oder übergriffiger Berührung.',
     relatedSlugs: ['was-ist-holistic-bodywork', 'nervensystemregulation-verstehen'],
-    relatedServiceSlugs: ['holistic-bodywork', 'cranio-sacrale-impulsarbeit'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -259,7 +259,7 @@ export const articles: Article[] = [
     metaDescription:
       'Kundalini Awakening erklärt: was in einer Session passiert, warum Integration entscheidend ist und für wen die Praxis geeignet ist.',
     relatedSlugs: ['was-ist-breathwork', 'nervensystemregulation-verstehen'],
-    relatedServiceSlugs: ['kundalini-awakening', 'prozessbegleitung-mentoring'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -301,7 +301,7 @@ export const articles: Article[] = [
     metaDescription:
       'Was Humanenergetik von Psychotherapie unterscheidet, wo die Grenzen liegen und wann welcher Zugang der passendere ist.',
     relatedSlugs: ['nervensystemregulation-verstehen', 'wann-breathwork-nicht-geeignet-ist'],
-    relatedServiceSlugs: ['prozessbegleitung-mentoring', 'coming-home-drei-monate'],
+    relatedServiceSlugs: ['1-1-begleitung', 'coming-home-drei-monate'],
     body: [
       {
         type: 'p',
@@ -344,7 +344,7 @@ export const articles: Article[] = [
     metaDescription:
       'Kontraindikationen für Breathwork und Körperarbeit: Schwangerschaft, Epilepsie, Herz-Kreislauf-Erkrankungen und weitere Situationen, in denen Vorsicht gilt.',
     relatedSlugs: ['was-ist-breathwork', 'humanenergetik-vs-psychotherapie'],
-    relatedServiceSlugs: ['breathwork-einzelsession', 'kundalini-awakening'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -383,7 +383,7 @@ export const articles: Article[] = [
     metaDescription:
       'Was dich bei einer ersten 1:1-Session mit Jasmin konkret erwartet: Vorgespräch, Ablauf, Nachbereitung – Schritt für Schritt erklärt.',
     relatedSlugs: ['was-ist-breathwork', 'achtsame-beruehrung-erklaert'],
-    relatedServiceSlugs: ['breathwork-einzelsession', 'holistic-bodywork'],
+    relatedServiceSlugs: ['1-1-begleitung'],
     body: [
       {
         type: 'p',
@@ -427,7 +427,7 @@ export const articles: Article[] = [
     metaDescription:
       'Warum Breathwork und Körperarbeit in der Gruppe anders wirken als 1:1 – und wie du entscheidest, welches Format zu dir passt.',
     relatedSlugs: ['was-ist-breathwork', 'erste-session-was-dich-erwartet'],
-    relatedServiceSlugs: ['breathwork-journey-gruppe', 'feminine-power-workshop'],
+    relatedServiceSlugs: ['feminine-power-workshop', '1-1-begleitung'],
     body: [
       {
         type: 'p',
