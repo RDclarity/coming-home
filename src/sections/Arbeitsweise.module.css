@@ -116,6 +116,10 @@
   background: var(--c-key1);
   border: 1px solid var(--c-key1);
   box-shadow: 0 8px 22px -6px color-mix(in srgb, var(--c-dark) 45%, transparent);
+  /* Eigene, vom Eltern-Transform (Scroll-Pop, siehe .marker3d) unabhängige
+     Animation – die Kreise atmen durchgehend leise weiter, sobald sie da
+     sind, statt nach dem Aufpoppen starr stehen zu bleiben. */
+  animation: markerBreathe 4.4s ease-in-out infinite;
 }
 
 .markerGlyph {
@@ -123,6 +127,16 @@
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--c-dark);
+}
+
+@keyframes markerBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.09);
+  }
 }
 
 .halo {
@@ -157,6 +171,10 @@
   .growRing,
   .marker3d {
     transition: none;
+  }
+
+  .markerInner {
+    animation: none;
   }
 }
 
@@ -196,6 +214,13 @@
 }
 
 @media (max-width: 720px) {
+  /* Das Label des obersten Markers (siehe .marker3d) ragt über den Ring
+     hinaus nach oben – auf schmalen Viewports reichte der Abstand zur
+     Überschrift sonst nicht und beide überschnitten sich. */
+  .head {
+    margin-bottom: clamp(3.75rem, 14vw, 4.75rem);
+  }
+
   .moment {
     flex-direction: column;
     gap: clamp(1.8rem, 6vw, 2.6rem);

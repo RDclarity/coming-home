@@ -91,7 +91,7 @@ export function Arbeitsweise() {
                   }}
                 >
                   <span className={styles.markerLabel}>{card.title}</span>
-                  <span className={styles.markerInner}>
+                  <span className={styles.markerInner} style={{ animationDelay: `${index * 350}ms` }}>
                     <span className={styles.markerGlyph}>{card.glyph}</span>
                   </span>
                 </a>
