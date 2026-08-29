@@ -1,0 +1,136 @@
+.sec {
+  width: 100%;
+  padding: var(--section-y) 1.5rem;
+  background: var(--c-dark);
+  color: var(--c-light);
+}
+
+.inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.left {
+  position: sticky;
+  top: 6rem;
+  min-width: 0;
+}
+
+.heading {
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1.12;
+  margin: 1.3rem 0 1.6rem;
+  color: var(--c-light);
+}
+
+.intro {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  opacity: 0.92;
+  margin-bottom: 1.1rem;
+}
+
+.intro2 {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  opacity: 0.72;
+}
+
+.card {
+  min-width: 0;
+  background: var(--c-white);
+  color: var(--c-dark);
+  padding: clamp(1.8rem, 4vw, 2.8rem);
+  border: 1px solid #0c0c0c14;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.formTitle {
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0 0 0.4rem;
+  color: var(--c-dark);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-text);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--c-dark);
+  opacity: 0.82;
+  cursor: pointer;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+  accent-color: var(--c-key1);
+  flex-shrink: 0;
+}
+
+.err {
+  color: #a4342a;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  color: var(--c-dark);
+}
+
+.successTitle {
+  font-family: var(--font-header);
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.successText {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c-key1);
+}
+
+@media (max-width: 860px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    position: static;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

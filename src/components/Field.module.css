@@ -1,0 +1,53 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  --field-accent: var(--c-key1);
+}
+
+.label {
+  font-family: var(--font-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--c-dark);
+  opacity: 0.85;
+}
+
+.req {
+  font-style: normal;
+  color: var(--field-accent);
+  margin-left: 0.15em;
+}
+
+.input {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  color: var(--c-dark);
+  background: #ffffffcc;
+  border: 1px solid #2b271f2e;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.input::placeholder {
+  color: #2b271f80;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--field-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-accent) 18%, transparent);
+  background: #ffffff;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 120px;
+}

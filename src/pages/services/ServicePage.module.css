@@ -1,0 +1,261 @@
+.hero {
+  width: 100%;
+  padding: clamp(7rem, 12vw, 9.5rem) 1.5rem clamp(3.5rem, 8vw, 5rem);
+  background: var(--c-dark);
+  color: var(--c-light);
+}
+
+.heroInner {
+  max-width: var(--wide);
+  margin: 0 auto;
+}
+
+.category {
+  color: var(--c-key1);
+}
+
+.title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  margin: 1.2rem 0 0.8rem;
+  color: var(--c-light);
+  max-width: 24ch;
+}
+
+.tagline {
+  font-family: var(--font-header);
+  font-style: italic;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  opacity: 0.85;
+  margin: 0 0 2rem;
+  max-width: 42ch;
+}
+
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1rem;
+  margin-bottom: 2.2rem;
+}
+
+.price {
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.priceNote {
+  opacity: 0.65;
+  font-size: 0.95rem;
+}
+
+.metaList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin: 0 0 2.2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.body {
+  width: 100%;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+  background: var(--c-white);
+  color: var(--c-dark);
+}
+
+.bodyInner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.intro {
+  font-size: 1.12rem;
+  line-height: 1.75;
+  opacity: 0.85;
+  margin: 0 0 2.2rem;
+  max-width: 56ch;
+}
+
+.blockTitle {
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 2.4rem 0 1rem;
+}
+
+.blockTitle:first-of-type {
+  margin-top: 0;
+}
+
+.bulletList {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bullet {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.86;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-key1);
+  flex: none;
+  margin-top: 0.55em;
+}
+
+.processList {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  counter-reset: process;
+}
+
+.processItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.processNum {
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--c-key1);
+  flex: none;
+  width: 1.6rem;
+}
+
+.processText {
+  font-size: 1rem;
+  line-height: 1.65;
+  opacity: 0.86;
+}
+
+.sidebar {
+  background: var(--c-light);
+  border: 1px solid #0c0c0c14;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  position: sticky;
+  top: 6rem;
+}
+
+.sidebarTitle {
+  font-family: var(--font-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 1rem;
+}
+
+.faqLink {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #0c0c0c14;
+  color: inherit;
+  text-decoration: none;
+}
+
+.faqLink:last-child {
+  border-bottom: none;
+}
+
+.related {
+  width: 100%;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+  background: var(--c-light);
+  color: var(--c-dark);
+}
+
+.relatedInner {
+  max-width: var(--wide);
+  margin: 0 auto;
+}
+
+.relatedHeading {
+  font-family: var(--font-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0 0 1.4rem;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.relatedCard {
+  display: block;
+  background: var(--c-white);
+  border: 1px solid #0c0c0c14;
+  padding: 1.6rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.relatedCard:hover {
+  border-color: var(--c-key1);
+}
+
+.relatedCardTitle {
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem;
+}
+
+.relatedCardPrice {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .bodyInner {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}

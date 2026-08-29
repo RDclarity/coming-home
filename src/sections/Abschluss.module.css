@@ -1,0 +1,63 @@
+.sec {
+  position: relative;
+  width: 100%;
+  padding: clamp(5rem, 14vw, 10rem) 1.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  /* background-image kommt als Inline-Style aus Abschluss.tsx (withBase). */
+  background-size: cover;
+  background-position: center;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #1a171221, #1a17128c);
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  color: var(--c-white);
+}
+
+.heading {
+  font-size: clamp(2.1rem, 5.5vw, 4rem);
+  line-height: 1.14;
+  font-style: italic;
+  text-wrap: balance;
+  color: var(--c-white);
+  text-shadow: 0 1px 34px #00000055;
+}
+
+.text {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  max-width: 44ch;
+  opacity: 0.9;
+  margin-bottom: 1.2rem;
+  color: var(--c-light);
+  text-shadow: 0 1px 24px #00000055;
+}
+
+.sub {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.7;
+  margin-top: 1rem;
+}

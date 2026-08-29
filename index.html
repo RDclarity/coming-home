@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#181817" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!--
+      Alles Routen-Spezifische (title, description, canonical, OG, Twitter,
+      JSON-LD) setzt scripts/prerender.mjs pro Seite ein – aus src/seo/pages.ts.
+      Es ersetzt alles zwischen den beiden Markern unten durch die echten Tags.
+      Für "npm run dev" (reines CSR, kein Prerender) bleibt dieser Fallback stehen.
+    -->
+    <!--app-head-->
+    <title>Coming Home – Körperorientierte Begleitung von Jasmin</title>
+    <meta
+      name="description"
+      content="Coming Home ist körperorientierte Begleitung mit Breathwork, Holistic Bodywork und achtsamer Berührung. 1:1 Begleitung, Gruppenarbeit, Workshops und Retreats mit Jasmin."
+    />
+    <!--/app-head-->
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

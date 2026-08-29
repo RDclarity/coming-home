@@ -1,0 +1,21 @@
+.sec {
+  width: 100%;
+  padding: var(--section-y) 1.5rem;
+  background: var(--c-white);
+  color: var(--c-dark);
+}
+
+.inner {
+  max-width: var(--narrow);
+  margin: 0 auto;
+}
+
+.head {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.heading {
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  line-height: 1.1;
+  margin: 1.2rem 0 0;
+}

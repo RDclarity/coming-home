@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /intern/
+
+Sitemap: https://rdclarity.github.io/coming-home/sitemap.xml
