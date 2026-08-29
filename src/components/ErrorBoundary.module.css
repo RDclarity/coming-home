@@ -1,0 +1,35 @@
+.sec {
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(7rem, 14vw, 10rem) 1.5rem clamp(4rem, 8vw, 6rem);
+  background: var(--c-white);
+  color: var(--c-dark);
+}
+
+.inner {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1.14;
+  margin: 1.2rem 0 1rem;
+}
+
+.text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin: 0 0 2rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}

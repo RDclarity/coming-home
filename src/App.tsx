@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { ConsentBanner } from './components/ConsentBanner'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { withBase } from './lib/url'
@@ -29,25 +30,27 @@ export default function App() {
       <ConsentBanner />
       <Nav />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route path="/begleitungen" element={<BegleitungenIndex />} />
-          <Route path="/begleitung/:slug" element={<ServicePage />} />
+            <Route path="/begleitungen" element={<BegleitungenIndex />} />
+            <Route path="/begleitung/:slug" element={<ServicePage />} />
 
-          <Route path="/ratgeber" element={<RatgeberIndex />} />
-          <Route path="/ratgeber/:slug" element={<ArticlePage />} />
+            <Route path="/ratgeber" element={<RatgeberIndex />} />
+            <Route path="/ratgeber/:slug" element={<ArticlePage />} />
 
-          <Route path="/impressum" element={<Impressum />} />
-          <Route path="/datenschutz" element={<Datenschutz />} />
-          <Route path="/agb" element={<Agb />} />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/agb" element={<Agb />} />
 
-          {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README. */}
-          <Route path="/intern/crm" element={<Crm />} />
-          <Route path="/intern/editor" element={<Editor />} />
+            {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README. */}
+            <Route path="/intern/crm" element={<Crm />} />
+            <Route path="/intern/editor" element={<Editor />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ErrorBoundary>
       </main>
       <Footer />
     </>

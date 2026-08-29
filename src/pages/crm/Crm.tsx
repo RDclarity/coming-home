@@ -13,6 +13,10 @@ function useLeads(): Lead[] {
   return useSyncExternalStore(crmStore.subscribe, crmStore.list, crmStore.list)
 }
 
+function useCrmLoading(): boolean {
+  return useSyncExternalStore(crmStore.subscribe, crmStore.isLoading, crmStore.isLoading)
+}
+
 export function Crm() {
   // Mit Supabase: echter Login (Row Level Security prüft serverseitig, siehe
   // crm/auth.ts). Ohne Supabase (lokaler Fallback): nur der Passphrase-
@@ -39,6 +43,7 @@ export function Crm() {
 
 function Dashboard() {
   const leads = useLeads()
+  const isLoading = useCrmLoading()
   const [statusFilter, setStatusFilter] = useState<LeadStatus | 'alle'>('alle')
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
@@ -95,7 +100,12 @@ function Dashboard() {
 
         <div className={styles.layout}>
           <div className={styles.list}>
-            {filtered.length === 0 && <p className={styles.empty}>Keine Anfragen in dieser Ansicht.</p>}
+            {isLoading && filtered.length === 0 && (
+              <p className={styles.empty}>Anfragen werden geladen …</p>
+            )}
+            {!isLoading && filtered.length === 0 && (
+              <p className={styles.empty}>Keine Anfragen in dieser Ansicht.</p>
+            )}
             {filtered.map((lead) => (
               <button
                 key={lead.id}

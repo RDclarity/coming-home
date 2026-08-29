@@ -44,6 +44,7 @@ type NoteRow = {
 
 let cache: Lead[] = []
 let initialized = false
+let loaded = false
 const listeners = new Set<() => void>()
 
 function notify() {
@@ -72,8 +73,19 @@ function rowsToLeads(leadRows: LeadRow[], noteRows: NoteRow[]): Lead[] {
 }
 
 async function fetchAll() {
+  // Gilt auch für einen erneuten Aufruf (z. B. refreshCrmData() nach Login) –
+  // während des Nachladens soll das UI wieder "lädt", nicht fälschlich
+  // "keine Anfragen" zeigen.
+  const wasLoaded = loaded
+  loaded = false
+  if (wasLoaded) notify()
+
   const client = await getSupabase()
-  if (!client) return
+  if (!client) {
+    loaded = true
+    notify()
+    return
+  }
 
   const [{ data: leadRows, error: leadsError }, { data: noteRows, error: notesError }] = await Promise.all([
     client.from('leads').select('*').order('created_at', { ascending: false }),
@@ -85,11 +97,13 @@ async function fetchAll() {
     // SELECT) – kein console.error, um die Konsole auf der echten Seite
     // nicht mit "Fehlern" vollzuspammen, die keine sind.
     cache = []
+    loaded = true
     notify()
     return
   }
 
   cache = rowsToLeads(leadRows ?? [], notesError ? [] : (noteRows ?? []))
+  loaded = true
   notify()
 }
 
@@ -197,5 +211,10 @@ export const supabaseCrmStore: CrmStore = {
     ensureInitialized()
     listeners.add(listener)
     return () => listeners.delete(listener)
+  },
+
+  isLoading() {
+    ensureInitialized()
+    return !loaded
   },
 }

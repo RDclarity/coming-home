@@ -55,4 +55,12 @@ export type CrmStore = {
   addNote(id: string, text: string): void
   remove(id: string): void
   subscribe(listener: () => void): () => void
+  /**
+   * Ob gerade der erste Datenabruf läuft (nur beim Supabase-Adapter
+   * relevant, der asynchron nachlädt). Damit lässt sich im UI zwischen
+   * "lädt noch" und "wirklich keine Anfragen vorhanden" unterscheiden –
+   * ohne das würde kurz "Keine Anfragen" aufblitzen, bevor echte Daten da
+   * sind. Der localStorage-Adapter ist synchron und daher nie am Laden.
+   */
+  isLoading(): boolean
 }

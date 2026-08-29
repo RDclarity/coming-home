@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties, MouseEventHandler, ReactNode } from 'react'
 import { withBase } from '../lib/url'
 import styles from './Button.module.css'
 
@@ -14,11 +14,12 @@ type CommonProps = {
   className?: string
 }
 
-type LinkProps = CommonProps & { href: string; type?: never; disabled?: never }
+type LinkProps = CommonProps & { href: string; type?: never; disabled?: never; onClick?: never }
 type ButtonProps = CommonProps & {
   href?: never
   type?: 'button' | 'submit'
   disabled?: boolean
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
 /**
@@ -45,6 +46,7 @@ export function Button(props: LinkProps | ButtonProps) {
       style={style}
       type={props.type ?? 'button'}
       disabled={props.disabled}
+      onClick={props.onClick}
     >
       <span>{children}</span>
     </button>

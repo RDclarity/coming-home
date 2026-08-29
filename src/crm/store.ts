@@ -108,6 +108,11 @@ export const localStorageCrmStore: CrmStore = {
     listeners.add(listener)
     return () => listeners.delete(listener)
   },
+
+  // localStorage ist synchron – hier gibt es nie einen "lädt noch"-Zustand.
+  isLoading() {
+    return false
+  },
 }
 
 /**
