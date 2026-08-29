@@ -226,6 +226,8 @@ export const bewerbung = {
     'Deshalb beginnt die Zusammenarbeit mit einem persönlichen Bewerbungsbogen und einem unverbindlichen Kennenlerngespräch. So können wir gemeinsam herausfinden, ob dieser Raum und diese Form der Begleitung im Moment wirklich zu dir passen.',
   formTitle: 'Bewerbungsbogen',
   programs: [
+    'Feminine Power – Tagesworkshop',
+    '1:1 Begleitung – 10-Stunden-Paket',
     'Coming Home – dreimonatige Begleitung',
     'Coming Home – Jahresbegleitung',
     'Ich bin mir noch nicht sicher',

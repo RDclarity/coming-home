@@ -7,12 +7,8 @@ const STORAGE_KEY = 'coming-home:music-enabled'
 /**
  * Hintergrundmusik-Umschalter, oben links, auf jeder Seite sichtbar.
  *
- * WICHTIG zur Audiodatei: Es liegt noch keine echte Musikdatei bei. Ich kann
- * hier keine Musik "erfinden" oder von irgendeiner Website herunterladen –
- * ohne bekannte Lizenz wäre das ein Urheberrechtsrisiko, und dafür gibt es
- * kein Tool, das mir eine geprüfte, lizenzfreie Datei liefert. Der Player
- * ist komplett fertig verdrahtet: Sobald `public/audio/theme.mp3` (siehe
- * public/audio/README.md) abgelegt ist, funktioniert alles ohne Codeänderung.
+ * Die Audiodatei (public/audio/theme.mp3 + .m4a) ist die Tonspur aus dem
+ * Hero-Hintergrundvideo, siehe src/sections/Hero.tsx.
  *
  * WICHTIG zu "immer an": Browser blockieren Audio mit Ton grundsätzlich,
  * bevor die besuchende Person mit der Seite interagiert hat (Chrome/Safari/
@@ -62,6 +58,31 @@ export function MusicPlayer() {
       document.removeEventListener('pointerdown', onFirstInteraction)
       document.removeEventListener('keydown', onFirstInteraction)
     }
+  }, [enabled])
+
+  // Pausiert, sobald der Tab in den Hintergrund geht (Tab-Wechsel, Minimieren,
+  // App-Wechsel am Handy) – spielt automatisch weiter, sobald man zurückkommt
+  // (nur wenn die Musik überhaupt eingeschaltet ist).
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    function onVisibilityChange() {
+      if (document.hidden) {
+        audio!.pause()
+        setPlaying(false)
+      } else if (enabled) {
+        audio!.play().then(
+          () => setPlaying(true),
+          () => {
+            /* Autoplay evtl. wieder blockiert – nächster Klick/Tap holt es nach */
+          },
+        )
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange)
   }, [enabled])
 
   function toggle() {

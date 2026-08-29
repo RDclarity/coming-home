@@ -1,0 +1,244 @@
+/**
+ * Gleiches Schritt-für-Schritt-Muster wie MultiStepContactForm.module.css,
+ * nur mit Farben für eine HELLE Karte (weißer Hintergrund, dunkler Text) statt
+ * für den dunklen Footer – siehe Bewerbung.module.css (.card).
+ */
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.progress {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.progressDot {
+  flex: 1;
+  height: 3px;
+  background: #0c0c0c14;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressDotFill {
+  height: 100%;
+  width: 0%;
+  background: var(--c-key1);
+  transition: width 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.progressDotFillActive {
+  width: 100%;
+}
+
+.stepWrap {
+  position: relative;
+  min-height: 8.5rem;
+}
+
+.step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  opacity: 0;
+  transform: translateX(16px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.stepActive {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+.stepLabel {
+  font-family: var(--font-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  color: var(--c-dark);
+}
+
+.stepQuestion {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--c-dark);
+}
+
+.stepOptional {
+  font-family: var(--font-text);
+  font-size: 0.82rem;
+  font-weight: 400;
+  opacity: 0.55;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.input {
+  font-family: var(--font-text);
+  font-size: 1.1rem;
+  color: var(--c-dark);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #0c0c0c26;
+  padding: 0.5rem 0.1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input::placeholder {
+  color: var(--c-dark);
+  opacity: 0.35;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--c-key1);
+}
+
+select.input {
+  cursor: pointer;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 5.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--c-dark);
+  opacity: 0.55;
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.backBtn:hover {
+  opacity: 1;
+}
+
+.backBtnHidden {
+  visibility: hidden;
+}
+
+.navBtn {
+  font-family: var(--font-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.8rem;
+  cursor: pointer;
+  border: 1px solid var(--c-dark);
+  background: transparent;
+  color: var(--c-dark);
+}
+
+.navBtn:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.navBtnSubmit {
+  border-color: var(--c-key1);
+  background: var(--c-key1);
+  color: var(--c-dark);
+}
+
+.finalStep {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--c-dark);
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.checkboxRow input {
+  margin-top: 0.2rem;
+  accent-color: var(--c-key1);
+  flex-shrink: 0;
+}
+
+.summary {
+  background: #0c0c0c08;
+  border: 1px solid #0c0c0c1a;
+  padding: 0.9rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--c-dark);
+  opacity: 0.85;
+}
+
+.summary strong {
+  opacity: 1;
+}
+
+.err {
+  color: #a4342a;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  color: var(--c-dark);
+}
+
+.successTitle {
+  font-family: var(--font-header);
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.successText {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c-key1);
+}
