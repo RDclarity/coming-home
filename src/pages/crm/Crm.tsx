@@ -1,6 +1,8 @@
 import { useMemo, useState, useSyncExternalStore, type FormEvent } from 'react'
 import { InternGate } from '../../components/InternGate'
+import { SupabaseLoginGate } from '../../components/SupabaseLoginGate'
 import { crmStore } from '../../crm/store'
+import { supabaseConfigured } from '../../crm/supabaseClient'
 import { LEAD_SOURCE_LABELS, LEAD_STATUS_LABELS, type Lead, type LeadStatus } from '../../crm/types'
 import { INTERN_PASSPHRASE } from '../../lib/internAuth'
 import styles from './Crm.module.css'
@@ -12,6 +14,17 @@ function useLeads(): Lead[] {
 }
 
 export function Crm() {
+  // Mit Supabase: echter Login (Row Level Security prüft serverseitig, siehe
+  // crm/auth.ts). Ohne Supabase (lokaler Fallback): nur der Passphrase-
+  // Sichtschutz, weil es dann nichts Serverseitiges gibt, das prüfen könnte.
+  if (supabaseConfigured) {
+    return (
+      <SupabaseLoginGate title="Coming-Home-CRM">
+        <Dashboard />
+      </SupabaseLoginGate>
+    )
+  }
+
   return (
     <InternGate
       storageKey="coming-home:crm:unlocked"
@@ -42,9 +55,9 @@ function Dashboard() {
         <span className={styles.badge}>Intern</span>
         <h1 className={styles.title}>Anfragen</h1>
         <p className={styles.notice}>
-          Diese Liste zeigt nur Anfragen, die auf diesem Gerät und in diesem Browser
-          eingegangen sind (localStorage) – siehe Hinweis in src/crm/store.ts. Für eine
-          zentrale, geräteübergreifende Übersicht braucht es später einen Backend-Adapter.
+          {supabaseConfigured
+            ? 'Zentrale Übersicht über Supabase – Anfragen von jedem Gerät landen hier, unabhängig davon, wo diese Seite gerade geöffnet ist.'
+            : 'Kein Supabase konfiguriert: Diese Liste zeigt nur Anfragen, die auf diesem Gerät und in diesem Browser eingegangen sind (localStorage) – siehe Hinweis in src/crm/store.ts.'}
         </p>
 
         <div className={styles.toolbar}>

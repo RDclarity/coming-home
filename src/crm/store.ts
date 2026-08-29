@@ -1,21 +1,17 @@
 /**
- * localStorage-Adapter für das CRM.
+ * localStorage-Adapter für das CRM – FALLBACK, wenn kein Supabase
+ * konfiguriert ist (siehe `crmStore`-Export ganz unten).
  *
- * WICHTIGE EINSCHRÄNKUNG, die beim Einsatz unbedingt klar sein muss:
- * localStorage ist pro Browser und pro Gerät isoliert. Eine Anfrage, die
- * eine Besucherin auf ihrem Handy abschickt, landet NUR in ihrem eigenen
- * Browser – nicht bei Jasmin. Dieses CRM sammelt also aktuell nur Leads, die
- * über DASSELBE Gerät/denselben Browser eingehen, auf dem später auch
- * /intern/crm geöffnet wird (z. B. zum Testen, oder wenn Jasmin selbst am
- * eigenen Gerät für sich Notizen führt).
- *
- * Damit echte Website-Besuche zentral bei Jasmin ankommen, braucht es einen
- * Backend-Adapter (z. B. Supabase) – bewusst noch NICHT angebunden. Sobald
- * es so weit ist: eine neue Datei erstellen, die `CrmStore` aus types.ts
- * implementiert, und in `crmStore` unten austauschen. Der Rest der App
- * (submitForm.ts, die CRM-Seite) muss dafür nicht angefasst werden.
+ * WICHTIGE EINSCHRÄNKUNG in diesem Fallback-Modus: localStorage ist pro
+ * Browser und pro Gerät isoliert. Eine Anfrage, die eine Besucherin auf
+ * ihrem Handy abschickt, landet dann NUR in ihrem eigenen Browser – nicht
+ * bei Jasmin. Mit gesetztem VITE_SUPABASE_URL/VITE_SUPABASE_ANON_KEY (siehe
+ * .env.example) gilt das nicht mehr – dann übernimmt supabaseStore.ts und
+ * alle Anfragen landen zentral in der Datenbank.
  */
 
+import { supabaseConfigured } from './supabaseClient'
+import { supabaseCrmStore } from './supabaseStore'
 import type { CrmStore, Lead, LeadStatus } from './types'
 
 const STORAGE_KEY = 'coming-home:crm:leads:v1'
@@ -114,5 +110,13 @@ export const localStorageCrmStore: CrmStore = {
   },
 }
 
-/** Der aktuell aktive Adapter. Andere Module importieren nur diesen Export. */
-export const crmStore: CrmStore = localStorageCrmStore
+/**
+ * Der aktuell aktive Adapter. Andere Module importieren nur diesen Export.
+ *
+ * Nutzt Supabase (supabaseStore.ts), sobald VITE_SUPABASE_URL/
+ * VITE_SUPABASE_ANON_KEY gesetzt sind (siehe .env.example) – Leads landen
+ * dann zentral in der Datenbank, nicht mehr nur lokal im Browser. Ohne diese
+ * Variablen (z. B. lokal ohne .env) bleibt der localStorage-Adapter aktiv,
+ * damit die Seite trotzdem baut und funktioniert.
+ */
+export const crmStore: CrmStore = supabaseConfigured ? supabaseCrmStore : localStorageCrmStore

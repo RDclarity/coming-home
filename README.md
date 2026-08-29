@@ -129,29 +129,42 @@ JPEGs. `hero.jpg` liegt zusätzlich als JPEG vor, weil das Open-Graph-Bild
 (für Link-Vorschauen in Messengern/Social Media) bewusst beim kompatibleren
 Format bleibt – nur die Sichtbare-Seite-Referenzen nutzen WebP.
 
-## CRM (lokal, noch ohne Backend)
+## CRM (mit echtem Supabase-Backend)
 
 Jede Formular-Anfrage (Bewerbungsbogen, Kontakt, Audioübung) landet zusätzlich
 zum normalen Versand (siehe „Formulare" unten) in einem einfachen CRM unter
 **`/intern/crm`** – bewusst nicht in Nav/Footer verlinkt, per `robots.txt`
 von der Indexierung ausgeschlossen und nicht Teil der Sitemap.
 
-**Wichtige Einschränkung:** Die aktuelle Implementierung
-(`src/crm/store.ts`) speichert ausschließlich in `localStorage` – pro Browser
-und Gerät isoliert. Das heißt: **Anfragen von echten Website-Besucher:innen
-kommen NICHT zentral bei Jasmin an**, sondern bleiben im jeweiligen Browser
-der anfragenden Person. Das CRM ist damit aktuell vor allem eine fertige,
-sofort nutzbare Oberfläche (Liste, Status, Notizen, CSV-Export) – für eine
-echte zentrale Übersicht braucht es einen Backend-Adapter (z. B. Supabase,
-absichtlich noch NICHT angebunden). Dafür `CrmStore` in `src/crm/types.ts`
-mit einem neuen Adapter implementieren und in `src/crm/store.ts` den Export
-`crmStore` austauschen – der Rest der App (Formulare, CRM-Seite) bleibt
-unverändert.
+Das CRM hat ein eigenes, von allen anderen Ventures des Betreibers komplett
+getrenntes Supabase-Projekt (`coming-home`, Schema in
+`supabase/migrations/00000000000001_leads.sql`). Sobald
+`VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` gesetzt sind (siehe
+`.env.example`, im GitHub-Actions-Deploy bereits als Repo-Secrets hinterlegt),
+übernimmt `src/crm/supabaseStore.ts` automatisch von der localStorage-Variante
+(`src/crm/store.ts`) – **Anfragen landen dann zentral in der Datenbank, egal
+von welchem Gerät aus jemand das Formular abschickt.** Ohne diese Variablen
+(z. B. lokal ohne `.env`) fällt die App automatisch auf den localStorage-Adapter
+zurück, damit sie trotzdem baut und funktioniert.
 
-Zugriffsschutz auf `/intern/crm` ist nur eine Passphrase-Abfrage
+**Sicherheitsmodell (Row Level Security):** Der `anon`-Key im Frontend darf
+laut Datenbank-Policy ausschließlich neue Leads *anlegen* – nie lesen, ändern
+oder löschen. Nur ein eingeloggter Account darf Leads sehen/bearbeiten/löschen.
+Zugriffsschutz auf `/intern/crm` ist deshalb ein **echter Supabase-Login**
+(E-Mail/Passwort, siehe `src/components/SupabaseLoginGate.tsx` und
+`src/crm/auth.ts`) – keine reine Passphrase mehr wie zuvor.
+
+**Jasmins Zugang selbst anlegen** (bewusst nicht automatisch von der KI
+erstellt): Supabase-Dashboard → Projekt „coming-home" → *Authentication* →
+*Users* → *Add user* → E-Mail und Passwort eurer Wahl eintragen, „Auto Confirm
+User" aktivieren. Mit diesen Zugangsdaten kann sie sich danach direkt unter
+`/intern/crm` einloggen.
+
+Ist kein Supabase konfiguriert (z. B. in einer lokalen Vorschau ohne `.env`),
+gilt weiterhin nur der alte Passphrase-Sichtschutz
 („cominghome2026", in `src/lib/internAuth.ts` änderbar) – **keine echte
-Zugriffskontrolle**, weil eine rein statische Seite keine serverseitige
-Prüfung machen kann. Das steht auch so auf der Seite selbst.
+Zugriffskontrolle**, weil eine rein statische Seite ohne Backend keine
+serverseitige Prüfung machen kann. Das steht auch so auf der Seite selbst.
 
 ## Text-Editor (lokal, noch ohne Backend)
 
@@ -255,7 +268,9 @@ medizinische Masseurin), muss das ergänzt werden.
 - **Terminbuchung**: „Meinen Platz reservieren" führt aktuell zum Kontaktformular.
 - **FAQ-Antworten** waren auf der alten Seite leer und sind hier neu formuliert –
   bitte fachlich gegenlesen.
-- **CRM-Backend**: siehe Abschnitt „CRM" oben – aktuell nur pro Gerät, nicht zentral.
+- **CRM-Backend**: seit `bau ein backend für die seite` erledigt – siehe
+  Abschnitt „CRM" oben, läuft über ein eigenes Supabase-Projekt. Offen bleibt
+  nur: Jasmins Login im Supabase-Dashboard anlegen (Anleitung ebenfalls oben).
 - **`llms.txt`**: wird nicht automatisch generiert, bei Preis-/Seitenänderungen
   von Hand nachziehen (`public/llms.txt`).
 - **Hintergrundmusik**: Player ist fertig (`src/components/MusicPlayer.tsx`,
