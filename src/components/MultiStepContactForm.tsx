@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { submitForm } from '../lib/submitForm'
 import styles from './MultiStepContactForm.module.css'
 
@@ -30,9 +30,40 @@ export function MultiStepContactForm() {
   const [error, setError] = useState<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
 
+  // Je ein Ref pro Schritt-Feld, damit wir beim Weiterklicken gezielt
+  // dorthin fokussieren können – siehe Erklärung beim Effekt unten.
+  const vornameRef = useRef<HTMLInputElement>(null)
+  const nachnameRef = useRef<HTMLInputElement>(null)
+  const telefonRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
+  const nachrichtRef = useRef<HTMLTextAreaElement>(null)
+  const stepRefs: Record<StepId, { current: HTMLElement | null } | null> = {
+    vorname: vornameRef,
+    nachname: nachnameRef,
+    telefon: telefonRef,
+    email: emailRef,
+    nachricht: nachrichtRef,
+    final: null,
+  }
+  const isFirstRender = useRef(true)
+
   const step = STEPS[stepIndex]
   const isFirst = stepIndex === 0
   const isLast = step === 'final'
+
+  useEffect(() => {
+    // NICHT beim ersten Rendern fokussieren – das Formular liegt im Footer,
+    // also am Ende jeder Seite. Ein `autoFocus` auf das erste Feld holt sich
+    // den Fokus trotzdem sofort beim Laden und klappt auf Mobilgeräten die
+    // Tastatur auf, obwohl das Formular noch gar nicht sichtbar ist. Der
+    // Fokus soll nur springen, wenn man WIRKLICH einen Schritt weiterklickt.
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    stepRefs[step]?.current?.focus()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step])
 
   function setValue(key: keyof typeof values, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }))
@@ -113,6 +144,7 @@ export function MultiStepContactForm() {
             Wie heißt du?
           </label>
           <input
+            ref={vornameRef}
             id="cf-vorname"
             className={styles.input}
             name="vorname"
@@ -121,7 +153,6 @@ export function MultiStepContactForm() {
             value={values.vorname}
             onChange={(event) => setValue('vorname', event.target.value)}
             onKeyDown={handleStepKeyDown}
-            autoFocus={step === 'vorname'}
             tabIndex={step === 'vorname' ? 0 : -1}
           />
         </div>
@@ -132,6 +163,7 @@ export function MultiStepContactForm() {
             Und dein Nachname?
           </label>
           <input
+            ref={nachnameRef}
             id="cf-nachname"
             className={styles.input}
             name="nachname"
@@ -150,6 +182,7 @@ export function MultiStepContactForm() {
             Wie erreiche ich dich telefonisch?
           </label>
           <input
+            ref={telefonRef}
             id="cf-telefon"
             className={styles.input}
             type="tel"
@@ -169,6 +202,7 @@ export function MultiStepContactForm() {
             Und deine E-Mail-Adresse?
           </label>
           <input
+            ref={emailRef}
             id="cf-email"
             className={styles.input}
             type="email"
@@ -190,6 +224,7 @@ export function MultiStepContactForm() {
             Magst du mir schon sagen, worum es geht?
           </label>
           <textarea
+            ref={nachrichtRef}
             id="cf-nachricht"
             className={styles.input}
             name="nachricht"
