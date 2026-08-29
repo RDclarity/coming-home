@@ -183,21 +183,25 @@ export const arbeitsweise = {
       glyph: '◯',
       title: 'Körper',
       text: 'Der Körper ist nicht nur ein Werkzeug. Er ist Erinnerung, Kompass und Zuhause.',
+      href: '/ratgeber/was-ist-holistic-bodywork',
     },
     {
       glyph: '〜',
       title: 'Atem',
       text: 'Der Atem kann Räume öffnen, in denen Kontrolle weicher und Fühlen wieder möglich wird.',
+      href: '/ratgeber/was-ist-breathwork',
     },
     {
       glyph: '✦',
       title: 'Berührung',
       text: 'Achtsame Berührung öffnet Räume, die Worte nicht erreichen. Sicher. Respektvoll. Transformativ.',
+      href: '/ratgeber/achtsame-beruehrung-erklaert',
     },
     {
       glyph: '◐',
       title: 'Integration',
       text: 'Erfahrungen brauchen Zeit, um sich zu setzen. Integration macht aus Erlebnissen echtes Leben.',
+      href: '/ratgeber/kundalini-awakening-praxis-und-integration',
     },
   ],
 } as const

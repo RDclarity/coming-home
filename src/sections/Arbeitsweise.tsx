@@ -3,6 +3,7 @@ import { Eyebrow } from '../components/Eyebrow'
 import { Reveal } from '../components/Reveal'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import { arbeitsweise } from '../data/site'
+import { withBase } from '../lib/url'
 import styles from './Arbeitsweise.module.css'
 
 // Positionen der 4 Marker rund um die Ringe, im Uhrzeigersinn ab 12 Uhr.
@@ -49,8 +50,8 @@ export function Arbeitsweise() {
               Sobald ein Ring seine Zielgröße erreicht, „poppt" das dazugehörige
               Element mit einem 3D-Flip an seiner Position auf – als visuelles
               Echo von Körper → Atem → Berührung → Integration weiter unten. */}
-          <div className={styles.ringWrap} ref={ref} aria-hidden="true">
-            <span className={styles.halo} />
+          <div className={styles.ringWrap} ref={ref}>
+            <span className={styles.halo} aria-hidden="true" />
 
             {arbeitsweise.cards.map((card, index) => {
               const local = localProgress(progress, index)
@@ -58,6 +59,7 @@ export function Arbeitsweise() {
               return (
                 <span
                   key={`ring-${card.title}`}
+                  aria-hidden="true"
                   className={[styles.growRing, index === arbeitsweise.cards.length - 1 && styles.growRingOuter]
                     .filter(Boolean)
                     .join(' ')}
@@ -77,19 +79,22 @@ export function Arbeitsweise() {
               const rotateY = -110 * (1 - local)
               const scale = 0.2 + 0.8 * local
               return (
-                <span
+                <a
                   key={`marker-${card.title}`}
+                  href={withBase(card.href)}
                   className={styles.marker3d}
                   style={{
                     ...MARKER_POSITIONS[index],
                     opacity: local,
+                    pointerEvents: local > 0.6 ? 'auto' : 'none',
                     transform: `translate(-50%, -50%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
                   }}
                 >
+                  <span className={styles.markerLabel}>{card.title}</span>
                   <span className={styles.markerInner}>
                     <span className={styles.markerGlyph}>{card.glyph}</span>
                   </span>
-                </span>
+                </a>
               )
             })}
           </div>
