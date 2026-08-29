@@ -30,7 +30,11 @@ export function useScrollProgress<T extends HTMLElement>() {
       frame = 0
       const rect = node!.getBoundingClientRect()
       const vh = window.innerHeight
-      const raw = (vh - rect.top) / (rect.height + vh * 0.5)
+      // Start etwas VOR dem eigentlichen Eintreten (vh * 1.15 statt vh) und
+      // kürzerer Nenner – auf kleinen/mobilen Viewports ist das Element
+      // selbst relativ klein und der sichtbare Scrollweg kurz, ohne diesen
+      // Vorlauf wäre die Animation oft schon fertig, bevor man sie sieht.
+      const raw = (vh * 1.15 - rect.top) / (rect.height + vh * 0.35)
       setProgress(Math.min(1, Math.max(0, raw)))
     }
 

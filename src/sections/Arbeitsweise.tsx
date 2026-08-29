@@ -18,6 +18,20 @@ const MARKER_POSITIONS = [
 // der Mitte heraus auf diese Größe.
 const RING_SCALES = [0.36, 0.58, 0.8, 1.02]
 
+// Scroll-Fenster jedes Rings: Ring 0 beginnt sofort (0.0), Ring 3 endet
+// deutlich vor Ende der Sektion (0.85) – bewusst großzügig überlappend und
+// früh startend, damit auf kleinen/mobilen Viewports (kurzer sichtbarer
+// Scrollweg) trotzdem die volle Animation sichtbar abläuft, statt schon
+// "fertig" zu sein, bevor man den Ring überhaupt sieht.
+const RING_WINDOW = 0.4
+const RING_STEP = 0.15
+
+function localProgress(progress: number, index: number): number {
+  const start = index * RING_STEP
+  const end = start + RING_WINDOW
+  return Math.min(1, Math.max(0, (progress - start) / (end - start)))
+}
+
 export function Arbeitsweise() {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
 
@@ -39,22 +53,18 @@ export function Arbeitsweise() {
             <span className={styles.halo} />
 
             {arbeitsweise.cards.map((card, index) => {
-              const threshold = index / arbeitsweise.cards.length
-              const active = progress >= threshold - 0.015
+              const local = localProgress(progress, index)
+              const scale = Math.max(local, 0.001) * RING_SCALES[index]
               return (
                 <span
                   key={`ring-${card.title}`}
-                  className={[
-                    styles.growRing,
-                    index === arbeitsweise.cards.length - 1 && styles.growRingOuter,
-                    active && styles.growRingActive,
-                  ]
+                  className={[styles.growRing, index === arbeitsweise.cards.length - 1 && styles.growRingOuter]
                     .filter(Boolean)
                     .join(' ')}
                   style={
                     {
-                      '--ring-scale': RING_SCALES[index],
-                      transitionDelay: `${index * 90}ms`,
+                      opacity: local * 0.5,
+                      transform: `scale3d(${scale}, ${scale}, 1) rotateX(60deg)`,
                     } as CSSProperties
                   }
                 />
@@ -62,15 +72,19 @@ export function Arbeitsweise() {
             })}
 
             {arbeitsweise.cards.map((card, index) => {
-              const threshold = index / arbeitsweise.cards.length
-              const active = progress >= threshold - 0.015
+              const local = localProgress(progress, index)
+              const translateZ = -60 + 96 * local
+              const rotateY = -110 * (1 - local)
+              const scale = 0.2 + 0.8 * local
               return (
                 <span
                   key={`marker-${card.title}`}
-                  className={[styles.marker3d, active && styles.marker3dActive]
-                    .filter(Boolean)
-                    .join(' ')}
-                  style={{ ...MARKER_POSITIONS[index], transitionDelay: `${index * 90 + 160}ms` }}
+                  className={styles.marker3d}
+                  style={{
+                    ...MARKER_POSITIONS[index],
+                    opacity: local,
+                    transform: `translate(-50%, -50%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+                  }}
                 >
                   <span className={styles.markerInner}>
                     <span className={styles.markerGlyph}>{card.glyph}</span>

@@ -9,3 +9,4 @@ dist-ssr
 !.env.example
 .secrets
 supabase/.temp
+incoming-photos
