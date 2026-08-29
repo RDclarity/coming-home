@@ -14,10 +14,10 @@ export function UeberJasmin() {
             <figure className={styles.frame}>
               <img
                 className={styles.img}
-                src={withBase('/images/jasmin-about.webp')}
-                alt="Jasmin in ihrem Arbeitsraum"
+                src={withBase('/images/jasmin-headshot.webp')}
+                alt="Jasmin, lachend am Fluss"
                 width={1920}
-                height={2885}
+                height={1920}
                 loading="lazy"
               />
             </figure>

@@ -13,10 +13,10 @@ export function Jasmin() {
           <div className={styles.frame}>
             <img
               className={styles.img}
-              src={withBase('/images/jasmin-portrait.webp')}
+              src={withBase('/images/jasmin-dance.webp')}
               alt="Jasmin, Begleiterin für Breathwork und Körperarbeit"
-              width={1920}
-              height={2886}
+              width={1277}
+              height={1920}
               loading="lazy"
             />
           </div>

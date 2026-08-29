@@ -11,7 +11,7 @@ export function Abschluss() {
           .module.css würde den GitHub-Pages-Unterpfad nicht mitbekommen. */}
       <div
         className={styles.bg}
-        style={{ backgroundImage: `url(${withBase('/images/closing-bg.webp')})` }}
+        style={{ backgroundImage: `url(${withBase('/images/jasmin-silhouette.webp')})` }}
         aria-hidden="true"
       />
       <div className={styles.scrim} aria-hidden="true" />

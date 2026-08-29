@@ -183,7 +183,7 @@ function jsonLdFor(page) {
 
 function headFor(page, { noindex = false } = {}) {
   const url = absoluteUrl(page.path)
-  const image = absoluteUrl('/images/hero.jpg')
+  const image = absoluteUrl('/images/hero-jasmin.jpg')
   const robots = noindex ? 'noindex, nofollow' : 'index, follow'
 
   return `

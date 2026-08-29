@@ -10,6 +10,15 @@ import { Abschluss } from '../../sections/Abschluss'
 import { NotFound } from '../NotFound'
 import styles from './ServicePage.module.css'
 
+// Ein Foto von Jasmin pro Angebot – dieselbe Session, aber jeweils eine
+// andere Stimmung passend zum jeweiligen Format.
+const HERO_IMAGES: Record<string, string> = {
+  '1-1-begleitung': '/images/service-1-1-begleitung.webp',
+  'coming-home-drei-monate': '/images/service-drei-monate.webp',
+  'coming-home-jahresbegleitung': '/images/service-jahresbegleitung.webp',
+  'feminine-power-workshop': '/images/service-feminine-power.webp',
+}
+
 export function ServicePage() {
   const { slug } = useParams()
   const service = getServiceBySlug(slug)
@@ -24,9 +33,21 @@ export function ServicePage() {
     .map((faqSlug) => getFaqBySlug(faqSlug))
     .filter((item) => item !== undefined)
 
+  const heroImage = HERO_IMAGES[service.slug]
+
   return (
     <>
       <section className={styles.hero}>
+        {heroImage && (
+          <>
+            <div
+              className={styles.heroBg}
+              style={{ backgroundImage: `url(${withBase(heroImage)})` }}
+              aria-hidden="true"
+            />
+            <div className={styles.heroScrim} aria-hidden="true" />
+          </>
+        )}
         <div className={styles.heroInner}>
           <Reveal>
             <Breadcrumbs
