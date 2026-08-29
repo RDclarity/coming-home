@@ -75,7 +75,7 @@ export function ServicePage() {
 
             <div className={styles.actions}>
               <Button href="/#kennenlernen" size="lg" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
-                Kennenlerngespräch vereinbaren
+                {service.ctaLabel ?? 'Kennenlerngespräch vereinbaren'}
               </Button>
               <Button href="/begleitungen" variant="outline" style={{ color: 'var(--c-light)' }}>
                 Alle Begleitungen

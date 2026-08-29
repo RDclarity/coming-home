@@ -4,10 +4,18 @@
  * einzige Quelle für die Service-Übersicht (/begleitungen) und die
  * einzelnen Detailseiten (/begleitung/:slug).
  *
- * Bewusst nur vier Angebote: 1:1 Begleitung (10-Stunden-Paket),
- * 3-Monats-Begleitung, Jahresbegleitung und das Tagesseminar. Nur das
- * Tagesseminar hat einen festen Preis – die drei anderen sind individuell
- * und werden im Kennenlerngespräch besprochen ("Preis auf Anfrage").
+ * Vier Hauptangebote: die individuelle 1:1 Session, 3-Monats-Begleitung,
+ * Jahresbegleitung und das Tagesseminar. Tagesseminar und 1:1 Session haben
+ * einen festen bzw. eingegrenzten Preis, die beiden mehrmonatigen
+ * Begleitungen sind individuell und werden im Kennenlerngespräch besprochen
+ * ("Preis auf Anfrage").
+ *
+ * Das frühere 10-Stunden-Paket der 1:1-Begleitung ist NICHT mehr das
+ * Hauptangebot unter dem Slug `1-1-begleitung` (das zeigt jetzt die neue,
+ * flexible Einzelsession) – der alte Inhalt ist bewusst nicht gelöscht,
+ * sondern liegt unten als `archivedServices` weiter, falls er an anderer
+ * Stelle wieder gebraucht wird. `archivedServices` wird bewusst NIRGENDS
+ * verlinkt oder gelistet (kein Eintrag in `services`, keine Sitemap-Seite).
  */
 
 import { AUF_ANFRAGE, formatPrice, pricing } from './pricing'
@@ -31,35 +39,40 @@ export type Service = {
   relatedSlugs: string[]
   relatedArticleSlugs: string[]
   metaDescription: string
+  /** Überschreibt den sonst generischen "Kennenlerngespräch vereinbaren"-Button im Hero. */
+  ctaLabel?: string
 }
 
 export const services: Service[] = [
   {
     slug: '1-1-begleitung',
     category: 'einzelsession',
-    title: '1:1 Begleitung – 10-Stunden-Paket',
-    shortTitle: '1:1 Begleitung',
-    tagline: 'Zehn Stunden, ganz für dich – Breathwork, Bodywork, Cranio-Sacral, Kundalini.',
+    title: 'Individuelle 1:1 Session',
+    shortTitle: '1:1 Session',
+    tagline: 'Dein Raum für Tiefe',
     intro:
-      'Die 1:1-Begleitung wird als 10-Stunden-Paket gebucht und kombiniert flexibel, was du gerade brauchst: bewusste Atemarbeit, Holistic Bodywork, Cranio-Sacrale Impulsarbeit, Kundalini Awakening und Prozessbegleitung. Kein starres Schema – jede Session entsteht aus dem, was dein Körper und dein Nervensystem gerade brauchen.',
-    priceLabel: AUF_ANFRAGE,
-    duration: '10 Stunden als Paket, aufgeteilt auf mehrere Sessions',
-    location: 'Niederösterreich – der genaue Ort wird bei der Terminvereinbarung besprochen',
+      'Ein geschützter Raum für ein aktuelles Thema, Regulation, Körperarbeit oder tieferes Erleben. Je nach Prozess können Elemente aus Holistic Bodywork, Connected Breathwork, Cranio-Sacral, Kundalini sowie Gespräch und Reflexion miteinander verbunden werden. Die Session folgt dabei keinem starren Ablauf. Wir schauen gemeinsam, was gerade da ist und welche Form der Begleitung in diesem Moment sinnvoll ist.',
+    priceLabel: '160 € – 220 €',
+    priceValue: 160,
+    priceNote:
+      'Plane für deinen Termin ca. 1,5–2 Stunden ein. Je nach tatsächlicher Dauer liegt deine Investition zwischen 160 € und 220 €.',
+    duration: 'ca. 1,5–2 Stunden',
+    location: '1120 Wien oder 3052 Innermanzing',
     highlights: [
-      'Zehn Stunden 1:1-Zeit, frei kombinierbar aus Breathwork, Bodywork, Cranio-Sacral, Kundalini Awakening und Prozessbegleitung',
-      'Ein geschützter Raum ohne Gruppe, ganz auf dich ausgerichtet',
-      'Vor- und Nachgespräch zur Einordnung und Integration bei jeder Session',
+      'Ein flexibel gestalteter Raum – für ein aktuelles Thema, Regulation, Körperarbeit oder tieferes Erleben',
+      'Frei kombinierbar aus Holistic Bodywork, Connected Breathwork, Cranio-Sacral, Kundalini sowie Gespräch und Reflexion',
+      'Keine starre Struktur – wir schauen gemeinsam, was in diesem Moment sinnvoll ist',
       'Geeignet auch als erster Kontakt mit körperorientierter Arbeit',
     ],
     forWho: [
-      'Du möchtest über mehrere Sessions hinweg an dir arbeiten, statt nur eine einzelne Erfahrung zu machen.',
-      'Du trägst ein Thema in dir, für das du einen ungeteilten, wiederkehrenden Raum brauchst.',
+      'Du trägst gerade ein Thema in dir, für das du einen geschützten, ungeteilten Raum brauchst.',
+      'Du wünschst dir Regulation, Körperarbeit oder ein tieferes Erleben – ohne vorgegebenen Ablauf.',
       'Du weißt noch nicht genau, welche Methode zu dir passt, und möchtest das gemeinsam herausfinden.',
     ],
     process: [
-      'Kennenlerngespräch: Wie geht es dir, was bringst du mit, was braucht Raum – und Klärung des Preises für dein Paket.',
-      'Zehn Stunden 1:1-Zeit, aufgeteilt auf mehrere Sessions, je nach Bedarf mit Atem-, Körper- oder Cranio-Sacral-Arbeit.',
-      'Nach jeder Session Zeit zum Nachspüren, am Ende ein Integrationsgespräch.',
+      'Kurze Abstimmung vorab: worum es geht, was gerade da ist.',
+      'Die Session selbst, ca. 1,5–2 Stunden – je nach Prozess kombiniert aus Körperarbeit, Atem, Cranio-Sacral, Kundalini und Gespräch.',
+      'Zeit zum Nachspüren direkt im Anschluss.',
     ],
     faqSlugs: [
       'brauche-ich-erfahrung',
@@ -74,7 +87,8 @@ export const services: Service[] = [
       'wann-breathwork-nicht-geeignet-ist',
     ],
     metaDescription:
-      '1:1 Begleitung mit Jasmin: 10-Stunden-Paket aus Breathwork, Bodywork, Cranio-Sacral und Kundalini Awakening. Preis auf Anfrage im Kennenlerngespräch.',
+      'Individuelle 1:1 Session mit Jasmin in Wien oder Innermanzing: Holistic Bodywork, Connected Breathwork, Cranio-Sacral und Kundalini flexibel kombiniert. 160–220 €, ca. 1,5–2 Stunden.',
+    ctaLabel: '1:1 Session anfragen',
   },
   {
     slug: 'coming-home-drei-monate',
@@ -175,6 +189,59 @@ export const services: Service[] = [
     relatedArticleSlugs: ['was-ist-breathwork'],
     metaDescription:
       'Feminine Power – Tagesworkshop mit Jasmin am 24. Oktober 2026, 9–18 Uhr: ein Tag Breathwork und Körperarbeit für Frauen. 369 € pro Person.',
+  },
+]
+
+/**
+ * Archiv, absichtlich NICHT Teil von `services` – erscheint dadurch weder auf
+ * /begleitungen noch als eigene Detailseite. Das alte 10-Stunden-Paket der
+ * 1:1-Begleitung, das der neuen flexiblen Einzelsession (siehe oben,
+ * `1-1-begleitung`) Platz gemacht hat. Bewusst mit eigenem Slug aufbewahrt,
+ * nicht gelöscht – bei Bedarf einfach in `services` verschieben, um es
+ * wieder live zu schalten.
+ */
+export const archivedServices: Service[] = [
+  {
+    slug: '1-1-begleitung-10-stunden-paket',
+    category: 'einzelsession',
+    title: '1:1 Begleitung – 10-Stunden-Paket',
+    shortTitle: '1:1 Begleitung (10-Stunden-Paket)',
+    tagline: 'Zehn Stunden, ganz für dich – Breathwork, Bodywork, Cranio-Sacral, Kundalini.',
+    intro:
+      'Die 1:1-Begleitung wird als 10-Stunden-Paket gebucht und kombiniert flexibel, was du gerade brauchst: bewusste Atemarbeit, Holistic Bodywork, Cranio-Sacrale Impulsarbeit, Kundalini Awakening und Prozessbegleitung. Kein starres Schema – jede Session entsteht aus dem, was dein Körper und dein Nervensystem gerade brauchen.',
+    priceLabel: AUF_ANFRAGE,
+    duration: '10 Stunden als Paket, aufgeteilt auf mehrere Sessions',
+    location: 'Niederösterreich – der genaue Ort wird bei der Terminvereinbarung besprochen',
+    highlights: [
+      'Zehn Stunden 1:1-Zeit, frei kombinierbar aus Breathwork, Bodywork, Cranio-Sacral, Kundalini Awakening und Prozessbegleitung',
+      'Ein geschützter Raum ohne Gruppe, ganz auf dich ausgerichtet',
+      'Vor- und Nachgespräch zur Einordnung und Integration bei jeder Session',
+      'Geeignet auch als erster Kontakt mit körperorientierter Arbeit',
+    ],
+    forWho: [
+      'Du möchtest über mehrere Sessions hinweg an dir arbeiten, statt nur eine einzelne Erfahrung zu machen.',
+      'Du trägst ein Thema in dir, für das du einen ungeteilten, wiederkehrenden Raum brauchst.',
+      'Du weißt noch nicht genau, welche Methode zu dir passt, und möchtest das gemeinsam herausfinden.',
+    ],
+    process: [
+      'Kennenlerngespräch: Wie geht es dir, was bringst du mit, was braucht Raum – und Klärung des Preises für dein Paket.',
+      'Zehn Stunden 1:1-Zeit, aufgeteilt auf mehrere Sessions, je nach Bedarf mit Atem-, Körper- oder Cranio-Sacral-Arbeit.',
+      'Nach jeder Session Zeit zum Nachspüren, am Ende ein Integrationsgespräch.',
+    ],
+    faqSlugs: [
+      'brauche-ich-erfahrung',
+      'wie-laeuft-erste-session-ab',
+      'wie-lange-dauert-session',
+      'wann-nicht-geeignet',
+    ],
+    relatedSlugs: ['coming-home-drei-monate', 'coming-home-jahresbegleitung'],
+    relatedArticleSlugs: [
+      'was-ist-breathwork',
+      'erste-session-was-dich-erwartet',
+      'wann-breathwork-nicht-geeignet-ist',
+    ],
+    metaDescription:
+      '1:1 Begleitung mit Jasmin: 10-Stunden-Paket aus Breathwork, Bodywork, Cranio-Sacral und Kundalini Awakening. Preis auf Anfrage im Kennenlerngespräch.',
   },
 ]
 

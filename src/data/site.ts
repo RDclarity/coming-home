@@ -79,7 +79,7 @@ export const orientierung = {
       label: 'Vertiefen',
       tagline: 'Du möchtest einen Raum nur für dich.',
       desc: 'Individuelle Sessions, die sich ganz an dir, deinem Körper und deinem Tempo ausrichten.',
-      offers: '1:1 Begleitung – 10-Stunden-Paket',
+      offers: 'Individuelle 1:1 Session',
     },
     {
       num: '03',
@@ -231,7 +231,7 @@ export const bewerbung = {
   formTitle: 'Bewerbungsbogen',
   programs: [
     'Feminine Power – Tagesworkshop',
-    '1:1 Begleitung – 10-Stunden-Paket',
+    'Individuelle 1:1 Session',
     'Coming Home – dreimonatige Begleitung',
     'Coming Home – Jahresbegleitung',
     'Ich bin mir noch nicht sicher',
@@ -281,17 +281,17 @@ export const faq = {
     {
       slug: 'wie-lange-dauert-session',
       q: 'Wie lange dauert eine 1:1-Session?',
-      a: 'Eine einzelne Session dauert in der Regel 90 Minuten, inklusive Ankommen, Arbeit und Integration. Für Erstsessions plane ich etwas mehr Zeit ein.',
+      a: 'Plane für eine 1:1 Session ca. 1,5–2 Stunden ein, inklusive Ankommen, Arbeit und Integration. Für Erstsessions plane ich etwas mehr Zeit ein.',
     },
     {
       slug: 'was-kostet-eine-begleitung',
       q: 'Was kostet eine Begleitung?',
-      a: 'Das Tagesseminar „Feminine Power" kostet 369 € pro Person. Die 1:1-Begleitung (10-Stunden-Paket), die dreimonatige Begleitung und die Jahresbegleitung sind individuell und werden im kostenlosen Kennenlerngespräch besprochen – dort schauen wir gemeinsam, welcher Rahmen und welches Investment zu dir passen.',
+      a: 'Das Tagesseminar „Feminine Power" kostet 369 € pro Person, eine individuelle 1:1 Session zwischen 160 € und 220 €, je nach Dauer. Die dreimonatige Begleitung und die Jahresbegleitung sind individuell und werden im kostenlosen Kennenlerngespräch besprochen – dort schauen wir gemeinsam, welcher Rahmen und welches Investment zu dir passen.',
     },
     {
       slug: 'wo-finden-sessions-statt',
       q: 'Wo finden die Sessions statt?',
-      a: '1:1 Sessions finden in Niederösterreich statt, einzelne Termine sind auch online möglich. Den genauen Ort erfährst du bei der Terminvereinbarung. Der Ort des Tagesseminars wird bei der Anmeldung bekannt gegeben.',
+      a: '1:1 Sessions finden in 1120 Wien oder 3052 Innermanzing statt, einzelne Termine sind auch online möglich. Den genauen Ort erfährst du bei der Terminvereinbarung. Der Ort des Tagesseminars wird bei der Anmeldung bekannt gegeben.',
     },
     {
       slug: 'wann-nicht-geeignet',
