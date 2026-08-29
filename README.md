@@ -149,9 +149,28 @@ mit einem neuen Adapter implementieren und in `src/crm/store.ts` den Export
 unverändert.
 
 Zugriffsschutz auf `/intern/crm` ist nur eine Passphrase-Abfrage
-(„cominghome2026", in `Crm.tsx` änderbar) – **keine echte Zugriffskontrolle**,
-weil eine rein statische Seite keine serverseitige Prüfung machen kann. Das
-steht auch so auf der Seite selbst.
+(„cominghome2026", in `src/lib/internAuth.ts` änderbar) – **keine echte
+Zugriffskontrolle**, weil eine rein statische Seite keine serverseitige
+Prüfung machen kann. Das steht auch so auf der Seite selbst.
+
+## Text-Editor (lokal, noch ohne Backend)
+
+Unter **`/intern/editor`** (gleicher Passphrase-Schutz wie das CRM) lassen
+sich alle Texte aus `src/data/site.ts` durchsuchen und bearbeiten –
+technisch generisch über `src/cms/flatten.ts` (zerlegt jedes verschachtelte
+Textobjekt in einzelne Felder), nicht Feld für Feld von Hand verdrahtet.
+
+**Wichtig, dieselbe Einschränkung wie beim CRM:** Änderungen landen als
+Entwurf in `localStorage` – nur in diesem Browser sichtbar, NICHT live für
+echte Besucher:innen. Über „Änderungen exportieren" lässt sich eine Liste
+aller geänderten Felder (alt → neu) als Datei herunterladen, die dann von
+Hand in die `src/data/*.ts`-Dateien übernommen und neu deployt werden muss.
+
+Echtes WordPress-artiges Verhalten (Änderungen sofort für alle live, neue
+Sektionen per Klick hinzufügen) braucht zwingend ein Backend mit Datenbank –
+das ist mit einer rein statischen Seite ohne Server nicht möglich. Sobald
+ein Backend angebunden wird (siehe CRM-Abschnitt), lässt sich dieser Editor
+darauf umstellen.
 
 ## Formulare
 
@@ -239,3 +258,14 @@ medizinische Masseurin), muss das ergänzt werden.
 - **CRM-Backend**: siehe Abschnitt „CRM" oben – aktuell nur pro Gerät, nicht zentral.
 - **`llms.txt`**: wird nicht automatisch generiert, bei Preis-/Seitenänderungen
   von Hand nachziehen (`public/llms.txt`).
+- **Hintergrundmusik**: Player ist fertig (`src/components/MusicPlayer.tsx`,
+  Umschalter oben links), es fehlt nur die echte Audiodatei – siehe
+  `public/audio/README.md`. Ohne Datei bleibt der Button sichtbar, spielt
+  aber nichts ab (kein Fehler, nur leer).
+- **Preise auf Anfrage**: Nur das Tagesseminar (369 €) hat einen festen,
+  öffentlich genannten Preis. 1:1-Begleitung, 3-Monats- und Jahresbegleitung
+  sind absichtlich ohne Preis – wird im Kennenlerngespräch besprochen.
+- **Englische Version**: noch nicht umgesetzt, angefragt aber wegen Umfang
+  (200+ Textfelder, drei Rechtstexte) noch nicht begonnen – siehe Chat.
+- **Editor-Backend**: siehe Abschnitt „Text-Editor" oben – wie beim CRM
+  aktuell nur pro Gerät, nicht live für Besucher:innen.

@@ -3,6 +3,7 @@ import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { withBase } from './lib/url'
 import { Crm } from './pages/crm/Crm'
+import { Editor } from './pages/editor/Editor'
 import { Home } from './pages/Home'
 import { Agb } from './pages/legal/Agb'
 import { Datenschutz } from './pages/legal/Datenschutz'
@@ -39,8 +40,9 @@ export default function App() {
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<Agb />} />
 
-          {/* Internes Werkzeug – nicht in Sitemap/robots.txt gelistet, siehe README. */}
+          {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README. */}
           <Route path="/intern/crm" element={<Crm />} />
+          <Route path="/intern/editor" element={<Editor />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

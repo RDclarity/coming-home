@@ -1,0 +1,165 @@
+.sec {
+  width: 100%;
+  min-height: 100vh;
+  padding: clamp(6rem, 10vw, 8rem) 1.5rem 4rem;
+  background: var(--c-light);
+  color: var(--c-dark);
+}
+
+.inner {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-text);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--c-key1);
+  color: var(--c-dark);
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  margin: 0 0 0.6rem;
+}
+
+.explainer {
+  background: var(--c-white);
+  border: 1px solid #0c0c0c14;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.explainer p {
+  margin: 0 0 0.8rem;
+}
+
+.explainer p:last-child {
+  margin-bottom: 0;
+}
+
+.explainer strong {
+  font-weight: 700;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+}
+
+.stats {
+  font-size: 0.85rem;
+  opacity: 0.65;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.actionBtn {
+  font-family: var(--font-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.6rem 1rem;
+  border: 1px solid #0c0c0c2e;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.actionBtnPrimary {
+  background: var(--c-dark);
+  color: var(--c-light);
+  border-color: var(--c-dark);
+}
+
+.search {
+  width: 100%;
+  font-family: var(--font-text);
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #0c0c0c2e;
+  margin-bottom: 1.6rem;
+  box-sizing: border-box;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.field {
+  background: var(--c-white);
+  border: 1px solid #0c0c0c14;
+  padding: 1rem 1.2rem;
+}
+
+.fieldEdited {
+  border-color: var(--c-key1);
+}
+
+.fieldLabel {
+  font-family: var(--font-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.fieldRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.fieldInput {
+  flex: 1;
+  font-family: var(--font-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid #0c0c0c2e;
+  resize: vertical;
+  min-height: 2.6rem;
+}
+
+.fieldInputEdited {
+  border-color: var(--c-key1);
+  background: color-mix(in srgb, var(--c-key1) 8%, var(--c-white));
+}
+
+.resetBtn {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #0c0c0c2e;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem;
+  opacity: 0.6;
+  font-size: 0.92rem;
+}

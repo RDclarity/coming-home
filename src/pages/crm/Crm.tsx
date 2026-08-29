@@ -1,13 +1,9 @@
 import { useMemo, useState, useSyncExternalStore, type FormEvent } from 'react'
+import { InternGate } from '../../components/InternGate'
 import { crmStore } from '../../crm/store'
 import { LEAD_SOURCE_LABELS, LEAD_STATUS_LABELS, type Lead, type LeadStatus } from '../../crm/types'
+import { INTERN_PASSPHRASE } from '../../lib/internAuth'
 import styles from './Crm.module.css'
-
-const UNLOCK_KEY = 'coming-home:crm:unlocked'
-// Rein ein Sichtschutz vor zufälligen Besucher:innen – siehe Hinweis auf der Seite
-// und in crm/store.ts. Keine echte Zugriffskontrolle, weil die Seite komplett
-// statisch ist und (noch) kein Backend hat, das eine Passphrase prüfen könnte.
-const PASSPHRASE = 'cominghome2026'
 
 const STATUS_ORDER: LeadStatus[] = ['neu', 'kontaktiert', 'gebucht', 'abgeschlossen', 'abgesagt']
 
@@ -16,58 +12,15 @@ function useLeads(): Lead[] {
 }
 
 export function Crm() {
-  const [unlocked, setUnlocked] = useState(
-    () => typeof sessionStorage !== 'undefined' && sessionStorage.getItem(UNLOCK_KEY) === '1',
-  )
-
-  if (!unlocked) return <Gate onUnlock={() => setUnlocked(true)} />
-  return <Dashboard />
-}
-
-function Gate({ onUnlock }: { onUnlock: () => void }) {
-  const [value, setValue] = useState('')
-  const [error, setError] = useState(false)
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (value === PASSPHRASE) {
-      sessionStorage.setItem(UNLOCK_KEY, '1')
-      onUnlock()
-    } else {
-      setError(true)
-    }
-  }
-
   return (
-    <section className={styles.sec}>
-      <form className={styles.gate} onSubmit={handleSubmit}>
-        <span className={styles.badge}>Intern</span>
-        <h1 className={styles.title}>Coming-Home-CRM</h1>
-        <p className={styles.notice}>
-          Nur ein Sichtschutz, keine echte Zugriffskontrolle – die Seite ist rein
-          clientseitig. Für echten Zugriffsschutz braucht es später ein Backend.
-        </p>
-        <input
-          className={styles.gateInput}
-          type="password"
-          placeholder="Passphrase"
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value)
-            setError(false)
-          }}
-          autoFocus
-        />
-        {error && <p className={styles.gateError}>Das war nicht die richtige Passphrase.</p>}
-        <button
-          type="submit"
-          className={styles.filterBtn}
-          style={{ width: '100%', background: 'var(--c-dark)', color: 'var(--c-light)' }}
-        >
-          Öffnen
-        </button>
-      </form>
-    </section>
+    <InternGate
+      storageKey="coming-home:crm:unlocked"
+      passphrase={INTERN_PASSPHRASE}
+      title="Coming-Home-CRM"
+      notice="Nur ein Sichtschutz, keine echte Zugriffskontrolle – die Seite ist rein clientseitig. Für echten Zugriffsschutz braucht es später ein Backend."
+    >
+      <Dashboard />
+    </InternGate>
   )
 }
 
