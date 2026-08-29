@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { withBase } from './lib/url'
 import { Crm } from './pages/crm/Crm'
@@ -22,6 +23,7 @@ export default function App() {
       <a className="skipLink" href={withBase('/#coming-home')}>
         Zum Inhalt springen
       </a>
+      <MusicPlayer />
       <Nav />
       <main>
         <Routes>
