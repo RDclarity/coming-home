@@ -23,10 +23,9 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(dirname(fileURLToPath(import.meta.url))), 'dist')
 const PORT = Number(process.argv[2]) || 4300
-// dist/ enthält die Dateien so, wie sie auf GitHub Pages unter /coming-home/
-// liegen würden – dieses Präfix also vor dem Datei-Lookup abschneiden, damit
-// man lokal exakt dieselben URLs wie live verwenden kann.
-const BASE_PREFIX = '/coming-home'
+// Die Seite läuft jetzt auf der eigenen Domain im Root (kein Unterpfad mehr
+// wie früher /coming-home/) – hier also nichts mehr abzuschneiden.
+const BASE_PREFIX = ''
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -80,5 +79,5 @@ const server = createServer(async (req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log(`dist/ läuft auf http://localhost:${PORT}/coming-home/ (wie GitHub Pages, ohne SPA-Fallback)`)
+  console.log(`dist/ läuft auf http://localhost:${PORT}/ (wie GitHub Pages, ohne SPA-Fallback)`)
 })

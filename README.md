@@ -5,8 +5,10 @@ Vite + React 19 + TypeScript, CSS Modules, keine Baukasten-Abhängigkeit mehr.
 Jede Seite wird zur Build-Zeit vorgerendert (SSG) und läuft danach als
 interaktive React-App weiter (Hydration) – siehe „Rendering & SEO" unten.
 
-Live: https://rdclarity.github.io/coming-home/ (GitHub Pages, per GitHub
-Actions bei jedem Push auf `main` neu gebaut, siehe `.github/workflows/deploy.yml`).
+Live: https://jasmindraxl.at/ (gehostet auf GitHub Pages, per GitHub Actions
+bei jedem Push auf `main` neu gebaut, siehe `.github/workflows/deploy.yml`;
+eigene Domain per `public/CNAME`, vorher lief die Seite unter
+`rdclarity.github.io/coming-home/`).
 
 ## Loslegen
 
@@ -110,16 +112,29 @@ Zusätzlich vorhanden:
   `noindex`) und dient GitHub Pages als Fallback für nicht vorgerenderte Pfade
   (aktuell nur `/intern/crm`, siehe unten).
 
-### GitHub-Pages-Unterpfad
+### Eigene Domain (jasmindraxl.at)
 
-Die Seite läuft unter `https://rdclarity.github.io/coming-home/` – also nicht
-auf einer eigenen Domain, sondern in einem Unterordner. `vite.config.ts` setzt
-`base: '/coming-home/'` für Produktions-Builds (`mode === 'production'`, greift
-für `build` **und** `preview`, nicht für `dev`). Jeder interne Link/jede
-`public/`-Referenz im Code läuft deshalb durch `withBase()` aus `src/lib/url.ts`
-statt rohe `"/pfad"`-Strings zu verwenden – das ist der einzige Ort, an dem der
-Unterpfad angehängt wird. Zieht die Seite später auf eine eigene Domain
-(z. B. `cominghome.de`) um: nur `base` in `vite.config.ts` wieder auf `/` setzen.
+Die Seite läuft unter `https://jasmindraxl.at/` – eigene Domain, kein
+Unterordner. `vite.config.ts` setzt `base: '/'`. Trotzdem läuft jeder interne
+Link/jede `public/`-Referenz im Code weiterhin durch `withBase()` aus
+`src/lib/url.ts` statt rohe `"/pfad"`-Strings zu verwenden – falls die Seite
+je wieder unter einem Unterpfad läuft (z. B. wieder als GitHub-Pages-
+Projektseite ohne eigene Domain), reicht dann wieder eine einzige Änderung
+in `vite.config.ts`.
+
+Die Domain-Anbindung besteht aus drei Teilen:
+
+1. **DNS** beim Registrar: 4 A-Einträge auf der nackten Domain (`185.199.108.153`,
+   `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) sowie ein
+   CNAME-Eintrag `www` → `rdclarity.github.io`.
+2. **`public/CNAME`** im Repo (Inhalt: `jasmindraxl.at`) – landet bei jedem
+   Build automatisch in `dist/CNAME`, damit GitHub Pages die Domain nach
+   jedem Deploy behält (sonst würde ein rein über die GitHub-UI gesetzter
+   Custom-Domain-Eintrag beim nächsten Deploy wieder verschwinden, weil
+   `dist/` frisch aus `public/` + Build-Output zusammengesetzt wird).
+3. **GitHub-Repo-Settings** → Pages → „Custom domain" → `jasmindraxl.at`
+   eintragen, „Enforce HTTPS" aktivieren, sobald das Zertifikat ausgestellt
+   ist (kann nach DNS-Umstellung etwas dauern).
 
 ## Bilder
 

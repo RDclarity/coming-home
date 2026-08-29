@@ -1,18 +1,15 @@
 /**
- * Zentrale Stelle für alles, was mit dem Deploy-Unterpfad zu tun hat.
+ * Zentrale Stelle für alles, was mit dem Deploy-Pfad zu tun hat.
  *
- * Die Seite läuft als GitHub-Pages-Projektseite unter
- * https://rdclarity.github.io/coming-home/ – also nicht auf einer eigenen
- * Domain, sondern unter einem Unterordner. Vite prefixt gebündelte Assets
- * (JS/CSS aus `import`) automatisch mit diesem Pfad, aber selbst geschriebene
- * `/images/...`- oder `/impressum`-Strings tut es das NICHT. Deshalb läuft
- * jeder interne Link und jede public/-Referenz im Code durch `withBase()`.
- *
- * Zieht die Seite auf eine eigene Domain um, muss nur `base` in
- * vite.config.ts wieder auf "/" gesetzt werden – der Code hier bleibt gleich.
+ * Die Seite läuft auf der eigenen Domain https://jasmindraxl.at/ (Root, kein
+ * Unterordner mehr – vorher lief sie als GitHub-Pages-Projektseite unter
+ * .../coming-home/, siehe Git-Historie). `withBase()` bleibt trotzdem
+ * bestehen und wird weiter überall verwendet: falls die Seite je wieder
+ * unter einem Unterpfad läuft, reicht dann wieder eine einzige Änderung in
+ * vite.config.ts.
  */
 
-const BASE = import.meta.env.BASE_URL // z. B. "/coming-home/" (Build) oder "/" (Dev)
+const BASE = import.meta.env.BASE_URL // aktuell "/" (Root), s. o.
 
 /**
  * Interner Pfad ("/impressum", "/images/hero.jpg") → korrekt geprefixter Pfad.
@@ -29,11 +26,10 @@ export function withBase(path: string): string {
  * JSON-LD und Canonical-URLs. Wird nur zur Build-Zeit im Prerender-Skript
  * gebraucht, nicht im Browser-Bundle.
  */
-export const SITE_ORIGIN = 'https://rdclarity.github.io'
+export const SITE_ORIGIN = 'https://jasmindraxl.at'
 
-/** Absolute URL für einen Routen-Pfad, inkl. Domain und Unterpfad. */
+/** Absolute URL für einen Routen-Pfad, inkl. Domain. */
 export function absoluteUrl(routePath: string): string {
-  const base = '/coming-home/'
   const clean = routePath === '/' ? '' : routePath.replace(/^\//, '')
-  return `${SITE_ORIGIN}${base}${clean}`
+  return `${SITE_ORIGIN}/${clean}`
 }
