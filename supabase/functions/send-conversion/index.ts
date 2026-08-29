@@ -27,8 +27,12 @@
 // GA4 Measurement ID + API Secret: GA4 → Verwaltung → Datenstreams → euer
 // Stream → Measurement Protocol-API-Geheimnisse.
 
+// Bewusst NICHT '*': Diese Function schickt Events an Meta/GA4 weiter, die
+// dort als "echte" Conversions zählen – ein offenes CORS würde es jeder
+// beliebigen fremden Website erlauben, gefälschte Conversions in Jasmins
+// Werbekonten einzuspeisen. Nur die eigene Domain darf sie aufrufen.
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://jasmindraxl.at',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }

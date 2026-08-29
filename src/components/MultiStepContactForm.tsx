@@ -125,6 +125,17 @@ export function MultiStepContactForm() {
       {/* `name` fürs CRM/den Versand, zusammengesetzt aus Vor- und Nachname. */}
       <input type="hidden" name="name" value={`${values.vorname} ${values.nachname}`.trim()} readOnly />
 
+      {/* Honeypot gegen automatisierten Formular-Spam, siehe submitForm.ts –
+          für Menschen unsichtbar, echte Nutzer:innen füllen es nie aus. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}
+      />
+
       <div className={styles.progress} aria-hidden="true">
         {STEPS.map((s, index) => (
           <span key={s} className={styles.progressDot}>

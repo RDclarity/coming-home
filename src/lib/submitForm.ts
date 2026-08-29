@@ -41,6 +41,15 @@ export async function submitForm(
 ): Promise<SubmitResult> {
   const data = Object.fromEntries(new FormData(form).entries())
 
+  // Honeypot: ein für Menschen unsichtbares Feld namens "website" (siehe die
+  // drei Formulare). Bots füllen erfahrungsgemäß blind alle Felder aus,
+  // echte Besucher:innen sehen und befüllen es nie. Ist es trotzdem befüllt,
+  // tun wir so, als hätte alles geklappt (kein Hinweis an den Bot), legen
+  // aber weder einen CRM-Lead an noch senden wir etwas.
+  if (String(data.website ?? '').trim() !== '') {
+    return { ok: true }
+  }
+
   recordLeadSafely(type, data)
   trackLeadSafely(type, data)
 
@@ -77,7 +86,7 @@ function recordLeadSafely(type: FormType, data: Record<string, FormDataEntryValu
   try {
     const fields = Object.fromEntries(
       Object.entries(data)
-        .filter(([key]) => key !== 'consent')
+        .filter(([key]) => key !== 'consent' && key !== 'website')
         .map(([key, value]) => [key, String(value)]),
     )
 
@@ -108,7 +117,7 @@ function trackLeadSafely(type: FormType, data: Record<string, FormDataEntryValue
 
 function openMailDraft(type: FormType, data: Record<string, FormDataEntryValue>) {
   const body = Object.entries(data)
-    .filter(([key]) => key !== 'consent')
+    .filter(([key]) => key !== 'consent' && key !== 'website')
     .map(([key, value]) => `${key}: ${value}`)
     .join('\n')
 

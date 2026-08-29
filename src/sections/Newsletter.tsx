@@ -41,6 +41,17 @@ export function Newsletter() {
             <p className={styles.success}>{newsletter.success}</p>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
+              {/* Honeypot gegen automatisierten Formular-Spam, siehe
+                  submitForm.ts – für Menschen unsichtbar. */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}
+              />
+
               <div className={styles.row}>
                 <label className={`${fieldStyles.field} ${styles.emailField}`}>
                   <input
