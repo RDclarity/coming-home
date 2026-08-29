@@ -1,21 +1,22 @@
-import { Fragment } from 'react'
+import { Fragment, type CSSProperties } from 'react'
 import { Eyebrow } from '../components/Eyebrow'
 import { Reveal } from '../components/Reveal'
 import { useScrollProgress } from '../hooks/useScrollProgress'
 import { arbeitsweise } from '../data/site'
 import styles from './Arbeitsweise.module.css'
 
-// Positionen der 4 Marker auf dem Ring, im Uhrzeigersinn ab 12 Uhr – deckt
-// sich mit der Zeichenrichtung des SVG-Kreises weiter unten.
+// Positionen der 4 Marker rund um die Ringe, im Uhrzeigersinn ab 12 Uhr.
 const MARKER_POSITIONS = [
-  { top: '0%', left: '50%' },
-  { top: '50%', left: '100%' },
-  { top: '100%', left: '50%' },
-  { top: '50%', left: '0%' },
+  { top: '2%', left: '50%' },
+  { top: '50%', left: '98%' },
+  { top: '98%', left: '50%' },
+  { top: '50%', left: '2%' },
 ]
 
-const RADIUS = 90
-const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+// Ziel-Größe jedes Rings – von innen (klein, nah an der Mitte) nach außen
+// (groß, an den Rand reichend). Jeder Ring „wächst" beim Runterscrollen aus
+// der Mitte heraus auf diese Größe.
+const RING_SCALES = [0.36, 0.58, 0.8, 1.02]
 
 export function Arbeitsweise() {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
@@ -29,36 +30,51 @@ export function Arbeitsweise() {
         </Reveal>
 
         <div className={styles.moment}>
-          {/* Der Ring baut sich beim Runterscrollen auf: Je weiter man liest,
-              desto mehr von Körper → Atem → Berührung → Integration ist
-              „gezeichnet" – als visuelles Echo der 4 Karten weiter unten. */}
+          {/* Beim Runterscrollen wächst aus der Mitte Ring um Ring nach außen
+              (gekippt, wie Planetenringe – echte CSS-3D-Transforms, kein Bild).
+              Sobald ein Ring seine Zielgröße erreicht, „poppt" das dazugehörige
+              Element mit einem 3D-Flip an seiner Position auf – als visuelles
+              Echo von Körper → Atem → Berührung → Integration weiter unten. */}
           <div className={styles.ringWrap} ref={ref} aria-hidden="true">
             <span className={styles.halo} />
-            <svg className={styles.progressSvg} viewBox="0 0 200 200">
-              <circle className={styles.track} cx="100" cy="100" r={RADIUS} />
-              <circle
-                className={styles.progressCircle}
-                cx="100"
-                cy="100"
-                r={RADIUS}
-                style={{
-                  strokeDasharray: CIRCUMFERENCE,
-                  strokeDashoffset: CIRCUMFERENCE * (1 - progress),
-                }}
-              />
-            </svg>
+
             {arbeitsweise.cards.map((card, index) => {
               const threshold = index / arbeitsweise.cards.length
               const active = progress >= threshold - 0.015
               return (
                 <span
-                  key={card.title}
-                  className={[styles.marker, active && styles.markerActive]
+                  key={`ring-${card.title}`}
+                  className={[
+                    styles.growRing,
+                    index === arbeitsweise.cards.length - 1 && styles.growRingOuter,
+                    active && styles.growRingActive,
+                  ]
                     .filter(Boolean)
                     .join(' ')}
-                  style={MARKER_POSITIONS[index]}
+                  style={
+                    {
+                      '--ring-scale': RING_SCALES[index],
+                      transitionDelay: `${index * 90}ms`,
+                    } as CSSProperties
+                  }
+                />
+              )
+            })}
+
+            {arbeitsweise.cards.map((card, index) => {
+              const threshold = index / arbeitsweise.cards.length
+              const active = progress >= threshold - 0.015
+              return (
+                <span
+                  key={`marker-${card.title}`}
+                  className={[styles.marker3d, active && styles.marker3dActive]
+                    .filter(Boolean)
+                    .join(' ')}
+                  style={{ ...MARKER_POSITIONS[index], transitionDelay: `${index * 90 + 160}ms` }}
                 >
-                  <span className={styles.markerGlyph}>{card.glyph}</span>
+                  <span className={styles.markerInner}>
+                    <span className={styles.markerGlyph}>{card.glyph}</span>
+                  </span>
                 </span>
               )
             })}

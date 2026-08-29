@@ -13,13 +13,14 @@
  * zurück: Das Postfach des Besuchers öffnet sich mit fertig ausgefülltem Text.
  * So geht nichts verloren, solange das Backend noch nicht steht.
  *
- * Zusätzlich landet jede Anfrage im lokalen CRM (siehe src/crm/) – unabhängig
- * davon, ob der Endpoint erreichbar war. Das läuft rein im Hintergrund und
- * beeinflusst den eigentlichen Versand nicht. WICHTIG: Das CRM speichert
- * aktuell nur in localStorage, siehe die Einschränkung in crm/store.ts.
+ * Zusätzlich landet jede Anfrage im CRM (siehe src/crm/) und – nur mit
+ * Cookie-Einwilligung, siehe ConsentBanner.tsx – als "Lead"-Conversion bei
+ * Google/Meta (siehe lib/tracking.ts). Beides läuft rein im Hintergrund und
+ * beeinflusst den eigentlichen Versand nicht.
  */
 
 import { crmStore } from '../crm/store'
+import { trackLead } from './tracking'
 
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT as string | undefined
 const FALLBACK_MAIL = 'hallo@cominghome.de'
@@ -41,6 +42,7 @@ export async function submitForm(
   const data = Object.fromEntries(new FormData(form).entries())
 
   recordLeadSafely(type, data)
+  trackLeadSafely(type, data)
 
   if (!ENDPOINT) {
     openMailDraft(type, data)
@@ -89,6 +91,18 @@ function recordLeadSafely(type: FormType, data: Record<string, FormDataEntryValu
   } catch {
     // Lokales CRM ist ein Zusatznutzen, kein kritischer Pfad – Fehler hier
     // (z. B. localStorage blockiert) dürfen die eigentliche Anfrage nicht stoppen.
+  }
+}
+
+/** Feuert die Lead-Conversion (Google/Meta) – darf den Versand niemals blockieren. */
+function trackLeadSafely(type: FormType, data: Record<string, FormDataEntryValue>) {
+  try {
+    trackLead(type, {
+      email: data.email ? String(data.email) : undefined,
+      telefon: data.telefon ? String(data.telefon) : undefined,
+    })
+  } catch {
+    // Tracking ist ein Zusatznutzen, kein kritischer Pfad
   }
 }
 

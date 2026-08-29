@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import { ConsentBanner } from './components/ConsentBanner'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { withBase } from './lib/url'
@@ -25,6 +26,7 @@ export default function App() {
         Zum Inhalt springen
       </a>
       <MusicPlayer />
+      <ConsentBanner />
       <Nav />
       <main>
         <Routes>

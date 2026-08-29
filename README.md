@@ -203,6 +203,45 @@ oder `newsletter` ist.
 E-Mail-Entwurf an `hallo@cominghome.de`. So geht nichts verloren, solange das
 Backend noch nicht steht – produktiv sollte aber ein echter Endpoint gesetzt sein.
 
+## Tracking (Google Analytics, Google Ads, Meta Pixel)
+
+Komplett vorbereitet, aber standardmäßig inaktiv – jedes Tool bleibt aus,
+solange seine ID nicht gesetzt ist (`.env.example`), genau wie beim
+Supabase-CRM. Sobald IDs gesetzt sind, erscheint automatisch ein
+Cookie-Banner (`src/components/ConsentBanner.tsx`); die Tools laden
+ausschließlich nach aktiver Zustimmung.
+
+**Aktivieren:**
+
+1. In `.env` (lokal) und als GitHub-Secrets (fürs Deployment) setzen, je
+   nachdem was ihr nutzt:
+   ```bash
+   VITE_GA_MEASUREMENT_ID=G-XXXXXXX        # Google Analytics 4
+   VITE_GOOGLE_ADS_ID=AW-XXXXXXXXX         # Google Ads
+   VITE_META_PIXEL_ID=XXXXXXXXXXXXXXX      # Meta (Facebook/Instagram) Pixel
+   ```
+   ```bash
+   gh secret set VITE_GA_MEASUREMENT_ID --repo RDclarity/coming-home --body "G-XXXXXXX"
+   # analog für die anderen beiden
+   ```
+
+2. **Serverseitige Ergänzung (optional, aber empfohlen):** Bei jeder
+   erfolgreichen Formular-Anfrage wird zusätzlich – nur mit Zustimmung – ein
+   Event an eine Supabase Edge Function geschickt
+   (`supabase/functions/send-conversion/`), die es serverseitig an die Meta
+   Conversions API und das GA4 Measurement Protocol weiterleitet. Das zählt
+   Conversions zuverlässiger, weil es auch dann noch funktioniert, wenn ein
+   Adblocker das Browser-Pixel im Nutzer-Browser blockiert (ein bekanntes
+   Problem bei reinem Client-Side-Tracking). Einrichtung: Kommentar am Anfang
+   von `supabase/functions/send-conversion/index.ts` – kurz zusammengefasst:
+   Function deployen, die passenden Secrets setzen (`META_PIXEL_ID`,
+   `META_CAPI_ACCESS_TOKEN`, `GA4_MEASUREMENT_ID`, `GA4_API_SECRET`), die
+   ausgegebene URL als `VITE_CONVERSION_ENDPOINT` eintragen.
+
+Ohne Schritt 2 funktioniert das normale Browser-Pixel/gtag trotzdem ganz
+normal – die Edge Function ist nur die zuverlässigere Ergänzung, kein
+Ersatz.
+
 ## Deployment
 
 `.github/workflows/deploy.yml` baut bei jedem Push auf `main` (und manuell

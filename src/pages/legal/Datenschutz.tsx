@@ -62,17 +62,37 @@ export function Datenschutz() {
 
       <h2>4. Cookies</h2>
       <p>
-        Diese Website verwendet keine Analyse-, Marketing- oder Tracking-Cookies. Es
-        kommen lediglich technisch notwendige Funktionen zum Einsatz, die für den
-        grundlegenden Betrieb der Seite erforderlich sind und keine Einwilligung nach
-        § 165 Telekommunikationsgesetz (TKG) benötigen.
+        Für den grundlegenden Betrieb der Seite (z. B. deine Musik-Einstellung, dein
+        Cookie-Auswahl) kommen ausschließlich technisch notwendige Funktionen zum
+        Einsatz, die keine Einwilligung nach § 165 Telekommunikationsgesetz (TKG)
+        benötigen.
+      </p>
+
+      <h2 id="analyse-marketing">4a. Analyse- und Marketing-Tools</h2>
+      <p>
+        Zusätzlich können Google Analytics, Google Ads und/oder der Meta-Pixel (Facebook/
+        Instagram) zum Einsatz kommen, um zu verstehen, wie die Seite genutzt wird, und um
+        Werbeanzeigen zielgerichtet auszuspielen bzw. deren Erfolg zu messen. Diese Tools
+        werden ausschließlich geladen, wenn du dem im Cookie-Banner aktiv zustimmst
+        ("Akzeptieren") – ohne diese Zustimmung bleiben sie vollständig inaktiv. Deine
+        Wahl kannst du jederzeit ändern, indem du den Local-Storage-Eintrag
+        "coming-home:consent" in deinem Browser löschst; der Banner erscheint dann erneut.
+      </p>
+      <p>
+        Rechtsgrundlage ist in diesem Fall ausschließlich deine Einwilligung (Art. 6 Abs. 1
+        lit. a DSGVO, § 165 TKG). Bei erfolgreicher Zustimmung werden zusätzlich einzelne
+        Ereignisse (z. B. "Formular abgeschickt") serverseitig über eine eigene Supabase
+        Edge Function an die Meta Conversions API und das GA4 Measurement Protocol
+        übermittelt; E-Mail-Adresse und Telefonnummer werden dabei ausschließlich gehasht
+        (SHA-256), nie im Klartext übertragen.
       </p>
       <p>
         <em>
-          [Platzhalter: Diesen Abschnitt anpassen, sobald Statistik-Tools (z. B. eine
-          datenschutzfreundliche Analytics-Lösung), ein Newsletter-Versanddienst oder
-          Social-Media-Einbindungen hinzukommen – jedes davon braucht einen eigenen
-          Absatz mit Zweck, Rechtsgrundlage und ggf. Opt-in.]
+          [Platzhalter: Sobald diese Tools mit echten IDs aktiv geschaltet sind, hier die
+          eingesetzten Anbieter konkret benennen (inkl. Links zu deren
+          Datenschutzerklärungen, z. B. Google Ireland Limited und Meta Platforms Ireland
+          Limited) und ggf. eine Auftragsverarbeitungsvereinbarung mit diesen Anbietern
+          abschließen.]
         </em>
       </p>
 

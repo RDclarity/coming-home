@@ -41,68 +41,66 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  perspective: 1200px;
 }
 
-.progressSvg {
+/* Ringe, die aus der Mitte heraus wachsen – wie gekippte Planetenringe
+   (echte CSS-3D-Transforms: rotateX kippt die Kreisfläche in den Raum). */
+.growRing {
   position: absolute;
   inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-key2);
+  opacity: 0;
+  transform: scale3d(0.001, 0.001, 1) rotateX(60deg);
+  transform-style: preserve-3d;
+  transition:
+    transform 1.1s cubic-bezier(0.2, 1.4, 0.3, 1),
+    opacity 0.7s ease;
+}
+
+.growRingActive {
+  opacity: 0.5;
+  transform: scale3d(var(--ring-scale), var(--ring-scale), 1) rotateX(60deg);
+}
+
+.growRingOuter {
+  border-color: var(--c-key1);
+}
+
+.marker3d {
+  position: absolute;
+  width: 2.6rem;
+  height: 2.6rem;
+  transform: translate(-50%, -50%) translateZ(-60px) rotateY(-110deg) scale(0.2);
+  opacity: 0;
+  transition:
+    transform 0.85s cubic-bezier(0.2, 1.5, 0.3, 1),
+    opacity 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.marker3dActive {
+  transform: translate(-50%, -50%) translateZ(36px) rotateY(0deg) scale(1);
+  opacity: 1;
+}
+
+.markerInner {
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
-.track {
-  fill: none;
-  stroke: var(--c-key2);
-  stroke-width: 1;
-  opacity: 0.16;
-}
-
-.progressCircle {
-  fill: none;
-  stroke: var(--c-key1);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  opacity: 0.9;
-  transition: stroke-dashoffset 0.2s linear;
-}
-
-.marker {
-  position: absolute;
-  width: 2.5rem;
-  height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--c-light);
-  border: 1px solid color-mix(in srgb, var(--c-key2) 40%, transparent);
-  transform: translate(-50%, -50%) scale(0.7);
-  opacity: 0.4;
-  transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s ease,
-    border-color 0.5s ease,
-    background-color 0.5s ease;
-}
-
-.markerActive {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
   background: var(--c-key1);
-  border-color: var(--c-key1);
+  border: 1px solid var(--c-key1);
+  box-shadow: 0 8px 22px -6px color-mix(in srgb, var(--c-dark) 45%, transparent);
 }
 
 .markerGlyph {
   font-family: var(--font-header);
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--c-key2);
-  transition: color 0.5s ease;
-}
-
-.markerActive .markerGlyph {
   color: var(--c-dark);
 }
 
@@ -135,8 +133,8 @@
     animation: none;
   }
 
-  .progressCircle,
-  .marker {
+  .growRing,
+  .marker3d {
     transition: none;
   }
 }
