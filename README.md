@@ -69,10 +69,13 @@ muss beim Ändern **von Hand** mitgepflegt werden, siehe unten).
 
 ## Begleitungen & Ratgeber (neue Unterseiten)
 
-- **`/begleitungen`** – Übersicht aller zehn Angebote (Einzelsessions,
-  3-/12-Monats-Begleitung, Tagesworkshop, Gruppenformat, Retreats), jede mit
-  eigener Detailseite unter `/begleitung/:slug` (Preis, Ablauf, Zielgruppe,
-  passende FAQ, verwandte Angebote). Daten in `src/data/services.ts`.
+- **`/begleitungen`** – Übersicht aller vier Angebote (1:1 Session,
+  3-Monats-Begleitung, Jahresbegleitung, Tagesseminar), jede mit eigener
+  Detailseite unter `/begleitung/:slug` (Preis, Ablauf, Zielgruppe, passende
+  FAQ, verwandte Angebote). Daten in `src/data/services.ts` – das frühere
+  10-Stunden-Paket der 1:1-Begleitung liegt dort als bewusst nicht gelistetes
+  `archivedServices`-Array weiter (frühere Gruppenformat-/Retreat-Angebote
+  wurden bereits davor ganz entfernt, nicht archiviert).
 - **`/ratgeber`** – zehn ausführliche Artikel zu Breathwork, Nervensystem-
   regulation, Cranio-Sacral, Kontraindikationen etc., jeweils unter
   `/ratgeber/:slug`. Daten in `src/data/articles.ts`. Bewusst substanziell

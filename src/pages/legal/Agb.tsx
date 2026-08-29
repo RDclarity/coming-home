@@ -7,7 +7,7 @@ export function Agb() {
     <LegalLayout
       eyebrow="Rechtliches"
       title="Allgemeine Geschäftsbedingungen"
-      updated="21. August 2026"
+      updated="30. August 2026"
       source={
         <>
           Diese AGB orientieren sich inhaltlich an den{' '}
@@ -32,10 +32,10 @@ export function Agb() {
       <p>
         Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für sämtliche Verträge
         zwischen {business.fullName} („Coming Home", „ich", „mich") und ihren Kund:innen
-        („du", „Klient:in") über Einzelsessions, mehrmonatige Begleitungen, Workshops,
-        Gruppenformate und Retreats im Bereich Breathwork, Holistic Bodywork,
-        Cranio-Sacrale Impulsarbeit und verwandte körperorientierte Angebote
-        (nachfolgend gemeinsam „Leistungen").
+        („du", „Klient:in") über die 1:1 Session, mehrmonatige Begleitungen und das
+        Tagesseminar im Bereich Breathwork, Holistic Bodywork, Cranio-Sacrale
+        Impulsarbeit und verwandte körperorientierte Angebote (nachfolgend gemeinsam
+        „Leistungen").
       </p>
 
       <h2>2. Charakter der Leistungen – keine Heilbehandlung</h2>

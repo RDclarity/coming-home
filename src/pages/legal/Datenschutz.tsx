@@ -6,7 +6,7 @@ export function Datenschutz() {
     <LegalLayout
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
-      updated="21. August 2026"
+      updated="30. August 2026"
       source={
         <>
           Die Abschnitte zu Gesundheitsdaten und Betroffenenrechten orientieren sich am
@@ -45,11 +45,16 @@ export function Datenschutz() {
         zusammengeführt.
       </p>
       <p>
-        <em>
-          [Platzhalter: Name und Sitz des Hosting-Anbieters ergänzen, sobald die Seite
-          live geschaltet ist – z. B. „Netlify, Inc., San Francisco" oder „Vercel Inc." –,
-          inkl. Hinweis auf einen ggf. bestehenden Auftragsverarbeitungsvertrag.]
-        </em>
+        Diese Website wird über GitHub Pages gehostet (GitHub, Inc., 88 Colin P. Kelly
+        Jr. Street, San Francisco, CA 94107, USA; im Konzern der Microsoft Corporation).
+        Die Datenübertragung kann dabei auch über Server außerhalb der EU/des EWR
+        erfolgen. GitHub verarbeitet in diesem Zusammenhang als Auftragsverarbeiter nach
+        Art. 28 DSGVO; für die Datenübertragung in die USA stützt sich GitHub auf die
+        EU-Standardvertragsklauseln. Mehr dazu in der{' '}
+        <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noreferrer noopener">
+          Datenschutzerklärung von GitHub
+        </a>
+        .
       </p>
 
       <h2>3. Schriftarten (Fonts)</h2>
@@ -151,17 +156,27 @@ export function Datenschutz() {
         </em>
       </p>
 
-      <h2>8. Formularversand</h2>
+      <h2>8. Formularversand und internes Anfragen-System (CRM)</h2>
       <p>
-        Die Formulardaten werden{' '}
-        <em>
-          [Platzhalter: technischen Übertragungsweg eintragen – z. B. „verschlüsselt an
-          einen Formular-Dienstleister übermittelt" mit Namen des Dienstleisters, oder
-          „per E-Mail an die oben genannte Adresse gesendet", falls (noch) kein externer
-          Formular-Endpoint eingerichtet ist]
-        </em>
-        . Sofern dabei ein externer Dienstleister eingebunden ist, besteht mit diesem ein
-        Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO.
+        Die Formulardaten werden aktuell direkt per E-Mail an die oben genannte
+        Adresse gesendet (dein E-Mail-Programm öffnet dazu beim Absenden einen
+        vorausgefüllten Entwurf) – es ist derzeit kein externer Formular-Dienstleister
+        zwischengeschaltet. Sollte künftig ein externer Formular- oder
+        E-Mail-Versanddienst eingebunden werden, wird dieser Abschnitt entsprechend
+        ergänzt und mit diesem Dienstleister ein Auftragsverarbeitungsvertrag gemäß
+        Art. 28 DSGVO abgeschlossen.
+      </p>
+      <p>
+        Zusätzlich landet jede über ein Formular dieser Website eingehende Anfrage in
+        einem passwortgeschützten, internen Anfragen-System, das ich zur Übersicht und
+        Bearbeitung eingehender Anfragen nutze. Dafür wird der Dienst Supabase
+        eingesetzt (Supabase Inc.); die Daten werden dabei ausschließlich auf Servern
+        innerhalb der EU (Frankfurt, Deutschland) gespeichert – es findet keine
+        Datenübertragung in Länder außerhalb der EU/des EWR statt. Zugriff auf dieses
+        System habe ausschließlich ich, geschützt durch ein persönliches Login.
+        Rechtsgrundlage ist dieselbe wie für den jeweiligen Verarbeitungszweck laut den
+        Abschnitten 5–7 oben; die dort genannten Aufbewahrungsfristen gelten
+        entsprechend auch für die im Anfragen-System gespeicherten Daten.
       </p>
 
       <h2>9. Empfänger:innen deiner Daten</h2>

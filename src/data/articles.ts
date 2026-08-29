@@ -37,8 +37,8 @@ export const articles: Article[] = [
     dek: 'Bewusste, verbundene Atmung wird oft als Trend abgetan – dabei steckt eine klare Methode dahinter. Ein ehrlicher Überblick.',
     category: 'Breathwork',
     readingMinutes: 6,
-    updated: '21. August 2026',
-    updatedIso: '2026-08-21',
+    updated: '30. August 2026',
+    updatedIso: '2026-08-30',
     metaDescription:
       'Was ist Breathwork wirklich? Ablauf, Wirkung auf das Nervensystem, Unterschiede zwischen Gruppen- und Einzelsession, und für wen es geeignet ist.',
     relatedSlugs: ['nervensystemregulation-verstehen', 'erste-session-was-dich-erwartet', 'wann-breathwork-nicht-geeignet-ist'],
@@ -68,7 +68,7 @@ export const articles: Article[] = [
       { type: 'h2', text: 'Gruppen-Breathwork oder 1:1-Session?' },
       {
         type: 'p',
-        text: 'In der Gruppe trägt die gemeinsame Energie oft mit – viele Menschen erleben eine Breathwork Journey in Gesellschaft als kraftvoller, gerade beim ersten Mal. Eine 1:1-Session bietet dafür ungeteilte Aufmerksamkeit und eignet sich besser, wenn du an einem konkreten Thema arbeiten oder einfach lieber ohne Publikum atmen möchtest.',
+        text: 'In der Gruppe trägt die gemeinsame Energie oft mit – viele Menschen erleben gemeinsames gehaltenes Atmen in Gesellschaft als kraftvoller, gerade beim ersten Mal. Eine 1:1-Session bietet dafür ungeteilte Aufmerksamkeit und eignet sich besser, wenn du an einem konkreten Thema arbeiten oder einfach lieber ohne Publikum atmen möchtest.',
       },
       {
         type: 'quote',
@@ -458,8 +458,8 @@ export const articles: Article[] = [
     dek: 'Manche Erfahrungen entfalten ihre größte Kraft, wenn wir sie teilen. Was Gruppenformate von 1:1-Arbeit unterscheidet.',
     category: 'Gruppe',
     readingMinutes: 5,
-    updated: '21. August 2026',
-    updatedIso: '2026-08-21',
+    updated: '30. August 2026',
+    updatedIso: '2026-08-30',
     metaDescription:
       'Warum Breathwork und Körperarbeit in der Gruppe anders wirken als 1:1 – und wie du entscheidest, welches Format zu dir passt.',
     relatedSlugs: ['was-ist-breathwork', 'erste-session-was-dich-erwartet'],
@@ -476,13 +476,13 @@ export const articles: Article[] = [
           'Die kollektive Energie im Raum wird von vielen als verstärkend erlebt – auch ohne dass jemand etwas "tut".',
           'Du bist trotzdem für dich – es gibt keinen Austausch während der Atemarbeit selbst.',
           'Am Ende gibt es oft (freiwilligen) Raum für Austausch, der bei 1:1-Sessions naturgemäß fehlt.',
-          'Gruppenformate sind meist günstiger und niedrigschwelliger als Einzelsessions.',
+          'Ein Gruppenformat ist oft niedrigschwelliger für den ersten Kontakt mit Breathwork – ohne gleich eine 1:1-Begleitung zu beginnen.',
         ],
       },
       { type: 'h2', text: 'Wann ein Gruppenformat die bessere Wahl ist' },
       {
         type: 'p',
-        text: 'Wenn du Breathwork zum ersten Mal ausprobieren möchtest, ohne dich gleich festzulegen, ist ein Gruppenformat wie die Breathwork Journey ein guter, unaufgeregter Einstieg. Auch wenn du ohnehin gern in Gemeinschaft bist, wirst du die Gruppenenergie eher als Ressource erleben als als Ablenkung.',
+        text: 'Wenn du Breathwork zum ersten Mal ausprobieren möchtest, ohne dich gleich festzulegen, ist ein Gruppenformat wie das Feminine-Power-Tagesseminar ein guter, unaufgeregter Einstieg. Auch wenn du ohnehin gern in Gemeinschaft bist, wirst du die Gruppenenergie eher als Ressource erleben als als Ablenkung.',
       },
       { type: 'h2', text: 'Wann 1:1 die bessere Wahl ist' },
       {
