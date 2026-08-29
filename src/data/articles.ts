@@ -210,11 +210,11 @@ export const articles: Article[] = [
   {
     slug: 'achtsame-beruehrung-erklaert',
     title: 'Achtsame Berührung: Was sie bedeutet – und was sie nicht ist',
-    dek: 'Der Begriff wird oft verwendet, selten erklärt. Ein klarer Blick auf das, was achtsame Berührung in der Praxis ausmacht.',
+    dek: 'Der Begriff wird oft verwendet und doch selten wirklich erklärt – ein klarer Blick auf die Haltung hinter achtsamer Berührung.',
     category: 'Grundlagen',
     readingMinutes: 5,
-    updated: '21. August 2026',
-    updatedIso: '2026-08-21',
+    updated: '29. August 2026',
+    updatedIso: '2026-08-29',
     metaDescription:
       'Was achtsame Berührung konkret bedeutet: Prinzipien, Grenzen und der Unterschied zu unangekündigter oder übergriffiger Berührung.',
     relatedSlugs: ['was-ist-holistic-bodywork', 'nervensystemregulation-verstehen'],
@@ -222,29 +222,65 @@ export const articles: Article[] = [
     body: [
       {
         type: 'p',
-        text: 'Achtsame Berührung ist kein bestimmter Griff und keine Technik – sie ist eine Haltung. Sie ist langsam, angekündigt und ohne ein festes Ziel, das erreicht werden muss. Sie will nichts "richten", sondern wahrnehmen, was gerade da ist.',
+        text: 'Der Begriff wird oft verwendet und doch selten wirklich erklärt. Denn achtsame Berührung beschreibt weniger eine bestimmte Technik als vielmehr die Haltung, aus der heraus Berührung entsteht.',
+      },
+      {
+        type: 'p',
+        text: 'Achtsame Berührung ist kein bestimmter Griff und kein festgelegter Ablauf. Sie geschieht bewusst, langsam und in Abstimmung mit dir.',
+      },
+      {
+        type: 'p',
+        text: 'Es geht nicht darum, etwas an dir zu „reparieren" oder ein bestimmtes Ergebnis zu erzwingen. Im Mittelpunkt steht die Wahrnehmung dessen, was im gegenwärtigen Moment da ist.',
       },
       { type: 'h2', text: 'Drei Prinzipien achtsamer Berührung' },
       {
         type: 'list',
         items: [
-          'Ankündigung: Du weißt vorher, was passiert, bevor es passiert – keine Überraschungen.',
-          'Zustimmung, die jederzeit widerrufbar ist: Ein Ja gilt nur für den Moment, in dem es gegeben wird.',
-          'Kein Leistungsziel: Es geht nicht darum, ein bestimmtes Ergebnis zu erzeugen, sondern darum, präsent zu sein.',
+          'Klarheit und Ankündigung: Du weißt, was geschieht. Berührung entsteht nicht überraschend, sondern bewusst und nachvollziehbar.',
+          'Zustimmung: Ein Ja gilt für den Moment, in dem es gegeben wird. Du kannst deine Zustimmung jederzeit verändern oder zurücknehmen.',
+          'Kein Leistungsdruck: Du musst nichts erreichen, nichts richtig machen und nirgendwo ankommen. Was sich zeigt, darf zunächst einfach wahrgenommen werden.',
         ],
       },
-      { type: 'h2', text: 'Was achtsame Berührung explizit nicht ist' },
+      { type: 'h2', text: 'Was achtsame Berührung nicht ist' },
       {
         type: 'p',
-        text: 'Achtsame Berührung ist nicht sexuell und findet nicht an intimen Körperstellen statt. Sie ist auch nicht "einfach nett gemeint" – sie folgt klaren, besprochenen Grenzen. Und sie ist keine Einbahnstraße: Du darfst jederzeit, ohne Begründung, Nein sagen, eine Berührung stoppen oder eine Session unterbrechen.',
+        text: 'Achtsame Berührung ist nicht sexuell und findet nicht an intimen Körperstellen statt.',
+      },
+      {
+        type: 'p',
+        text: 'Sie überschreitet keine Grenzen und setzt nichts voraus. Berührung geschieht innerhalb eines klar besprochenen Rahmens und immer in Abstimmung mit dir.',
+      },
+      {
+        type: 'p',
+        text: 'Du darfst jederzeit Nein sagen, eine Berührung verändern oder stoppen und deine Bedürfnisse aussprechen.',
+      },
+      {
+        type: 'p',
+        text: 'Denn wirkliche Achtsamkeit bedeutet für mich nicht, über die Grenzen eines Menschen hinwegzugehen, sondern sie wahrzunehmen und zu respektieren.',
       },
       {
         type: 'quote',
-        text: 'Achtsame Berührung öffnet Räume, die Worte nicht erreichen. Sicher. Respektvoll. Transformativ.',
+        text: 'Achtsame Berührung öffnet Räume, die Worte manchmal nicht erreichen. Räume, in denen nichts geleistet, erklärt oder festgehalten werden muss.',
       },
       {
         type: 'p',
-        text: 'Für viele Menschen ist gerade diese Klarheit der Grund, warum achtsame Berührung überhaupt erst möglich macht, sich zu entspannen – weil der Körper spürt, dass er die Kontrolle nicht abgibt, sondern behält.',
+        text: 'Für viele Menschen entsteht Entspannung nicht dadurch, dass sie sich bewusst vornehmen loszulassen.',
+      },
+      {
+        type: 'p',
+        text: 'Sie entsteht dort, wo genügend Sicherheit da ist, um nicht mehr festhalten zu müssen.',
+      },
+      {
+        type: 'p',
+        text: 'Genau darin liegt für mich die Qualität achtsamer Berührung: Sie drängt nichts auf und will nichts erzwingen. Sie lädt dazu ein, wahrzunehmen, zu spüren und dem eigenen Körper wieder zuzuhören.',
+      },
+      {
+        type: 'p',
+        text: 'Manchmal wird dabei etwas sehr Einfaches wieder spürbar: der Kontakt zu sich selbst.',
+      },
+      {
+        type: 'p',
+        text: 'Und genau dort beginnt Coming Home.',
       },
     ],
   },
