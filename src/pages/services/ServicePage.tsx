@@ -6,6 +6,7 @@ import { Reveal } from '../../components/Reveal'
 import { getFaqBySlug } from '../../data/site'
 import { categoryLabels, getServiceBySlug, services } from '../../data/services'
 import { withBase } from '../../lib/url'
+import { Abschluss } from '../../sections/Abschluss'
 import { NotFound } from '../NotFound'
 import styles from './ServicePage.module.css'
 
@@ -131,6 +132,8 @@ export function ServicePage() {
           </div>
         </section>
       )}
+
+      <Abschluss />
     </>
   )
 }

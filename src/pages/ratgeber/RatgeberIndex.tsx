@@ -2,6 +2,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs'
 import { Reveal } from '../../components/Reveal'
 import { articles } from '../../data/articles'
 import { withBase } from '../../lib/url'
+import { Abschluss } from '../../sections/Abschluss'
 import styles from './RatgeberIndex.module.css'
 
 export function RatgeberIndex() {
@@ -37,6 +38,8 @@ export function RatgeberIndex() {
           ))}
         </div>
       </section>
+
+      <Abschluss />
     </>
   )
 }

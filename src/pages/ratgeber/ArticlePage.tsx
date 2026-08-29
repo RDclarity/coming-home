@@ -6,6 +6,7 @@ import { Reveal } from '../../components/Reveal'
 import { articles, getArticleBySlug, type ArticleBlock } from '../../data/articles'
 import { getServiceBySlug } from '../../data/services'
 import { withBase } from '../../lib/url'
+import { Abschluss } from '../../sections/Abschluss'
 import { NotFound } from '../NotFound'
 import styles from './ArticlePage.module.css'
 
@@ -109,6 +110,8 @@ export function ArticlePage() {
           </div>
         </section>
       )}
+
+      <Abschluss />
     </>
   )
 }

@@ -2,6 +2,7 @@ import { Breadcrumbs } from '../../components/Breadcrumbs'
 import { Reveal } from '../../components/Reveal'
 import { categoryLabels, services, type Service } from '../../data/services'
 import { withBase } from '../../lib/url'
+import { Abschluss } from '../../sections/Abschluss'
 import styles from './BegleitungenIndex.module.css'
 
 const ORDER: Service['category'][] = ['einzelsession', 'begleitung', 'workshop']
@@ -53,6 +54,8 @@ export function BegleitungenIndex() {
           })}
         </div>
       </section>
+
+      <Abschluss />
     </>
   )
 }
