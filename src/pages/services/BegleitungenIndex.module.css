@@ -17,11 +17,25 @@
   max-width: 20ch;
 }
 
+.leadEmphasis {
+  font-family: var(--font-header);
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  line-height: 1.4;
+  color: var(--c-key1);
+  margin: 0 0 1.1rem;
+  max-width: 56ch;
+}
+
 .lead {
   font-size: 1.1rem;
   line-height: 1.7;
   opacity: 0.82;
   max-width: 56ch;
+}
+
+.lead + .lead {
+  margin-top: 1rem;
 }
 
 .list {

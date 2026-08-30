@@ -15,10 +15,20 @@ export function BegleitungenIndex() {
           <Reveal>
             <Breadcrumbs items={[{ label: 'Begleitungen' }]} />
             <h1 className={styles.title}>Alle Begleitungen im Überblick</h1>
+            <p className={styles.leadEmphasis}>Coming Home trägt meine Handschrift.</p>
             <p className={styles.lead}>
-              Jede dieser Begleitungen führe ich, Jasmin, persönlich durch – keine Vertretung,
-              kein Team, kein Franchise. Von der einzelnen Session bis zur Jahresbegleitung
-              findest du hier alle Angebote mit Preis, Dauer und Ablauf.
+              Jede Begleitung entsteht aus meiner Haltung, meiner Erfahrung und meiner Art,
+              Räume zu öffnen und zu halten. Räume, in denen Ruhe entstehen darf, Begegnung
+              möglich wird und du wieder mehr bei dir selbst ankommen kannst.
+            </p>
+            <p className={styles.lead}>
+              In der 1:1 Begleitung bin ich persönlich an deiner Seite. Für größere Gruppen
+              und besondere Formate hole ich bewusst ausgewählte Menschen dazu, die meine
+              Arbeit ergänzen und den Raum gemeinsam mit mir tragen.
+            </p>
+            <p className={styles.lead}>
+              Was dabei immer spürbar bleibt, ist die Essenz von Coming Home: Präsenz, Tiefe
+              und echte Verbindung.
             </p>
           </Reveal>
         </div>
