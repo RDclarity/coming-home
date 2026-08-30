@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_GOOGLE_ADS_ID?: string
   readonly VITE_META_PIXEL_ID?: string
   readonly VITE_CONVERSION_ENDPOINT?: string
+  readonly VITE_LEAD_NOTIFY_ENDPOINT?: string
 }
 
 interface ImportMeta {

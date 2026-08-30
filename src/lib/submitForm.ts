@@ -1,29 +1,35 @@
 /**
  * Formularversand.
  *
- * Die Seite ist bewusst backend-frei gebaut. Setz in `.env` eine Zieladresse:
+ * Jede Anfrage landet IMMER im CRM (siehe src/crm/) – das ist die eigentliche
+ * Datenquelle und läuft direkt gegen Supabase, unabhängig von allem
+ * Folgenden. Zusätzlich:
+ *
+ *  - Automatische Benachrichtigung per E-Mail an anfrage@jasmindraxl.at über
+ *    die Supabase Edge Function `notify-lead` (siehe dort für Setup –
+ *    Resend-Account, Domain-Verifizierung, RESEND_API_KEY). Erst aktiv,
+ *    sobald VITE_LEAD_NOTIFY_ENDPOINT gesetzt ist.
+ *  - Nur mit Cookie-Einwilligung (siehe ConsentBanner.tsx) eine "Lead"-
+ *    Conversion bei Google/Meta (siehe lib/tracking.ts).
+ *
+ * Zusätzlich lässt sich optional ein eigener Formular-Endpoint setzen:
  *
  *   VITE_FORM_ENDPOINT=https://…
  *
- * Dorthin geht ein JSON-POST mit allen Feldern plus `formType`. Das funktioniert
- * mit Formspree, Basin, einer Supabase Edge Function, n8n, Make – oder jedem
- * eigenen Endpoint.
- *
- * Ohne gesetzten Endpoint fällt der Versand auf einen vorbereiteten E-Mail-Entwurf
- * zurück: Das Postfach des Besuchers öffnet sich mit fertig ausgefülltem Text.
- * So geht nichts verloren, solange das Backend noch nicht steht.
- *
- * Zusätzlich landet jede Anfrage im CRM (siehe src/crm/) und – nur mit
- * Cookie-Einwilligung, siehe ConsentBanner.tsx – als "Lead"-Conversion bei
- * Google/Meta (siehe lib/tracking.ts). Beides läuft rein im Hintergrund und
- * beeinflusst den eigentlichen Versand nicht.
+ * Dorthin geht ein JSON-POST mit allen Feldern plus `formType` – für
+ * Formspree, Basin, n8n, Make o. ä., falls das mal zusätzlich gebraucht wird.
+ * NUR wenn WEDER das (VITE_FORM_ENDPOINT) NOCH die E-Mail-Benachrichtigung
+ * (VITE_LEAD_NOTIFY_ENDPOINT) konfiguriert sind, fällt der Versand auf einen
+ * vorbereiteten E-Mail-Entwurf im Postfach der besuchenden Person zurück –
+ * so geht nichts verloren, solange gar kein Backend dafür steht.
  */
 
 import { crmStore } from '../crm/store'
 import { trackLead } from './tracking'
 
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT as string | undefined
-const FALLBACK_MAIL = 'hallo@cominghome.de'
+const LEAD_NOTIFY_ENDPOINT = import.meta.env.VITE_LEAD_NOTIFY_ENDPOINT as string | undefined
+const FALLBACK_MAIL = 'anfrage@jasmindraxl.at'
 
 export type FormType = 'bewerbung' | 'kontakt' | 'newsletter'
 
@@ -52,9 +58,14 @@ export async function submitForm(
 
   recordLeadSafely(type, data)
   trackLeadSafely(type, data)
+  notifyLeadSafely(type, data)
 
   if (!ENDPOINT) {
-    openMailDraft(type, data)
+    // Kein externer Formular-Endpoint gesetzt – solange wenigstens die
+    // E-Mail-Benachrichtigung konfiguriert ist, reicht das (plus CRM) als
+    // vollständiger Versandweg, ohne dass die besuchende Person selbst noch
+    // eine E-Mail abschicken müsste.
+    if (!LEAD_NOTIFY_ENDPOINT) openMailDraft(type, data)
     return { ok: true }
   }
 
@@ -100,6 +111,43 @@ function recordLeadSafely(type: FormType, data: Record<string, FormDataEntryValu
   } catch {
     // Lokales CRM ist ein Zusatznutzen, kein kritischer Pfad – Fehler hier
     // (z. B. localStorage blockiert) dürfen die eigentliche Anfrage nicht stoppen.
+  }
+}
+
+/**
+ * Löst die automatische E-Mail-Benachrichtigung an anfrage@jasmindraxl.at aus
+ * (Supabase Edge Function `notify-lead`) – nicht abgewartet, darf den
+ * eigentlichen Versand niemals blockieren oder verzögern. Ohne gesetzten
+ * VITE_LEAD_NOTIFY_ENDPOINT passiert einfach nichts (siehe openMailDraft-
+ * Fallback oben).
+ */
+function notifyLeadSafely(type: FormType, data: Record<string, FormDataEntryValue>) {
+  if (!LEAD_NOTIFY_ENDPOINT) return
+
+  try {
+    const fields = Object.fromEntries(
+      Object.entries(data)
+        .filter(([key]) => key !== 'consent' && key !== 'website' && key !== 'name' && key !== 'email' && key !== 'telefon')
+        .map(([key, value]) => [key, String(value)]),
+    )
+
+    fetch(LEAD_NOTIFY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: type,
+        name: data.name ? String(data.name) : undefined,
+        email: data.email ? String(data.email) : undefined,
+        telefon: data.telefon ? String(data.telefon) : undefined,
+        fields,
+      }),
+      keepalive: true,
+    }).catch(() => {
+      // E-Mail-Benachrichtigung ist ein Zusatznutzen – der Lead liegt so
+      // oder so schon sicher im CRM (recordLeadSafely lief vorher).
+    })
+  } catch {
+    // s. o.
   }
 }
 

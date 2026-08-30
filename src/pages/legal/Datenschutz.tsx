@@ -158,13 +158,16 @@ export function Datenschutz() {
 
       <h2>8. Formularversand und internes Anfragen-System (CRM)</h2>
       <p>
-        Die Formulardaten werden aktuell direkt per E-Mail an die oben genannte
-        Adresse gesendet (dein E-Mail-Programm öffnet dazu beim Absenden einen
-        vorausgefüllten Entwurf) – es ist derzeit kein externer Formular-Dienstleister
-        zwischengeschaltet. Sollte künftig ein externer Formular- oder
-        E-Mail-Versanddienst eingebunden werden, wird dieser Abschnitt entsprechend
-        ergänzt und mit diesem Dienstleister ein Auftragsverarbeitungsvertrag gemäß
-        Art. 28 DSGVO abgeschlossen.
+        Sobald du eines der Formulare dieser Website abschickst, wird automatisch eine
+        Benachrichtigungs-E-Mail an mein internes Postfach (anfrage@jasmindraxl.at)
+        ausgelöst, damit ich zeitnah von deiner Anfrage erfahre. Dafür wird der
+        E-Mail-Versanddienst Resend (Resend, Inc., USA) eingesetzt; die Übermittlung in
+        die USA stützt sich auf die EU-Standardvertragsklauseln. Übertragen werden dabei
+        genau die Angaben, die du im jeweiligen Formular gemacht hast (siehe Abschnitte
+        5–7). Ist dieser Dienst ausnahmsweise nicht erreichbar, öffnet sich stattdessen
+        ein vorausgefüllter E-Mail-Entwurf in deinem eigenen E-Mail-Programm – so geht
+        deine Anfrage so oder so nicht verloren, unabhängig davon landet sie außerdem
+        immer im unten beschriebenen Anfragen-System.
       </p>
       <p>
         Zusätzlich landet jede über ein Formular dieser Website eingehende Anfrage in
