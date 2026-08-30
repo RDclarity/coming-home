@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
-    "preview": "node scripts/serve-dist.mjs"
+    "preview": "node scripts/serve-dist.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@fontsource-variable/cormorant-garamond": "^5.2.5",
@@ -17,6 +19,7 @@
     "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
