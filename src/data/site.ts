@@ -317,6 +317,7 @@ export const termine = {
       location: 'Wakanda Health, 3052 Neustift Innermanzing',
       seats: 'begrenzte Plätze',
       price: formatPrice(pricing.tagesseminar.price),
+      slug: 'feminine-power-workshop',
     },
   ],
   reserveLabel: 'Meinen Platz buchen',

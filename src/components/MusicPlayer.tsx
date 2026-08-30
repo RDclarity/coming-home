@@ -113,6 +113,24 @@ export function MusicPlayer() {
         <source src={withBase('/audio/theme.m4a')} type="audio/mp4" />
         <source src={withBase('/audio/theme.mp3')} type="audio/mpeg" />
       </audio>
+      <span className={styles.hint} aria-hidden="true">
+        <svg className={styles.hintArrow} viewBox="0 0 48 20" fill="none">
+          <path
+            d="M46 14C36 18 20 16 4 6"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+          <path
+            d="M11 4L4 6L7 13"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        Musik an
+      </span>
       <button
         type="button"
         className={[styles.btn, playing && styles.playing, !enabled && styles.muted]

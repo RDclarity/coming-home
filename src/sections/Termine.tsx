@@ -2,6 +2,7 @@ import { Button } from '../components/Button'
 import { Eyebrow } from '../components/Eyebrow'
 import { Reveal } from '../components/Reveal'
 import { termine } from '../data/site'
+import { withBase } from '../lib/url'
 import styles from './Termine.module.css'
 
 export function Termine() {
@@ -25,7 +26,7 @@ export function Termine() {
                 <span className={styles.time}>{event.time}</span>
               </div>
 
-              <div>
+              <a className={styles.contentLink} href={withBase(`/begleitung/${event.slug}`)}>
                 <h3 className={styles.title}>{event.title}</h3>
                 <p className={styles.desc}>{event.desc}</p>
                 <div className={styles.meta}>
@@ -35,7 +36,11 @@ export function Termine() {
                   </span>
                   <span>{event.seats}</span>
                 </div>
-              </div>
+                <span className={styles.more}>
+                  Mehr erfahren
+                  <span aria-hidden="true">→</span>
+                </span>
+              </a>
 
               <div className={styles.action}>
                 <span className={styles.price}>{event.price}</span>

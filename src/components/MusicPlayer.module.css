@@ -68,6 +68,31 @@
   }
 }
 
+.hint {
+  position: fixed;
+  top: calc(1.1rem + 80px + 0.55rem);
+  left: calc(1.1rem + 2.6rem + 0.3rem);
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-text);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  text-shadow: 0 1px 4px #00000080;
+  white-space: nowrap;
+}
+
+.hintArrow {
+  width: 34px;
+  height: 15px;
+  color: var(--c-key1);
+  flex-shrink: 0;
+}
+
 .note {
   width: 17px;
   height: 17px;
