@@ -159,36 +159,36 @@ export const services: Service[] = [
   {
     slug: 'feminine-power-workshop',
     category: 'workshop',
-    title: 'Feminine Power – Tagesworkshop',
-    shortTitle: 'Tagesworkshop',
-    tagline: 'Ein Tag, um in deine Weiblichkeit einzutauchen.',
+    title: 'Coming Home – Connected Breathwork',
+    shortTitle: 'Connected Breathwork',
+    tagline: 'Ein Tag, der dich aus dem Funktionieren zurück ins Spüren führt.',
     intro:
-      'Ein transformierender Tagesworkshop für Frauen, die in ihre Sexualität eintauchen, ihre Lust wecken und ihre wahre Weiblichkeit leben wollen – in einer kleinen, geschützten Gruppe und persönlich von Jasmin geleitet.',
+      'Durch Bewegung, Begegnung, bewusste Körperwahrnehmung und Connected Breathwork entsteht ein Raum, in dem du dir selbst und anderen auf eine neue Weise begegnen kannst. Ein Tag zum Wahrnehmen. Zum Erleben. Zum Loslassen. Und zum Zurückkommen zu dir.',
     priceLabel: formatPrice(pricing.tagesseminar.price),
     priceNote: pricing.tagesseminar.unit,
     duration: pricing.tagesseminar.duration,
-    location: 'Wird bei Anmeldung bekannt gegeben',
+    location: 'Wakanda Health, 3052 Neustift Innermanzing',
     highlights: [
-      'Ganztägiges Format (9:00–18:00 Uhr) mit Breathwork, Körperarbeit und Bewegung',
-      'Kleine Gruppengröße für einen geschützten Rahmen',
+      'Ganztägiges Format (9:00–18:00 Uhr) mit Bewegung, Begegnung und Connected Breathwork',
+      'Bewusste Körperwahrnehmung in einer kleinen, geschützten Gruppe',
       'Von Jasmin persönlich konzipiert und geleitet',
       'Kein Vorwissen nötig',
     ],
     forWho: [
-      'Du möchtest dich wieder lebendig, sinnlich und mit dir verbunden fühlen.',
+      'Du möchtest aus dem ständigen Funktionieren aussteigen und wieder bewusster wahrnehmen.',
       'Du suchst einen intensiven Einstieg, ohne dich gleich langfristig zu binden.',
-      'Du fühlst dich in einer Frauengruppe wohler als in einer gemischten Runde.',
+      'Du wünschst dir echte Begegnung und eine tiefere Verbindung zu dir selbst und deinem Körper.',
     ],
     process: [
       'Ankommen und Einstimmung am Morgen, 9:00 Uhr.',
-      'Breathwork- und Körperarbeit-Einheiten über den Tag verteilt.',
+      'Bewegung, Begegnung und Connected-Breathwork-Einheiten über den Tag verteilt.',
       'Gemeinsamer Ausklang mit Raum für Austausch, Ende 18:00 Uhr.',
     ],
     faqSlugs: ['brauche-ich-erfahrung', 'wo-finden-sessions-statt'],
     relatedSlugs: ['1-1-begleitung'],
     relatedArticleSlugs: ['was-ist-breathwork'],
     metaDescription:
-      'Feminine Power – Tagesworkshop mit Jasmin am 24. Oktober 2026, 9–18 Uhr: ein Tag Breathwork und Körperarbeit für Frauen. 369 € pro Person.',
+      'Coming Home – Connected Breathwork mit Jasmin am 24. Oktober 2026, 9–18 Uhr in Neustift Innermanzing: ein Tag Bewegung, Begegnung und bewusste Körperwahrnehmung. 369 € pro Person.',
   },
 ]
 

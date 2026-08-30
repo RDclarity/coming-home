@@ -102,7 +102,7 @@ export const reise = {
       keyword: 'Entdecken',
       title: 'Der erste Schritt zurück zu dir.',
       text: 'Vielleicht spürst du schon lange, dass da mehr in dir steckt. Mehr Verbindung. Mehr Lebendigkeit. Mehr von dem, was sich wirklich nach dir anfühlt. Im Tagesseminar lernst du meine Arbeit kennen, sammelst erste Erfahrungen und beginnst, deinem Körper und deiner inneren Stimme wieder zuzuhören.',
-      offers: ['Feminine Power – Tagesworkshop'],
+      offers: ['Coming Home – Connected Breathwork'],
       cta: { label: 'Workshop entdecken', href: '/#termine' },
     },
     {
@@ -230,7 +230,7 @@ export const bewerbung = {
     'Deshalb beginnt die Zusammenarbeit mit einem persönlichen Bewerbungsbogen und einem unverbindlichen Kennenlerngespräch. So können wir gemeinsam herausfinden, ob dieser Raum und diese Form der Begleitung im Moment wirklich zu dir passen.',
   formTitle: 'Bewerbungsbogen',
   programs: [
-    'Feminine Power – Tagesworkshop',
+    'Coming Home – Connected Breathwork',
     'Individuelle 1:1 Session',
     'Coming Home – dreimonatige Begleitung',
     'Coming Home – Jahresbegleitung',
@@ -286,12 +286,12 @@ export const faq = {
     {
       slug: 'was-kostet-eine-begleitung',
       q: 'Was kostet eine Begleitung?',
-      a: 'Das Tagesseminar „Feminine Power" kostet 369 € pro Person, eine individuelle 1:1 Session zwischen 160 € und 220 €, je nach Dauer. Die dreimonatige Begleitung und die Jahresbegleitung sind individuell und werden im kostenlosen Kennenlerngespräch besprochen – dort schauen wir gemeinsam, welcher Rahmen und welches Investment zu dir passen.',
+      a: 'Der Tagesworkshop „Coming Home – Connected Breathwork" kostet 369 € pro Person, eine individuelle 1:1 Session zwischen 160 € und 220 €, je nach Dauer. Die dreimonatige Begleitung und die Jahresbegleitung sind individuell und werden im kostenlosen Kennenlerngespräch besprochen – dort schauen wir gemeinsam, welcher Rahmen und welches Investment zu dir passen.',
     },
     {
       slug: 'wo-finden-sessions-statt',
       q: 'Wo finden die Sessions statt?',
-      a: '1:1 Sessions finden in 1120 Wien oder 3052 Innermanzing statt, einzelne Termine sind auch online möglich. Den genauen Ort erfährst du bei der Terminvereinbarung. Der Ort des Tagesseminars wird bei der Anmeldung bekannt gegeben.',
+      a: '1:1 Sessions finden in 1120 Wien oder 3052 Innermanzing statt, einzelne Termine sind auch online möglich. Den genauen Ort erfährst du bei der Terminvereinbarung. Der Tagesworkshop „Coming Home – Connected Breathwork" findet bei Wakanda Health, 3052 Neustift Innermanzing statt.',
     },
     {
       slug: 'wann-nicht-geeignet',
@@ -312,14 +312,14 @@ export const termine = {
     {
       date: '24. Oktober 2026',
       time: '9:00 – 18:00 Uhr',
-      title: 'Feminine Power – Tagesworkshop',
-      desc: 'Ein transformierender Workshop für Frauen, die in ihre Sexualität eintauchen, ihre Lust wecken und ihre wahre Weiblichkeit leben wollen.',
-      location: 'Wird bei Anmeldung bekannt gegeben',
+      title: 'Coming Home – Connected Breathwork',
+      desc: 'Ein Tag, der dich aus dem Funktionieren zurück ins Spüren führt. Durch Bewegung, Begegnung, bewusste Körperwahrnehmung und Connected Breathwork entsteht ein Raum, in dem du dir selbst und anderen auf eine neue Weise begegnen kannst. Ein Tag zum Wahrnehmen. Zum Erleben. Zum Loslassen. Und zum Zurückkommen zu dir.',
+      location: 'Wakanda Health, 3052 Neustift Innermanzing',
       seats: 'begrenzte Plätze',
       price: formatPrice(pricing.tagesseminar.price),
     },
   ],
-  reserveLabel: 'Meinen Platz reservieren',
+  reserveLabel: 'Meinen Platz buchen',
 } as const
 
 export const newsletter = {
