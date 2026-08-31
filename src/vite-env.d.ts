@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_META_PIXEL_ID?: string
   readonly VITE_CONVERSION_ENDPOINT?: string
   readonly VITE_LEAD_NOTIFY_ENDPOINT?: string
+  readonly VITE_SENTRY_DSN?: string
 }
 
 interface ImportMeta {

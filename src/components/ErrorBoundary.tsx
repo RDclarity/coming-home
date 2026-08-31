@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { reportError } from '../lib/errorTracking'
 import { Button } from './Button'
 import { Eyebrow } from './Eyebrow'
 import styles from './ErrorBoundary.module.css'
@@ -30,6 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary hat einen Fehler abgefangen:', error, errorInfo.componentStack)
+    reportError(error, { componentStack: errorInfo.componentStack, kind: 'error-boundary' })
   }
 
   render() {

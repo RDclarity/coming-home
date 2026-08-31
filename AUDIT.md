@@ -1,10 +1,31 @@
 # Coming Home – Audit
 
-**Stand:** 30. August 2026
+**Stand:** 30. August 2026 (ursprüngliche Erstellung) – **Status-Updates**
+siehe Kasten direkt darunter.
 **Umfang:** Vollständiger Code-, Security- und Production-Readiness-Audit gemäß
 Auftrag. Alle Aussagen basieren auf dem tatsächlichen Repository-Zustand
 (`npm ci`, `npm run build`, `npm audit`, Migration/RLS-Review, manuelle
 Code-Durchsicht) zum Zeitpunkt der Erstellung – nicht auf Annahmen.
+
+> ## Status (31. August 2026)
+>
+> | Punkt | Status |
+> |---|---|
+> | C1 – Legacy-Keys rotieren | ⏳ Offen – nur manuell im Dashboard möglich |
+> | C2 – Auth-Signup-Toggle prüfen | ⏳ Offen – nur manuell im Dashboard möglich |
+> | H1 – Tests | ✅ Erledigt (Phase 5, Playwright, 13 Tests, `e2e/`) |
+> | H2 – CI-Gate | ✅ Erledigt (Phase 6, `.github/workflows/ci.yml`) |
+> | H3 – Monitoring | ✅ Erledigt (`uptime.yml` + `src/lib/errorTracking.ts`, Sentry noch ohne DSN = inaktiv) |
+> | H4 – Backup-/Recovery-Doku | ✅ Erledigt (`DEPLOYMENT.md`) |
+> | M1 – CORS einschränken | ✅ Erledigt (`send-conversion/index.ts`) |
+> | M2–M4, L1–L3 | ⏳ Weiterhin offen, optional/keine Dringlichkeit (siehe unten) |
+>
+> **C1 und C2 kann ich technisch nicht selbst erledigen** – beides sind
+> Dashboard-Toggles, für die ich entweder eine riskante volle
+> Konfigurationsüberschreibung (`supabase config push`) oder Zugriff auf ein
+> Account-weites CLI-Token bräuchte, das *alle* Projekte des Betreibers
+> verwalten kann. Bitte weiterhin manuell erledigen (Anleitung im jeweiligen
+> Abschnitt unten).
 
 ## Einordnung des Projekts (wichtig für die Bewertung unten)
 

@@ -33,6 +33,7 @@ jobs:
           VITE_META_PIXEL_ID: ${{ secrets.VITE_META_PIXEL_ID }}
           VITE_CONVERSION_ENDPOINT: ${{ secrets.VITE_CONVERSION_ENDPOINT }}
           VITE_LEAD_NOTIFY_ENDPOINT: ${{ secrets.VITE_LEAD_NOTIFY_ENDPOINT }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -1,0 +1,23 @@
+name: Uptime-Check
+
+# Prüft stündlich, ob jasmindraxl.at erreichbar ist. Schlägt der Workflow
+# fehl, benachrichtigt GitHub den Repo-Owner automatisch per E-Mail (Standard-
+# Verhalten für fehlgeschlagene Actions-Runs, kein zusätzliches Setup nötig).
+# Siehe AUDIT.md H3.
+on:
+  schedule:
+    - cron: '0 * * * *' # jede volle Stunde
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: jasmindraxl.at erreichbar?
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 https://jasmindraxl.at/)
+          echo "HTTP-Status: $status"
+          if [ "$status" -ge 400 ] || [ "$status" -eq 000 ]; then
+            echo "::error::jasmindraxl.at antwortet mit Status $status"
+            exit 1
+          fi

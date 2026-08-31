@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource-variable/cormorant-garamond": "^5.2.5",
     "@fontsource-variable/inter": "^5.2.5",
+    "@sentry/browser": "^10.72.0",
     "@supabase/supabase-js": "^2.112.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
