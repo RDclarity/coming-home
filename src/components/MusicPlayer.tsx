@@ -19,6 +19,7 @@ const STORAGE_KEY = 'coming-home:music-enabled'
  */
 export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
   const [enabled, setEnabled] = useState(true)
   const [playing, setPlaying] = useState(false)
 
@@ -47,8 +48,16 @@ export function MusicPlayer() {
     tryPlay()
 
     // Erste Interaktion irgendwo auf der Seite startet die Wiedergabe nach,
-    // falls der Browser den ersten Versuch blockiert hat.
-    const onFirstInteraction = () => {
+    // falls der Browser den ersten Versuch blockiert hat. WICHTIG: Klicks auf
+    // den Musik-Button selbst werden hier bewusst ignoriert (dafür ist
+    // toggle() zuständig) – sonst reagieren bei einem Klick GENAU auf diesen
+    // Button zwei Handler gleichzeitig auf dieselbe Interaktion und heben
+    // sich gegenseitig auf: dieser Listener startet die Wiedergabe, toggle()
+    // sieht im selben Moment noch den alten (blockierten) Zustand und
+    // schaltet sofort wieder aus. Ergebnis war: erster Klick tat scheinbar
+    // nichts, erst der zweite startete die Musik wirklich.
+    const onFirstInteraction = (event: Event) => {
+      if (btnRef.current?.contains(event.target as Node)) return
       if (enabled && audio.paused) tryPlay()
     }
     document.addEventListener('pointerdown', onFirstInteraction, { once: true })
@@ -86,7 +95,13 @@ export function MusicPlayer() {
   }, [enabled])
 
   function toggle() {
-    const next = !enabled
+    // Bewusst nach dem tatsächlichen Wiedergabezustand entscheiden, nicht
+    // nach der gespeicherten "an/aus"-Präferenz: Direkt nach dem Laden ist
+    // `enabled` schon `true` (Standard), obwohl noch gar nichts hörbar
+    // läuft (vom Browser blockiert, siehe oben). Würde toggle() auf
+    // `enabled` prüfen, würde ein allererster Klick fälschlich als
+    // "wieder ausschalten" interpretiert, obwohl nie etwas zu hören war.
+    const next = !playing
     setEnabled(next)
     try {
       localStorage.setItem(STORAGE_KEY, next ? '1' : '0')
@@ -97,6 +112,8 @@ export function MusicPlayer() {
     const audio = audioRef.current
     if (!audio) return
     if (next) {
+      // Direkter Klick = echte Nutzer-Geste, `play()` klappt hier immer,
+      // unabhängig von der Autoplay-Sperre oben.
       audio.play().then(
         () => setPlaying(true),
         () => setPlaying(false),
@@ -132,6 +149,7 @@ export function MusicPlayer() {
         Musik an
       </span>
       <button
+        ref={btnRef}
         type="button"
         className={[styles.btn, playing && styles.playing, !enabled && styles.muted]
           .filter(Boolean)
