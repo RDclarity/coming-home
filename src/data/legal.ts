@@ -1,11 +1,6 @@
 /**
  * Betriebsdaten für Impressum, Datenschutz und AGB.
  *
- * WICHTIG: Die mit [Platzhalter] markierten Werte sind noch keine echten Angaben.
- * Sie MÜSSEN vor dem Livegang durch die tatsächlichen Daten von Jasmin ersetzt
- * werden – ein Impressum mit falschen oder erfundenen Angaben ist in Österreich
- * ein Wettbewerbsverstoß (§ 5 ECG) und macht die Anbieterin persönlich haftbar.
- *
  * Diese Datei geht davon aus, dass die Tätigkeit unter das freie Gewerbe
  * „Hilfestellung zur Erreichung einer körperlichen bzw. energetischen
  * Ausgewogenheit" (Humanenergetik) fällt – das passt zur Selbstbeschreibung der
@@ -16,17 +11,17 @@
 
 export const business = {
   // Vollständiger Name der Unternehmerin bzw. Firmenwortlaut laut Gewerbeschein.
-  fullName: '[Platzhalter: Vor- und Nachname]',
+  fullName: 'Jasmin Draxl',
 
   // Nur ausfüllen, falls unter einer eingetragenen Firma (z. B. „… e.U.") tätig.
   companyName: '',
 
-  street: '[Platzhalter: Straße und Hausnummer]',
-  zip: '[Platzhalter: PLZ]',
-  city: '[Platzhalter: Ort]',
+  street: 'Ratschkygasse 11/1',
+  zip: '1120',
+  city: 'Wien',
   country: 'Österreich',
 
-  phone: '[Platzhalter: Telefonnummer]',
+  phone: '0664 9292311',
   email: 'hallo@jasmindraxl.at',
 
   // Gewerbebezeichnung laut Gewerbeschein.
@@ -42,10 +37,10 @@ export const business = {
   companyRegisterCourt: '',
 
   // Die Bezirksverwaltungsbehörde am Sitz des Unternehmens (zugleich Gewerbebehörde).
-  authority: '[Platzhalter: zuständige Bezirkshauptmannschaft / zuständiges Magistrat]',
+  authority: 'Magistrat 1120',
 
   chamber: 'Mitglied der Wirtschaftskammer Österreich (WKO)',
-  chamberState: '[Platzhalter: Landesinnung/-kammer, z. B. WKO Niederösterreich]',
+  chamberState: 'WKO Wien',
 
   // Betrieblicher Sitz, falls Sessions ausschließlich außer Haus stattfinden.
   hasFixedPremises: false,

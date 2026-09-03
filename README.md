@@ -301,17 +301,12 @@ das passt zur „keine Heilbehandlung"-Formulierung, die die Seite ohnehin schon
 verwendet. Übt Jasmin daneben ein reglementiertes Gewerbe aus (z. B. Massage als
 medizinische Masseurin), muss das ergänzt werden.
 
-**Einziger noch offener Punkt vor vollständiger rechtlicher Korrektheit:**
-
-In `src/data/legal.ts` fehlen noch die echten Angaben zur Person: vollständiger
-Name, Adresse, Telefonnummer, zuständige Gewerbebehörde, Landesinnung (aktuell
-`[Platzhalter: …]`). Ein Impressum mit falschen oder erfundenen Angaben ist in
-Österreich ein Wettbewerbsverstoß (§ 5 ECG) – deshalb wurden diese NICHT
-erfunden, sondern müssen von Jasmin selbst kommen. Diese Platzhalter fließen
-aktuell auch in das JSON-LD auf jeder Seite – dort werden sie automatisch
-weggelassen, solange sie als `[Platzhalter: …]` erkennbar sind (siehe
-`isPlaceholder()` in `scripts/prerender.mjs`), damit keine Fantasie-Adresse an
-Suchmaschinen/KI-Systeme ausgeliefert wird.
+Die persönlichen Angaben in `src/data/legal.ts` (Name, Adresse, Telefon,
+Gewerbebehörde, Landesinnung) sind seit 4. September 2026 die echten Angaben
+von Jasmin, kein Platzhalter mehr. `scripts/prerender.mjs` (`isPlaceholder()`)
+lässt trotzdem weiterhin jeden künftig neu eingetragenen `[Platzhalter: …]`-Wert
+automatisch aus dem JSON-LD raus, falls hier je wieder etwas geändert wird,
+bevor die echten Daten feststehen.
 
 Alle drei Rechtsseiten (Impressum, Datenschutz, AGB) sollten vor dem
 endgültigen Livegang trotzdem einmal von einer Rechtsberatung gegengelesen
