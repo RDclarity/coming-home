@@ -5,7 +5,7 @@ import styles from './NotFound.module.css'
 /**
  * Wird sowohl als Route "*" gerendert als auch – separat vom Prerender –
  * als dist/404.html gebaut, das GitHub Pages für alle nicht vorgerenderten
- * Pfade ausliefert (etwa /intern/crm). Siehe scripts/prerender.mjs.
+ * Pfade ausliefert (etwa /admin). Siehe scripts/prerender.mjs.
  */
 export function NotFound() {
   return (

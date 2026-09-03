@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { bewerbung } from '../data/site'
 import { submitForm } from '../lib/submitForm'
 import styles from './MultiStepBewerbungForm.module.css'
@@ -47,9 +48,10 @@ export function MultiStepBewerbungForm() {
     motivation: '',
   })
   const [consent, setConsent] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending'>('idle')
   const [error, setError] = useState<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
+  const navigate = useNavigate()
 
   const vornameRef = useRef<HTMLInputElement>(null)
   const nachnameRef = useRef<HTMLInputElement>(null)
@@ -129,21 +131,12 @@ export function MultiStepBewerbungForm() {
     const result = await submitForm('bewerbung', formRef.current)
 
     if (result.ok) {
-      setStatus('done')
+      // Eigene Dankeseite statt Inline-Meldung – siehe pages/Danke.tsx.
+      navigate('/danke', { state: { formType: 'bewerbung' } })
     } else {
       setStatus('idle')
       setError(result.message)
     }
-  }
-
-  if (status === 'done') {
-    return (
-      <div className={styles.success}>
-        <span className={styles.dot} aria-hidden="true" />
-        <h3 className={styles.successTitle}>{bewerbung.successTitle}</h3>
-        <p className={styles.successText}>{bewerbung.successText}</p>
-      </div>
-    )
   }
 
   return (

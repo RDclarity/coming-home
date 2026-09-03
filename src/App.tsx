@@ -1,10 +1,11 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ConsentBanner } from './components/ConsentBanner'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { withBase } from './lib/url'
 import { Crm } from './pages/crm/Crm'
+import { Danke } from './pages/Danke'
 import { Editor } from './pages/editor/Editor'
 import { Home } from './pages/Home'
 import { Agb } from './pages/legal/Agb'
@@ -44,8 +45,16 @@ export default function App() {
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/agb" element={<Agb />} />
 
-            {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README. */}
-            <Route path="/intern/crm" element={<Crm />} />
+            {/* Dankeseite nach Formularversand statt Popup/mailto – siehe
+                pages/Danke.tsx und lib/submitForm.ts. Nicht in Sitemap/
+                robots.txt gelistet (nur über Client-Navigation erreichbar). */}
+            <Route path="/danke" element={<Danke />} />
+
+            {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README.
+                /admin ist der Zugang fürs CRM (Lead-Übersicht); /intern/crm bleibt als
+                Weiterleitung erhalten, falls die alte Adresse noch irgendwo verlinkt ist. */}
+            <Route path="/admin" element={<Crm />} />
+            <Route path="/intern/crm" element={<Navigate to="/admin" replace />} />
             <Route path="/intern/editor" element={<Editor />} />
 
             <Route path="*" element={<NotFound />} />

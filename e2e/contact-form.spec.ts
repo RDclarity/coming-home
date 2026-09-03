@@ -53,7 +53,10 @@ test('Kontaktformular: kompletter Happy Path führt zu Erfolgsmeldung', async ({
   await fillContactForm(page)
   await contactForm(page).getByRole('button', { name: 'Nachricht senden' }).click()
 
-  await expect(contactForm(page).getByText('Deine Nachricht ist angekommen.')).toBeVisible()
+  // Erfolgreiches Absenden navigiert auf die eigene Dankeseite (kein Popup,
+  // keine Inline-Meldung mehr) – siehe pages/Danke.tsx.
+  await expect(page).toHaveURL(/\/danke$/)
+  await expect(page.getByRole('heading', { name: 'Danke für deine Nachricht.' })).toBeVisible()
   await expect(insertRequest).resolves.toBeTruthy()
 })
 
@@ -95,8 +98,8 @@ test('Kontaktformular: Honeypot verhindert Bot-Submits (kein echter Insert)', as
   await fillContactForm(page)
   await contactForm(page).getByRole('button', { name: 'Nachricht senden' }).click()
 
-  // Der Bot bekommt bewusst KEINEN Hinweis (wirkt wie Erfolg) – aber es
-  // wird nichts gespeichert.
-  await expect(contactForm(page).getByText('Deine Nachricht ist angekommen.')).toBeVisible()
+  // Der Bot bekommt bewusst KEINEN Hinweis (landet wie ein echter Absender
+  // auf der Dankeseite) – aber es wird nichts gespeichert.
+  await expect(page).toHaveURL(/\/danke$/)
   expect(insertCalled).toBe(false)
 })

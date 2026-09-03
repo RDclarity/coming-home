@@ -89,7 +89,7 @@ function buildEmail(body: LeadPayload) {
           .join('')}
       </table>
       <p style="margin-top: 1.5rem; opacity: 0.7;">
-        Landet zusätzlich im CRM: https://jasmindraxl.at/intern/crm
+        Landet zusätzlich im CRM: https://jasmindraxl.at/admin
       </p>
     </div>
   `

@@ -42,6 +42,24 @@
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  /* Der ganze Kreis (Ringe + Marker gemeinsam, siehe unten) atmet leise vor
+     sich hin – wie ein Atemzug, passend zum Thema Breathwork. Bewusst am
+     Wrapper statt an den einzelnen Ringen: die Ringe selbst bekommen ihr
+     transform:scale3d(...) live per Inline-Style aus dem Scroll-Fortschritt
+     (siehe Arbeitsweise.tsx) – eine zweite Animation auf derselben Property
+     würde das überschreiben. Am Wrapper gibt es kein solches Inline-
+     Transform, hier kann die Pulse-Animation also ungestört mitlaufen. */
+  animation: ringWrapBreathe 6s ease-in-out infinite;
+}
+
+@keyframes ringWrapBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
 }
 
 /* Ringe, die aus der Mitte heraus wachsen – wie gekippte Planetenringe
@@ -164,7 +182,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .halo {
+  .halo,
+  .ringWrap {
     animation: none;
   }
 

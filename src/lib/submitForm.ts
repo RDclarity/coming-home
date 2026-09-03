@@ -1,9 +1,11 @@
 /**
  * Formularversand.
  *
- * Jede Anfrage landet IMMER im CRM (siehe src/crm/) – das ist die eigentliche
- * Datenquelle und läuft direkt gegen Supabase, unabhängig von allem
- * Folgenden. Zusätzlich:
+ * Jede Anfrage landet IMMER im CRM (siehe src/crm/) – das ist die eigentliche,
+ * zuverlässige Datenquelle und läuft direkt gegen Supabase, unabhängig von
+ * allem Folgenden. Es gibt deshalb bewusst KEINEN mailto:-Fallback mehr (der
+ * öffnete früher unangekündigt das E-Mail-Programm der besuchenden Person –
+ * verwirrend und unnötig, seit das CRM zuverlässig läuft). Zusätzlich:
  *
  *  - Automatische Benachrichtigung per E-Mail an anfrage@jasmindraxl.at über
  *    die Supabase Edge Function `notify-lead` (siehe dort für Setup –
@@ -18,10 +20,9 @@
  *
  * Dorthin geht ein JSON-POST mit allen Feldern plus `formType` – für
  * Formspree, Basin, n8n, Make o. ä., falls das mal zusätzlich gebraucht wird.
- * NUR wenn WEDER das (VITE_FORM_ENDPOINT) NOCH die E-Mail-Benachrichtigung
- * (VITE_LEAD_NOTIFY_ENDPOINT) konfiguriert sind, fällt der Versand auf einen
- * vorbereiteten E-Mail-Entwurf im Postfach der besuchenden Person zurück –
- * so geht nichts verloren, solange gar kein Backend dafür steht.
+ * Ist er nicht gesetzt (Normalfall), gilt der Versand trotzdem als
+ * abgeschlossen, sobald der Lead im CRM liegt – die aufrufenden Formulare
+ * navigieren danach zur Dankeseite (siehe pages/Danke.tsx).
  */
 
 import { crmStore } from '../crm/store'
@@ -34,12 +35,6 @@ const FALLBACK_MAIL = 'anfrage@jasmindraxl.at'
 export type FormType = 'bewerbung' | 'kontakt' | 'newsletter'
 
 export type SubmitResult = { ok: true } | { ok: false; message: string }
-
-const LABELS: Record<FormType, string> = {
-  bewerbung: 'Bewerbung Coming-Home-Begleitung',
-  kontakt: 'Nachricht über die Website',
-  newsletter: 'Anfrage Audioübung',
-}
 
 export async function submitForm(
   type: FormType,
@@ -61,11 +56,9 @@ export async function submitForm(
   notifyLeadSafely(type, data)
 
   if (!ENDPOINT) {
-    // Kein externer Formular-Endpoint gesetzt – solange wenigstens die
-    // E-Mail-Benachrichtigung konfiguriert ist, reicht das (plus CRM) als
-    // vollständiger Versandweg, ohne dass die besuchende Person selbst noch
-    // eine E-Mail abschicken müsste.
-    if (!LEAD_NOTIFY_ENDPOINT) openMailDraft(type, data)
+    // Kein externer Formular-Endpoint gesetzt – der Lead liegt schon sicher
+    // im CRM (recordLeadSafely oben), das reicht als vollständiger
+    // Versandweg. Kein mailto-Fallback mehr, siehe Datei-Kommentar oben.
     return { ok: true }
   }
 
@@ -118,8 +111,8 @@ function recordLeadSafely(type: FormType, data: Record<string, FormDataEntryValu
  * Löst die automatische E-Mail-Benachrichtigung an anfrage@jasmindraxl.at aus
  * (Supabase Edge Function `notify-lead`) – nicht abgewartet, darf den
  * eigentlichen Versand niemals blockieren oder verzögern. Ohne gesetzten
- * VITE_LEAD_NOTIFY_ENDPOINT passiert einfach nichts (siehe openMailDraft-
- * Fallback oben).
+ * VITE_LEAD_NOTIFY_ENDPOINT passiert einfach nichts – der Lead liegt trotzdem
+ * im CRM (recordLeadSafely lief vorher).
  */
 function notifyLeadSafely(type: FormType, data: Record<string, FormDataEntryValue>) {
   if (!LEAD_NOTIFY_ENDPOINT) return
@@ -161,18 +154,4 @@ function trackLeadSafely(type: FormType, data: Record<string, FormDataEntryValue
   } catch {
     // Tracking ist ein Zusatznutzen, kein kritischer Pfad
   }
-}
-
-function openMailDraft(type: FormType, data: Record<string, FormDataEntryValue>) {
-  const body = Object.entries(data)
-    .filter(([key]) => key !== 'consent' && key !== 'website')
-    .map(([key, value]) => `${key}: ${value}`)
-    .join('\n')
-
-  const href =
-    `mailto:${FALLBACK_MAIL}` +
-    `?subject=${encodeURIComponent(LABELS[type])}` +
-    `&body=${encodeURIComponent(body)}`
-
-  window.location.href = href
 }

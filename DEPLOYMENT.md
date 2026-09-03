@@ -77,7 +77,7 @@ unten stehenden manuellen Methoden regelmäßig genutzt werden.
 
 ### Manuelle Backup-Möglichkeiten (unabhängig vom Plan)
 
-1. **Schnell, ohne Technik:** Im CRM (`/intern/crm`) einloggen → **„Als CSV
+1. **Schnell, ohne Technik:** Im CRM (`/admin`) einloggen → **„Als CSV
    exportieren"** klickt alle aktuell sichtbaren Leads als Datei herunter.
    Reicht für eine gelegentliche, manuelle Sicherung.
 2. **Vollständig, für Entwickler:innen:**

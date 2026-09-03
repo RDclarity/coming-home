@@ -12,7 +12,7 @@
  * bekommen (hydrateRoot in main.tsx).
  *
  * Erzeugt außerdem dist/404.html (GitHub-Pages-SPA-Fallback für nicht
- * vorgerenderte Pfade wie /intern/crm) und dist/sitemap.xml.
+ * vorgerenderte Pfade wie /admin, /danke) und dist/sitemap.xml.
  */
 
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
@@ -233,7 +233,7 @@ async function main() {
   }
   console.log(`prerender: ${written} Seiten geschrieben`)
 
-  // 404.html – GitHub-Pages-Fallback für nicht vorgerenderte Pfade (z. B. /intern/crm).
+  // 404.html – GitHub-Pages-Fallback für nicht vorgerenderte Pfade (z. B. /admin, /danke).
   const notFoundPage = {
     path: '/404',
     title: `Seite nicht gefunden – ${site.brandLong}`,

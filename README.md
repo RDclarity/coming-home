@@ -113,7 +113,7 @@ Zusätzlich vorhanden:
   generiert, damit die Kuratierung bewusst bleibt.
 - `dist/404.html` – wird beim Prerender separat erzeugt (NotFound-Seite,
   `noindex`) und dient GitHub Pages als Fallback für nicht vorgerenderte Pfade
-  (aktuell nur `/intern/crm`, siehe unten).
+  (aktuell nur `/admin`, siehe unten).
 
 ### Eigene Domain (jasmindraxl.at)
 
@@ -151,7 +151,7 @@ Format bleibt – nur die Sichtbare-Seite-Referenzen nutzen WebP.
 
 Jede Formular-Anfrage (Bewerbungsbogen, Kontakt, Audioübung) landet zusätzlich
 zum normalen Versand (siehe „Formulare" unten) in einem einfachen CRM unter
-**`/intern/crm`** – bewusst nicht in Nav/Footer verlinkt, per `robots.txt`
+**`/admin`** – bewusst nicht in Nav/Footer verlinkt, per `robots.txt`
 von der Indexierung ausgeschlossen und nicht Teil der Sitemap.
 
 Das CRM hat ein eigenes, von allen anderen Ventures des Betreibers komplett
@@ -168,7 +168,7 @@ zurück, damit sie trotzdem baut und funktioniert.
 **Sicherheitsmodell (Row Level Security):** Der `anon`-Key im Frontend darf
 laut Datenbank-Policy ausschließlich neue Leads *anlegen* – nie lesen, ändern
 oder löschen. Nur ein eingeloggter Account darf Leads sehen/bearbeiten/löschen.
-Zugriffsschutz auf `/intern/crm` ist deshalb ein **echter Supabase-Login**
+Zugriffsschutz auf `/admin` ist deshalb ein **echter Supabase-Login**
 (E-Mail/Passwort, siehe `src/components/SupabaseLoginGate.tsx` und
 `src/crm/auth.ts`) – keine reine Passphrase mehr wie zuvor.
 
@@ -176,7 +176,7 @@ Zugriffsschutz auf `/intern/crm` ist deshalb ein **echter Supabase-Login**
 erstellt): Supabase-Dashboard → Projekt „coming-home" → *Authentication* →
 *Users* → *Add user* → E-Mail und Passwort eurer Wahl eintragen, „Auto Confirm
 User" aktivieren. Mit diesen Zugangsdaten kann sie sich danach direkt unter
-`/intern/crm` einloggen.
+`/admin` einloggen.
 
 Ist kein Supabase konfiguriert (z. B. in einer lokalen Vorschau ohne `.env`),
 gilt weiterhin nur der alte Passphrase-Sichtschutz

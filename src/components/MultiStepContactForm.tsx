@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { submitForm } from '../lib/submitForm'
 import styles from './MultiStepContactForm.module.css'
 
@@ -26,9 +27,10 @@ export function MultiStepContactForm() {
   })
   const [consent, setConsent] = useState(false)
   const [newsletter, setNewsletter] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending'>('idle')
   const [error, setError] = useState<string | null>(null)
   const formRef = useRef<HTMLFormElement>(null)
+  const navigate = useNavigate()
 
   // Je ein Ref pro Schritt-Feld, damit wir beim Weiterklicken gezielt
   // dorthin fokussieren können – siehe Erklärung beim Effekt unten.
@@ -109,15 +111,12 @@ export function MultiStepContactForm() {
     const result = await submitForm('kontakt', formRef.current)
 
     if (result.ok) {
-      setStatus('done')
+      // Eigene Dankeseite statt Inline-Meldung – siehe pages/Danke.tsx.
+      navigate('/danke', { state: { formType: 'kontakt' } })
     } else {
       setStatus('idle')
       setError(result.message)
     }
-  }
-
-  if (status === 'done') {
-    return <p className={styles.success}>Deine Nachricht ist angekommen. Ich melde mich bald bei dir.</p>
   }
 
   return (

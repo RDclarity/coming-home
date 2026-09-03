@@ -41,6 +41,11 @@ test('Rechtstexte laden ohne Absturz', async ({ page }) => {
   }
 })
 
+test('Alte CRM-Adresse /intern/crm leitet auf /admin weiter', async ({ page }) => {
+  await page.goto('/intern/crm')
+  await expect(page).toHaveURL(/\/admin$/)
+})
+
 test('Unbekannte Route zeigt 404-Seite', async ({ page }) => {
   await page.goto('/diese-seite-gibt-es-nicht')
   await expect(page.getByText('Diese Seite gibt es nicht.')).toBeVisible()

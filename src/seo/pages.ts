@@ -5,8 +5,9 @@
  *  2. Die generierte sitemap.xml.
  *  3. (indirekt) robots.txt/llms.txt, die von Hand denselben Pfaden folgen.
  *
- * /intern/crm ist absichtlich NICHT hier gelistet – das interne Werkzeug wird
- * nicht vorgerendert, nicht indexiert und nicht in der Sitemap geführt.
+ * /admin (CRM), /intern/editor und /danke sind absichtlich NICHT hier
+ * gelistet – interne Werkzeuge bzw. die Dankeseite werden nicht vorgerendert,
+ * nicht indexiert und nicht in der Sitemap geführt.
  */
 
 import { articles } from '../data/articles'

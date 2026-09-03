@@ -185,7 +185,7 @@ Formular-Submit fälschlich fehlschlagen ließe.
 
 ## 6. Weitere interne Werkzeuge
 
-- **`/intern/crm`** – Lead-Übersicht, siehe oben. Nicht in Sitemap/Nav
+- **`/admin`** – Lead-Übersicht, siehe oben. Nicht in Sitemap/Nav
   verlinkt, per `robots.txt` von Indexierung ausgeschlossen.
 - **`/intern/editor`** – Ein rein lokaler (localStorage) "WordPress-artiger"
   Text-Editor (`src/cms/`) zum Durchsuchen/Bearbeiten der Inhalte aus

@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /intern/
+Disallow: /admin/
 
 Sitemap: https://jasmindraxl.at/sitemap.xml

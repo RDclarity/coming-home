@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { mockSupabaseAuth } from './helpers'
 
 /**
- * /intern/crm ist nicht vorgerendert (siehe scripts/prerender.mjs) und wird
+ * /admin ist nicht vorgerendert (siehe scripts/prerender.mjs) und wird
  * über dist/404.html + Client-Routing erreicht – deshalb hier bewusst über
  * die Startseite + direkte Eingabe der URL statt eines einfachen `goto`,
  * damit der reale Pfad getestet wird, den Besucher:innen auch nehmen.
@@ -15,7 +15,7 @@ import { mockSupabaseAuth } from './helpers'
  */
 
 test('CRM ohne Login zeigt die Login-Maske, keine Leads', async ({ page }) => {
-  await page.goto('/intern/crm')
+  await page.goto('/admin')
   await expect(page.getByRole('heading', { name: 'Coming-Home-CRM' })).toBeVisible()
   await expect(page.getByPlaceholder('E-Mail')).toBeVisible()
   await expect(page.getByPlaceholder('Passwort')).toBeVisible()
@@ -24,7 +24,7 @@ test('CRM ohne Login zeigt die Login-Maske, keine Leads', async ({ page }) => {
 
 test('CRM: falsches Passwort zeigt Fehlermeldung, kein Zugriff', async ({ page }) => {
   await mockSupabaseAuth(page, 'invalid-credentials')
-  await page.goto('/intern/crm')
+  await page.goto('/admin')
 
   await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
   await page.getByPlaceholder('Passwort').fill('falsches-passwort')
@@ -36,7 +36,7 @@ test('CRM: falsches Passwort zeigt Fehlermeldung, kein Zugriff', async ({ page }
 
 test('CRM: erfolgreicher Login zeigt das Dashboard', async ({ page }) => {
   await mockSupabaseAuth(page, 'success')
-  await page.goto('/intern/crm')
+  await page.goto('/admin')
 
   await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
   await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
