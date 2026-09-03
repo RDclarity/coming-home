@@ -8,25 +8,6 @@ export function Agb() {
       eyebrow="Rechtliches"
       title="Allgemeine Geschäftsbedingungen"
       updated="30. August 2026"
-      source={
-        <>
-          Diese AGB orientieren sich inhaltlich an den{' '}
-          <strong>
-            Standesregeln des Fachverbands der gewerblichen Dienstleister für die freien
-            Gewerbe der Humanenergetik
-          </strong>{' '}
-          (genehmigt vom Erweiterten Präsidium der Wirtschaftskammer Österreich am
-          23.4.2014) sowie am{' '}
-          <strong>
-            Muster-Aufklärungsbogen für die Humanenergetik und Datenschutz
-          </strong>{' '}
-          der Wirtschaftskammer Wien, Fachgruppe Personenberatung und
-          Personenbetreuung. Beide Dokumente ersetzen keine Rechtsberatung – das gilt
-          auch für diese daraus abgeleiteten AGB. Vor Veröffentlichung bitte von einer
-          Rechtsberatung prüfen lassen, insbesondere die Abschnitte zum
-          Rücktrittsrecht und zur Haftung.
-        </>
-      }
     >
       <h2>1. Geltungsbereich</h2>
       <p>
@@ -106,19 +87,11 @@ export function Agb() {
         sofern nicht anders vereinbart, vor Beginn der jeweiligen Leistung bzw. gemäß den
         bei der Buchung angegebenen Zahlungsbedingungen fällig.
       </p>
-      <p>
-        <em>
-          [Platzhalter: Konkrete Zahlungsarten (z. B. Überweisung, Zahlungsdienstleister)
-          und Ratenzahlungsmodalitäten für die mehrmonatigen Begleitungen ergänzen, falls
-          angeboten.]
-        </em>
-      </p>
-
       <h2>6. Terminabsagen und Stornobedingungen</h2>
       <p>
-        Einzelsessions und Plätze in Workshops bzw. Gruppenterminen können bis{' '}
-        <em>[Platzhalter: Frist, z. B. „48 Stunden"]</em> vor dem vereinbarten Termin
-        kostenfrei storniert oder verschoben werden. Bei späteren Absagen oder Nichterscheinen
+        Einzelsessions und Plätze in Workshops bzw. Gruppenterminen können bis 48 Stunden
+        vor dem vereinbarten Termin kostenfrei storniert oder verschoben werden. Bei
+        späteren Absagen oder Nichterscheinen
         („No-Show") behalte ich mir vor, das vereinbarte Honorar ganz oder teilweise in
         Rechnung zu stellen, da der Platz für andere Klient:innen freigehalten wurde.
       </p>

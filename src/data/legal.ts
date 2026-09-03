@@ -27,7 +27,7 @@ export const business = {
   country: 'Österreich',
 
   phone: '[Platzhalter: Telefonnummer]',
-  email: 'hallo@cominghome.de',
+  email: 'hallo@jasmindraxl.at',
 
   // Gewerbebezeichnung laut Gewerbeschein.
   tradeTitle: 'Humanenergetikerin',

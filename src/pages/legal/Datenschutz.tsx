@@ -7,13 +7,6 @@ export function Datenschutz() {
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
       updated="30. August 2026"
-      source={
-        <>
-          Die Abschnitte zu Gesundheitsdaten und Betroffenenrechten orientieren sich am
-          Muster-Aufklärungsbogen für die Humanenergetik und Datenschutz der
-          Wirtschaftskammer Wien (2024). Ersetzt keine Rechtsberatung.
-        </>
-      }
     >
       <p>
         Der Schutz deiner personenbezogenen Daten ist mir wichtig. Diese
@@ -91,15 +84,12 @@ export function Datenschutz() {
         übermittelt; E-Mail-Adresse und Telefonnummer werden dabei ausschließlich gehasht
         (SHA-256), nie im Klartext übertragen.
       </p>
-      <p>
-        <em>
-          [Platzhalter: Sobald diese Tools mit echten IDs aktiv geschaltet sind, hier die
+      {/* Sobald diese Tools mit echten IDs aktiv geschaltet sind (siehe .env.example,
+          VITE_GA_MEASUREMENT_ID/VITE_GOOGLE_ADS_ID/VITE_META_PIXEL_ID), hier die
           eingesetzten Anbieter konkret benennen (inkl. Links zu deren
           Datenschutzerklärungen, z. B. Google Ireland Limited und Meta Platforms Ireland
           Limited) und ggf. eine Auftragsverarbeitungsvereinbarung mit diesen Anbietern
-          abschließen.]
-        </em>
-      </p>
+          abschließen. */}
 
       <h2>5. Bewerbungsbogen für Coming-Home-Begleitungen</h2>
       <p>
@@ -148,13 +138,9 @@ export function Datenschutz() {
         Abmeldelink in jeder E-Mail widerrufen; die Rechtmäßigkeit der bis dahin erfolgten
         Verarbeitung bleibt davon unberührt.
       </p>
-      <p>
-        <em>
-          [Platzhalter: Sobald ein E-Mail-Marketing-Tool (z. B. Brevo, Mailchimp, CleverReach)
-          im Einsatz ist, hier Anbieter, Serverstandort und Verweis auf dessen
-          Datenschutzerklärung ergänzen.]
-        </em>
-      </p>
+      {/* Sobald ein E-Mail-Marketing-Tool (z. B. Brevo, Mailchimp, CleverReach) im
+          Einsatz ist, hier Anbieter, Serverstandort und Verweis auf dessen
+          Datenschutzerklärung ergänzen. */}
 
       <h2>8. Formularversand und internes Anfragen-System (CRM)</h2>
       <p>

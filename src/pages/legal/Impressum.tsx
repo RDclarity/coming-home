@@ -9,12 +9,6 @@ export function Impressum() {
       eyebrow="Rechtliches"
       title="Impressum"
       updated="21. August 2026"
-      source={
-        <>
-          Aufbau angelehnt an das Musterimpressum der Wirtschaftskammer Wien, Fachgruppe
-          Personenberatung und Personenbetreuung. Ersetzt keine Rechtsberatung.
-        </>
-      }
     >
       <p>
         Informationspflicht gemäß § 5 E-Commerce-Gesetz, § 14 Unternehmensgesetzbuch,

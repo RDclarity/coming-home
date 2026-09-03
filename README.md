@@ -217,9 +217,11 @@ Das Format passt zu Formspree, Basin, n8n, Make oder einer eigenen Function –
 gesendet wird `{ formType, …Felder }`, wobei `formType` `bewerbung`, `kontakt`
 oder `newsletter` ist.
 
-**Ohne gesetzten Endpoint** öffnet sich beim Absenden ein vorbereiteter
-E-Mail-Entwurf an `hallo@cominghome.de`. So geht nichts verloren, solange das
-Backend noch nicht steht – produktiv sollte aber ein echter Endpoint gesetzt sein.
+**Ohne gesetzten Endpoint** passiert nichts weiter außer dem CRM-Eintrag (siehe
+`lib/submitForm.ts`) – kein mailto-Popup mehr. Zusätzlich (unabhängig von
+`VITE_FORM_ENDPOINT`) lässt sich über `VITE_LEAD_NOTIFY_ENDPOINT` eine
+automatische E-Mail-Benachrichtigung an `anfrage@jasmindraxl.at` aktivieren,
+siehe `supabase/functions/notify-lead/`.
 
 ## Tracking (Google Analytics, Google Ads, Meta Pixel)
 
@@ -299,44 +301,34 @@ das passt zur „keine Heilbehandlung"-Formulierung, die die Seite ohnehin schon
 verwendet. Übt Jasmin daneben ein reglementiertes Gewerbe aus (z. B. Massage als
 medizinische Masseurin), muss das ergänzt werden.
 
-**Vor dem Livegang unbedingt erledigen:**
+**Einziger noch offener Punkt vor vollständiger rechtlicher Korrektheit:**
 
-1. In `src/data/legal.ts` alle `[Platzhalter: …]`-Werte durch die echten Angaben
-   ersetzen: vollständiger Name, Adresse, Telefonnummer, zuständige
-   Gewerbebehörde, Landesinnung. Ein Impressum mit falschen oder erfundenen
-   Angaben ist in Österreich ein Wettbewerbsverstoß (§ 5 ECG). Diese Platzhalter
-   fließen aktuell auch in das JSON-LD auf jeder Seite – dort werden sie
-   automatisch weggelassen, solange sie als `[Platzhalter: …]` erkennbar sind
-   (siehe `isPlaceholder()` in `scripts/prerender.mjs`), damit keine Fantasie-
-   Adresse an Suchmaschinen/KI-Systeme ausgeliefert wird.
-2. In `src/pages/legal/Datenschutz.tsx` den Hosting-Anbieter eintragen
-   (Abschnitt 2 – aktuell „GitHub Pages" nicht genannt, sollte ergänzt werden),
-   sowie den tatsächlichen Formular-Versandweg (Abschnitt 8).
-3. In `src/pages/legal/Agb.tsx` die Stornofrist (Abschnitt 6) und die
-   Zahlungsarten (Abschnitt 5) festlegen.
-4. Alle drei Seiten von einer Rechtsberatung gegenlesen lassen – das steht so
-   auch auf jeder Seite selbst, weil weder die WKO-Vorlagen noch diese daraus
-   abgeleiteten Texte eine Rechtsberatung ersetzen.
+In `src/data/legal.ts` fehlen noch die echten Angaben zur Person: vollständiger
+Name, Adresse, Telefonnummer, zuständige Gewerbebehörde, Landesinnung (aktuell
+`[Platzhalter: …]`). Ein Impressum mit falschen oder erfundenen Angaben ist in
+Österreich ein Wettbewerbsverstoß (§ 5 ECG) – deshalb wurden diese NICHT
+erfunden, sondern müssen von Jasmin selbst kommen. Diese Platzhalter fließen
+aktuell auch in das JSON-LD auf jeder Seite – dort werden sie automatisch
+weggelassen, solange sie als `[Platzhalter: …]` erkennbar sind (siehe
+`isPlaceholder()` in `scripts/prerender.mjs`), damit keine Fantasie-Adresse an
+Suchmaschinen/KI-Systeme ausgeliefert wird.
+
+Alle drei Rechtsseiten (Impressum, Datenschutz, AGB) sollten vor dem
+endgültigen Livegang trotzdem einmal von einer Rechtsberatung gegengelesen
+werden – die WKO-Vorlagen, an denen sie sich orientieren, ersetzen keine
+Rechtsberatung. Das steht bewusst nicht mehr direkt auf den Seiten selbst
+(interne Hinweise gehören nicht auf eine öffentliche Seite), sondern nur hier.
 
 ## Weitere offene Punkte
 
-- **E-Mail-Adresse**: `hallo@cominghome.de` ist aus der alten Seite übernommen.
 - **Instagram-Link** in `src/data/site.ts` zeigt noch auf die Profil-Startseite.
-- **Terminbuchung**: „Meinen Platz reservieren" führt aktuell zum Kontaktformular.
-- **FAQ-Antworten** waren auf der alten Seite leer und sind hier neu formuliert –
-  bitte fachlich gegenlesen.
-- **CRM-Backend**: seit `bau ein backend für die seite` erledigt – siehe
-  Abschnitt „CRM" oben, läuft über ein eigenes Supabase-Projekt. Offen bleibt
-  nur: Jasmins Login im Supabase-Dashboard anlegen (Anleitung ebenfalls oben).
+- **CRM-Backend**: läuft über ein eigenes Supabase-Projekt, siehe Abschnitt
+  „CRM" oben – erreichbar unter `/admin`. Offen bleibt nur: Jasmins Login im
+  Supabase-Dashboard anlegen (Anleitung ebenfalls oben).
 - **`llms.txt`**: wird nicht automatisch generiert, bei Preis-/Seitenänderungen
   von Hand nachziehen (`public/llms.txt`).
-- **Hintergrundmusik**: Player ist fertig (`src/components/MusicPlayer.tsx`,
-  Umschalter oben links), es fehlt nur die echte Audiodatei – siehe
-  `public/audio/README.md`. Ohne Datei bleibt der Button sichtbar, spielt
-  aber nichts ab (kein Fehler, nur leer).
-- **Preise auf Anfrage**: Nur das Tagesseminar (369 €) hat einen festen,
-  öffentlich genannten Preis. 1:1-Begleitung, 3-Monats- und Jahresbegleitung
-  sind absichtlich ohne Preis – wird im Kennenlerngespräch besprochen.
+- **Hintergrundmusik**: Player fertig, Audiodatei liegt vor
+  (`public/audio/theme.mp3`/`.m4a`).
 - **Englische Version**: noch nicht umgesetzt, angefragt aber wegen Umfang
   (200+ Textfelder, drei Rechtstexte) noch nicht begonnen – siehe Chat.
 - **Editor-Backend**: siehe Abschnitt „Text-Editor" oben – wie beim CRM

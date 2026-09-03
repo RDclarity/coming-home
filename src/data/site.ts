@@ -8,7 +8,7 @@ import { formatPrice, pricing } from './pricing'
 export const site = {
   brand: 'Coming Home',
   brandLong: 'Coming Home by Jasmin',
-  email: 'hallo@cominghome.de',
+  email: 'hallo@jasmindraxl.at',
   instagram: 'https://www.instagram.com/',
   claim: 'Coming Home – Körperbewusstsein und echte Verbindung.',
   ctaLabel: 'Kennenlerngespräch vereinbaren',
