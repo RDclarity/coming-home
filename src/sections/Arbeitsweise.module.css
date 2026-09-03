@@ -49,16 +49,16 @@
      (siehe Arbeitsweise.tsx) – eine zweite Animation auf derselben Property
      würde das überschreiben. Am Wrapper gibt es kein solches Inline-
      Transform, hier kann die Pulse-Animation also ungestört mitlaufen. */
-  animation: ringWrapBreathe 6s ease-in-out infinite;
+  animation: ringWrapBreathe 4.4s ease-in-out infinite;
 }
 
 @keyframes ringWrapBreathe {
   0%,
   100% {
-    transform: scale(1);
+    transform: scale(0.94);
   }
   50% {
-    transform: scale(1.035);
+    transform: scale(1.09);
   }
 }
 
