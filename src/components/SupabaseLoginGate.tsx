@@ -53,10 +53,7 @@ function LoginForm({ title }: { title: string }) {
       <form className={styles.gate} onSubmit={handleSubmit}>
         <span className={styles.badge}>Intern</span>
         <h1 className={styles.title}>{title}</h1>
-        <p className={styles.notice}>
-          Login für dein Coming-Home-Konto. Zugänge werden im Supabase-Dashboard verwaltet
-          (Authentication → Users).
-        </p>
+        <p className={styles.notice}>Login für dein Coming-Home-Konto.</p>
         <input
           className={styles.input}
           type="email"

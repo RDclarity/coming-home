@@ -30,7 +30,7 @@ export function Editor() {
       storageKey="coming-home:editor:unlocked"
       passphrase={INTERN_PASSPHRASE}
       title="Coming-Home-Texteditor"
-      notice="Nur ein Sichtschutz, keine echte Zugriffskontrolle – die Seite ist rein clientseitig."
+      notice="Interner Bereich."
     >
       <EditorDashboard />
     </InternGate>

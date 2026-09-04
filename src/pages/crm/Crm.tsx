@@ -34,7 +34,7 @@ export function Crm() {
       storageKey="coming-home:crm:unlocked"
       passphrase={INTERN_PASSPHRASE}
       title="Coming-Home-CRM"
-      notice="Nur ein Sichtschutz, keine echte Zugriffskontrolle – die Seite ist rein clientseitig. Für echten Zugriffsschutz braucht es später ein Backend."
+      notice="Interner Bereich."
     >
       <Dashboard />
     </InternGate>
@@ -61,8 +61,8 @@ function Dashboard() {
         <h1 className={styles.title}>Anfragen</h1>
         <p className={styles.notice}>
           {supabaseConfigured
-            ? 'Zentrale Übersicht über Supabase – Anfragen von jedem Gerät landen hier, unabhängig davon, wo diese Seite gerade geöffnet ist.'
-            : 'Kein Supabase konfiguriert: Diese Liste zeigt nur Anfragen, die auf diesem Gerät und in diesem Browser eingegangen sind (localStorage) – siehe Hinweis in src/crm/store.ts.'}
+            ? 'Alle eingehenden Anfragen aus den Formularen der Website, egal von welchem Gerät aus sie abgeschickt wurden.'
+            : 'Diese Ansicht zeigt nur Anfragen, die auf diesem Gerät eingegangen sind.'}
         </p>
 
         <div className={styles.toolbar}>
