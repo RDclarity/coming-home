@@ -5,7 +5,7 @@ import styles from './FuerWen.module.css'
 
 export function FuerWen() {
   return (
-    <section className={styles.sec}>
+    <section id="fuer-wen" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.head}>
           <Eyebrow>{fuerWen.eyebrow}</Eyebrow>

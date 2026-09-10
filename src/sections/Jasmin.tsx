@@ -7,7 +7,7 @@ import styles from './Jasmin.module.css'
 
 export function Jasmin() {
   return (
-    <section className={styles.sec}>
+    <section id="jasmin" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.media}>
           <div className={styles.frame}>

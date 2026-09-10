@@ -6,7 +6,7 @@ import styles from './Abschluss.module.css'
 
 export function Abschluss() {
   return (
-    <section className={styles.sec}>
+    <section id="abschluss" className={styles.sec}>
       {/* Hintergrundbild als Inline-Style statt CSS url() – ein "/"-Pfad in
           .module.css würde den GitHub-Pages-Unterpfad nicht mitbekommen. */}
       <div

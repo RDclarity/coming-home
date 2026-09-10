@@ -37,7 +37,7 @@ export function Arbeitsweise() {
   const { ref, progress } = useScrollProgress<HTMLDivElement>()
 
   return (
-    <section className={styles.sec}>
+    <section id="arbeitsweise" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.head}>
           <Eyebrow align="center">{arbeitsweise.eyebrow}</Eyebrow>

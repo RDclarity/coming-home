@@ -6,7 +6,7 @@ import styles from './Orientierung.module.css'
 
 export function Orientierung() {
   return (
-    <section className={styles.sec}>
+    <section id="orientierung" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.head}>
           <Eyebrow>{orientierung.eyebrow}</Eyebrow>

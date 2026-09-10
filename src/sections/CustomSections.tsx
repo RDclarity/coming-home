@@ -15,7 +15,7 @@ export function CustomSections() {
       {customSections.map((section) => {
         if (section.blockType === 'quote') {
           return (
-            <section key={section.id} className={styles.quoteSec}>
+            <section key={section.id} id={`bereich-${section.id}`} className={styles.quoteSec}>
               <Reveal className={styles.quoteInner}>
                 <p className={styles.quoteText}>„{section.content.quote}"</p>
                 {section.content.attribution && (
@@ -28,7 +28,7 @@ export function CustomSections() {
 
         if (section.blockType === 'image_text') {
           return (
-            <section key={section.id} className={styles.imageTextSec}>
+            <section key={section.id} id={`bereich-${section.id}`} className={styles.imageTextSec}>
               <div className={styles.imageTextInner}>
                 {section.content.imageUrl && (
                   <Reveal className={styles.imageWrap}>
@@ -46,7 +46,7 @@ export function CustomSections() {
 
         // 'text'
         return (
-          <section key={section.id} className={styles.textSec}>
+          <section key={section.id} id={`bereich-${section.id}`} className={styles.textSec}>
             <Reveal className={styles.textInner}>
               {section.content.heading && <h2 className={styles.heading}>{section.content.heading}</h2>}
               <p className={styles.body}>{section.content.body}</p>

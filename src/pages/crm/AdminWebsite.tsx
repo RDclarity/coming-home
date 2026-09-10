@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   createCustomSection,
   deleteCustomSection,
@@ -77,6 +77,41 @@ function groupLabel(key: string): string {
   return SITE_SECTION_LABELS[raw] ?? raw
 }
 
+// Welche id auf der echten Website zu welchem site.ts-Export gehört (siehe
+// die jeweiligen <section id="..."> in src/sections/*.tsx) – damit die
+// Vorschau beim Öffnen einer Gruppe zur passenden Stelle springen kann.
+const SITE_SECTION_ANCHOR: Record<string, string> = {
+  site: 'coming-home',
+  navLinks: 'coming-home',
+  hero: 'coming-home',
+  ankommen: 'ankommen',
+  jasmin: 'jasmin',
+  orientierung: 'orientierung',
+  reise: 'dein-weg',
+  ueberJasmin: 'ueber-jasmin',
+  arbeitsweise: 'arbeitsweise',
+  fuerWen: 'fuer-wen',
+  bewerbung: 'kennenlernen',
+  faq: 'faq',
+  termine: 'termine',
+  newsletter: 'audiouebung',
+  abschluss: 'abschluss',
+  kontakt: 'kontakt',
+}
+
+/** Wohin die Vorschau springen soll, wenn diese Gruppe geöffnet wird. */
+function targetForGroup(key: string): { path: string; hash?: string } {
+  if (key.startsWith('services:')) {
+    const service = servicesModule.services[Number(key.slice(9))]
+    return { path: service ? `/begleitung/${service.slug}` : '/' }
+  }
+  if (key.startsWith('articles:')) {
+    const article = articlesModule.articles[Number(key.slice(9))]
+    return { path: article ? `/ratgeber/${article.slug}` : '/' }
+  }
+  return { path: '/', hash: SITE_SECTION_ANCHOR[key.slice(5)] }
+}
+
 /**
  * Website-Editor: Texte der ganzen Seite (Startseite, Begleitungen,
  * Ratgeber-Artikel) bearbeiten, neue Bereiche aus fertigen Bausteinen
@@ -89,6 +124,36 @@ export function AdminWebsite() {
   const [publishing, setPublishing] = useState(false)
   const [publishResult, setPublishResult] = useState<string | null>(null)
   const [zeigeVorschau, setZeigeVorschau] = useState(true)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+
+  /**
+   * Springt in der Vorschau zur passenden Stelle. Vorschau und Backend
+   * laufen auf derselben Domain (jasmindraxl.at) – deshalb "same origin"
+   * und per JS direkt ansprechbar: liegt das Ziel auf derselben Seite, wird
+   * nur dorthin gescrollt (kein Neuladen); nur beim Wechsel auf eine andere
+   * Seite (z. B. eine andere Begleitung) lädt die Vorschau neu.
+   */
+  function jumpTo(path: string, hash?: string) {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    try {
+      const win = iframe.contentWindow
+      if (win && win.location.pathname === path) {
+        if (!hash) {
+          win.scrollTo({ top: 0, behavior: 'smooth' })
+          return
+        }
+        const el = win.document.getElementById(hash)
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          return
+        }
+      }
+    } catch {
+      // Vorschau lädt noch / anderer Zustand – dann einfach neu laden (unten).
+    }
+    iframe.src = `https://jasmindraxl.at${path}${hash ? `#${hash}` : ''}`
+  }
 
   async function handlePublish() {
     setPublishing(true)
@@ -154,15 +219,16 @@ export function AdminWebsite() {
       </p>
 
       <div className={zeigeVorschau ? styles.mitVorschau : undefined}>
-        <div>{tab === 'texte' ? <TextEditor /> : <BereicheEditor />}</div>
+        <div>{tab === 'texte' ? <TextEditor onJump={jumpTo} /> : <BereicheEditor onJump={jumpTo} />}</div>
 
         {zeigeVorschau && (
           <div className={styles.vorschauSpalte}>
             <p className={styles.vorschauLabel}>
               Aktuell live (deine letzten Änderungen erscheinen hier erst, sobald automatisch neu
-              gebaut wurde – spätestens nach 15 Minuten)
+              gebaut wurde – spätestens nach 15 Minuten). Springt automatisch zur Stelle, die du
+              gerade bearbeitest.
             </p>
-            <iframe className={styles.vorschauFrame} src="https://jasmindraxl.at/" title="Aktuelle Website" />
+            <iframe ref={iframeRef} className={styles.vorschauFrame} src="https://jasmindraxl.at/" title="Aktuelle Website" />
           </div>
         )}
       </div>
@@ -174,7 +240,7 @@ export function AdminWebsite() {
 // Texte
 // ---------------------------------------------------------------------------
 
-function TextEditor() {
+function TextEditor({ onJump }: { onJump: (path: string, hash?: string) => void }) {
   const [overrides, setOverrides] = useState<Record<string, string>>({})
   const [laden, setLaden] = useState(true)
   const [search, setSearch] = useState('')
@@ -236,7 +302,11 @@ function TextEditor() {
             <button
               type="button"
               className={styles.gruppenKopf}
-              onClick={() => setOffeneGruppe((g) => (g === key ? null : key))}
+              onClick={() => {
+                setOffeneGruppe((g) => (g === key ? null : key))
+                const target = targetForGroup(key)
+                onJump(target.path, target.hash)
+              }}
             >
               <span>{groupLabel(key)}</span>
               <span className={styles.gruppenMeta}>{fields.length} Felder</span>
@@ -338,7 +408,7 @@ const BLOCK_TYPE_LABEL: Record<CustomSectionBlockType, string> = {
   quote: 'Zitat',
 }
 
-function BereicheEditor() {
+function BereicheEditor({ onJump }: { onJump: (path: string, hash?: string) => void }) {
   const [sections, setSections] = useState<CustomSection[]>([])
   const [laden, setLaden] = useState(true)
 
@@ -390,6 +460,7 @@ function BereicheEditor() {
             onDelete={() => handleDelete(section.id)}
             onMoveUp={index > 0 ? () => handleMove(section.id, 'up') : undefined}
             onMoveDown={index < sections.length - 1 ? () => handleMove(section.id, 'down') : undefined}
+            onJump={onJump}
           />
         ))}
       </div>
@@ -411,12 +482,14 @@ function BereichEditor({
   onDelete,
   onMoveUp,
   onMoveDown,
+  onJump,
 }: {
   section: CustomSection
   onSaved: () => void
   onDelete: () => void
   onMoveUp?: () => void
   onMoveDown?: () => void
+  onJump: (path: string, hash?: string) => void
 }) {
   const [content, setContent] = useState(section.content)
   const [hochladen, setHochladen] = useState(false)
@@ -441,7 +514,7 @@ function BereichEditor({
   }
 
   return (
-    <div className={styles.gruppe}>
+    <div className={styles.gruppe} onFocus={() => onJump('/', `bereich-${section.id}`)}>
       <div className={styles.bereichKopf}>
         <span className={styles.gruppenMeta}>{BLOCK_TYPE_LABEL[section.blockType]}</span>
         <div className={styles.bereichAktionen}>

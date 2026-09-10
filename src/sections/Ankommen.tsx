@@ -5,7 +5,7 @@ import styles from './Ankommen.module.css'
 
 export function Ankommen() {
   return (
-    <section className={styles.sec}>
+    <section id="ankommen" className={styles.sec}>
       <div className={styles.inner}>
         <div className={styles.textBlock}>
           <Reveal>
