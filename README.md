@@ -273,12 +273,41 @@ ist das bewusst ein optionaler Schritt für später und keine Voraussetzung
 `articles` in einzelne Felder, wie schon der frühere lokale Editor) – nach
 Abschnitt gruppiert, mit Suche. Speichert beim Verlassen eines Feldes.
 
-**Fotos:** aktuell nur für neu hinzugefügte Bereiche (Baustein „Bild mit
-Text") möglich – die bestehenden Fotos auf der Seite (Hero, Jasmin-Porträt
-usw.) sind noch direkt im Code der jeweiligen Sektion verdrahtet, nicht über
-`site.ts` steuerbar. Die umzustellen, damit auch sie im Editor austauschbar
-werden, wäre ein separater, größerer Umbau – sag Bescheid, falls das als
-Nächstes sinnvoll ist.
+**Vorschau springt automatisch mit** (nach WordPress-Recherche umgesetzt,
+siehe Chat): Öffnet man eine Gruppe, springt die Live-Vorschau rechts zur
+passenden Stelle – bei Begleitungen/Artikeln auf die jeweilige Unterseite,
+bei Startseiten-Abschnitten direkt dorthin gescrollt (`jumpTo()` in
+`AdminWebsite.tsx`, nutzt aus, dass Backend und Vorschau live auf derselben
+Domain laufen).
+
+**Live-Tipp-Vorschau** (nach dem Vorbild von WordPress' Customizer-
+„postMessage"-Technik): Während man in einem Feld tippt, ändert sich der
+Text schon in der Vorschau – VOR dem Speichern. Sucht dafür im Bereich der
+aktuellen Sektion nach dem exakten Original-Text und ersetzt genau diesen
+(`liveType()` in `AdminWebsite.tsx`). Findet er den Text nicht mehr 1:1
+(z. B. weil er schon anders lautet), passiert einfach nichts – reines
+Komfort-Extra, die eigentliche Speicherung läuft unabhängig davon normal
+weiter.
+
+**Verlauf:** Die 🕓-Schaltfläche neben jedem Feld zeigt die letzten fünf
+eigenen Versionen (nicht nur den Original-Text im Code) mit Zeitstempel und
+„Wiederherstellen"-Knopf. Vor jedem Überschreiben eines Feldes wird der
+bisherige Wert automatisch in `content_override_history` gesichert (siehe
+`saveOverride()` in `cms/api.ts` und Migration
+`00000000000006_content_override_history.sql`).
+
+**Foto-Bibliothek:** Beim Baustein „Bild mit Text" gibt es neben dem Upload
+jetzt auch „Vorhandenes Foto wählen" – zeigt alle bisher hochgeladenen
+Fotos aus dem `site-images`-Bucket zur Wiederverwendung, statt jedes Mal neu
+hochzuladen (`fetchSiteImages()` in `cms/api.ts`).
+
+**Fotos generell:** Foto-Auswahl (Upload + Bibliothek) geht aktuell nur für
+neu hinzugefügte Bereiche (Baustein „Bild mit Text") – die bestehenden
+Fotos auf der Seite (Hero, Jasmin-Porträt usw.) sind noch direkt im Code
+der jeweiligen Sektion verdrahtet, nicht über `site.ts` steuerbar. Die
+umzustellen, damit auch sie im Editor austauschbar werden, wäre ein
+separater, größerer Umbau – sag Bescheid, falls das als Nächstes sinnvoll
+ist.
 
 **Bereiche/„Abteilungen":** feste Bausteine (Text mit Überschrift, Bild mit
 Text, Zitat) statt freiem Seitenaufbau – bewusst so entschieden, damit neue

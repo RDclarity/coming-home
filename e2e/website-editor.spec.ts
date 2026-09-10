@@ -53,3 +53,72 @@ test('Backend: Gruppe öffnen lässt die Vorschau zur passenden Stelle springen'
   await page.getByRole('button', { name: /^Begleitung: Individuelle 1:1 Session/ }).click()
   await expect(vorschau).toHaveAttribute('src', 'https://jasmindraxl.at/begleitung/1-1-begleitung')
 })
+
+test('Backend: Verlauf zeigt frühere Versionen eines Felds und stellt sie wieder her', async ({ page }) => {
+  await mockSupabaseAuth(page, 'success')
+  await page.route('**/rest/v1/content_overrides**', (route) => {
+    if (route.request().method() === 'GET') {
+      return route.fulfill({ status: 200, contentType: 'application/json', body: '[]' })
+    }
+    return route.fulfill({ status: 201, contentType: 'application/json', body: '[]' })
+  })
+  await page.route('**/rest/v1/content_override_history**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify([{ value: 'Ältere Version des Texts', created_at: new Date().toISOString() }]),
+    }),
+  )
+  await page.goto('/admin')
+
+  await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
+  await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
+  await page.getByRole('button', { name: 'Anmelden' }).click()
+  await page.getByRole('button', { name: 'Website', exact: true }).click()
+  await page.getByRole('button', { name: 'Startseite – Hero' }).click()
+
+  await page.getByTitle('Verlauf').first().click()
+  await expect(page.getByText('Ältere Version des Texts')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Wiederherstellen' }).click()
+  await expect(page.locator('textarea').first()).toHaveValue('Ältere Version des Texts')
+})
+
+test('Backend: Foto-Bibliothek zeigt vorhandene Fotos zur Wiederverwendung', async ({ page }) => {
+  await mockSupabaseAuth(page, 'success')
+  await page.route('**/rest/v1/custom_sections**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify([
+        {
+          id: 'test-section-1',
+          block_type: 'image_text',
+          sort_order: 0,
+          content: { heading: 'Testüberschrift', body: 'Testtext' },
+        },
+      ]),
+    }),
+  )
+  await page.route('**/storage/v1/object/list/site-images**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify([
+        { name: 'foto-1.jpg', id: '1', created_at: new Date().toISOString() },
+      ]),
+    }),
+  )
+  await page.goto('/admin')
+
+  await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
+  await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
+  await page.getByRole('button', { name: 'Anmelden' }).click()
+  await page.getByRole('button', { name: 'Website', exact: true }).click()
+  await page.getByRole('button', { name: 'Bereiche', exact: true }).click()
+
+  await expect(page.getByPlaceholder('Überschrift (optional)')).toHaveValue('Testüberschrift')
+  await page.getByRole('button', { name: 'Vorhandenes Foto wählen' }).click()
+
+  await expect(page.getByTitle('foto-1.jpg')).toBeVisible()
+})

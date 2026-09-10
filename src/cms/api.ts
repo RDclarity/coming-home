@@ -28,6 +28,20 @@ export async function fetchOverrides(): Promise<Record<string, string>> {
 
 export async function saveOverride(path: string, value: string): Promise<void> {
   const c = await client()
+
+  // Verlauf: bisherigen Wert (egal ob eigene Überschreibung oder das erste
+  // Mal) VOR dem Überschreiben wegsichern, damit "Verlauf" später auch zu
+  // einer eigenen vorherigen Version zurück kann, nicht nur zum Original
+  // im Code. Darf das eigentliche Speichern nie verhindern.
+  try {
+    const { data: bestehend } = await c.from('content_overrides').select('value').eq('path', path).maybeSingle()
+    if (bestehend) {
+      await c.from('content_override_history').insert({ path, value: bestehend.value })
+    }
+  } catch {
+    // Verlauf ist ein Zusatznutzen, kein kritischer Pfad.
+  }
+
   const { error } = await c
     .from('content_overrides')
     .upsert({ path, value, updated_at: new Date().toISOString() }, { onConflict: 'path' })
@@ -39,6 +53,19 @@ export async function resetOverride(path: string): Promise<void> {
   const c = await client()
   const { error } = await c.from('content_overrides').delete().eq('path', path)
   if (error) throw error
+}
+
+/** Die letzten eigenen Versionen eines Feldes, neueste zuerst. */
+export async function fetchOverrideHistory(path: string, limit = 5): Promise<{ value: string; createdAt: string }[]> {
+  const c = await client()
+  const { data, error } = await c
+    .from('content_override_history')
+    .select('value, created_at')
+    .eq('path', path)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+  if (error) throw error
+  return (data ?? []).map((row) => ({ value: row.value, createdAt: row.created_at }))
 }
 
 // ---------------------------------------------------------------------------
@@ -53,6 +80,25 @@ export async function uploadSiteImage(file: File): Promise<string> {
   const upload = await c.storage.from('site-images').upload(path, file)
   if (upload.error) throw upload.error
   return c.storage.from('site-images').getPublicUrl(path).data.publicUrl
+}
+
+export type SiteImage = { path: string; url: string; createdAt: string }
+
+/** Alle bisher hochgeladenen Fotos – für die Foto-Bibliothek (schon
+ * hochgeladene Bilder wiederverwenden statt jedes Mal neu hochzuladen). */
+export async function fetchSiteImages(): Promise<SiteImage[]> {
+  const c = await client()
+  const { data, error } = await c.storage.from('site-images').list('', {
+    sortBy: { column: 'created_at', order: 'desc' },
+  })
+  if (error) throw error
+  return (data ?? [])
+    .filter((entry) => entry.name && entry.id) // Ordner-Platzhalter rausfiltern
+    .map((entry) => ({
+      path: entry.name,
+      url: c.storage.from('site-images').getPublicUrl(entry.name).data.publicUrl,
+      createdAt: entry.created_at ?? '',
+    }))
 }
 
 // ---------------------------------------------------------------------------

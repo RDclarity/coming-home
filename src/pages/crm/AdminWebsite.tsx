@@ -3,13 +3,16 @@ import {
   createCustomSection,
   deleteCustomSection,
   fetchCustomSections,
+  fetchOverrideHistory,
   fetchOverrides,
+  fetchSiteImages,
   moveCustomSection,
   publish,
   resetOverride,
   saveOverride,
   updateCustomSectionContent,
   uploadSiteImage,
+  type SiteImage,
 } from '../../cms/api'
 import { flattenToFields, type EditableField } from '../../cms/flatten'
 import * as articlesModule from '../../data/articles'
@@ -155,6 +158,37 @@ export function AdminWebsite() {
     iframe.src = `https://jasmindraxl.at${path}${hash ? `#${hash}` : ''}`
   }
 
+  /**
+   * Live-Tipp-Vorschau (nach dem Vorbild von WordPress' Customizer-
+   * "postMessage"-Technik, siehe README): schreibt den gerade getippten Text
+   * direkt in die Vorschau, noch BEVOR gespeichert wird. Sucht dafür im
+   * Bereich der aktuellen Sektion (bzw. auf der ganzen Seite, wenn es keine
+   * Sektions-ID gibt, z. B. bei Begleitungen/Artikeln) nach dem exakten
+   * Original-Text und ersetzt genau diesen Textknoten. Findet sich der
+   * Original-Text nicht mehr 1:1 (z. B. weil er schon anders überschrieben
+   * wurde), passiert einfach nichts – reines Komfort-Extra, kein
+   * kritischer Pfad, die eigentliche Speicherung läuft unabhängig davon.
+   */
+  function liveType(hash: string | undefined, originalValue: string, newValue: string) {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    try {
+      const doc = iframe.contentWindow?.document
+      if (!doc) return
+      const root = (hash && doc.getElementById(hash)) || doc.body
+      const walker = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+      let node: Text | null
+      while ((node = walker.nextNode() as Text | null)) {
+        if (node.textContent === originalValue) {
+          node.textContent = newValue
+          return
+        }
+      }
+    } catch {
+      // Vorschau (noch) nicht auf der richtigen Seite geladen – kein Problem.
+    }
+  }
+
   async function handlePublish() {
     setPublishing(true)
     setPublishResult(null)
@@ -219,7 +253,13 @@ export function AdminWebsite() {
       </p>
 
       <div className={zeigeVorschau ? styles.mitVorschau : undefined}>
-        <div>{tab === 'texte' ? <TextEditor onJump={jumpTo} /> : <BereicheEditor onJump={jumpTo} />}</div>
+        <div>
+          {tab === 'texte' ? (
+            <TextEditor onJump={jumpTo} onLiveType={liveType} />
+          ) : (
+            <BereicheEditor onJump={jumpTo} />
+          )}
+        </div>
 
         {zeigeVorschau && (
           <div className={styles.vorschauSpalte}>
@@ -240,7 +280,13 @@ export function AdminWebsite() {
 // Texte
 // ---------------------------------------------------------------------------
 
-function TextEditor({ onJump }: { onJump: (path: string, hash?: string) => void }) {
+function TextEditor({
+  onJump,
+  onLiveType,
+}: {
+  onJump: (path: string, hash?: string) => void
+  onLiveType: (hash: string | undefined, originalValue: string, newValue: string) => void
+}) {
   const [overrides, setOverrides] = useState<Record<string, string>>({})
   const [laden, setLaden] = useState(true)
   const [search, setSearch] = useState('')
@@ -297,35 +343,38 @@ function TextEditor({ onJump }: { onJump: (path: string, hash?: string) => void 
       />
 
       <div className={styles.gruppenListe}>
-        {groups.map(([key, fields]) => (
-          <div key={key} className={styles.gruppe}>
-            <button
-              type="button"
-              className={styles.gruppenKopf}
-              onClick={() => {
-                setOffeneGruppe((g) => (g === key ? null : key))
-                const target = targetForGroup(key)
-                onJump(target.path, target.hash)
-              }}
-            >
-              <span>{groupLabel(key)}</span>
-              <span className={styles.gruppenMeta}>{fields.length} Felder</span>
-            </button>
-            {(offeneGruppe === key || search.trim() !== '') && (
-              <div className={styles.gruppenInhalt}>
-                {fields.map((field) => (
-                  <FieldRow
-                    key={field.path}
-                    field={field}
-                    overrideValue={overrides[field.path]}
-                    onSaved={handleSaved}
-                    onReset={handleReset}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+        {groups.map(([key, fields]) => {
+          const target = targetForGroup(key)
+          return (
+            <div key={key} className={styles.gruppe}>
+              <button
+                type="button"
+                className={styles.gruppenKopf}
+                onClick={() => {
+                  setOffeneGruppe((g) => (g === key ? null : key))
+                  onJump(target.path, target.hash)
+                }}
+              >
+                <span>{groupLabel(key)}</span>
+                <span className={styles.gruppenMeta}>{fields.length} Felder</span>
+              </button>
+              {(offeneGruppe === key || search.trim() !== '') && (
+                <div className={styles.gruppenInhalt}>
+                  {fields.map((field) => (
+                    <FieldRow
+                      key={field.path}
+                      field={field}
+                      overrideValue={overrides[field.path]}
+                      onSaved={handleSaved}
+                      onReset={handleReset}
+                      onLiveType={(newValue) => onLiveType(target.hash, field.value, newValue)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -336,15 +385,18 @@ function FieldRow({
   overrideValue,
   onSaved,
   onReset,
+  onLiveType,
 }: {
   field: EditableField
   overrideValue: string | undefined
   onSaved: (path: string, value: string) => void
   onReset: (path: string) => void
+  onLiveType: (newValue: string) => void
 }) {
   const currentValue = overrideValue ?? field.value
   const [value, setValue] = useState(currentValue)
   const [speichert, setSpeichert] = useState(false)
+  const [verlauf, setVerlauf] = useState<{ value: string; createdAt: string }[] | null>(null)
   const isEdited = overrideValue !== undefined && overrideValue !== field.value
 
   useEffect(() => setValue(currentValue), [currentValue])
@@ -367,10 +419,37 @@ function FieldRow({
 
   async function handleReset() {
     setValue(field.value)
+    onLiveType(field.value)
     setSpeichert(true)
     try {
       await resetOverride(field.path)
       onReset(field.path)
+    } finally {
+      setSpeichert(false)
+    }
+  }
+
+  async function toggleVerlauf() {
+    if (verlauf) {
+      setVerlauf(null)
+      return
+    }
+    setVerlauf(await fetchOverrideHistory(field.path))
+  }
+
+  async function wiederherstellen(alterWert: string) {
+    setValue(alterWert)
+    onLiveType(alterWert)
+    setVerlauf(null)
+    setSpeichert(true)
+    try {
+      if (alterWert === field.value) {
+        await resetOverride(field.path)
+        onReset(field.path)
+      } else {
+        await saveOverride(field.path, alterWert)
+        onSaved(field.path, alterWert)
+      }
     } finally {
       setSpeichert(false)
     }
@@ -383,17 +462,39 @@ function FieldRow({
         <textarea
           className={styles.feldInput}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            setValue(e.target.value)
+            onLiveType(e.target.value)
+          }}
           onBlur={handleBlur}
           rows={value.length > 80 ? 3 : 1}
         />
         {isEdited && (
-          <button type="button" className={styles.resetBtn} onClick={handleReset} title="Zurücksetzen">
+          <button type="button" className={styles.resetBtn} onClick={handleReset} title="Auf Original zurücksetzen">
             ↺
           </button>
         )}
+        <button type="button" className={styles.resetBtn} onClick={toggleVerlauf} title="Verlauf">
+          🕓
+        </button>
         {speichert && <span className={styles.speichertHinweis}>speichert …</span>}
       </div>
+      {verlauf && (
+        <div className={styles.verlaufListe}>
+          {verlauf.length === 0 && <p className={styles.verlaufLeer}>Noch keine früheren Versionen.</p>}
+          {verlauf.map((eintrag, i) => (
+            <div key={i} className={styles.verlaufEintrag}>
+              <span className={styles.verlaufText}>{eintrag.value}</span>
+              <span className={styles.verlaufDatum}>
+                {new Date(eintrag.createdAt).toLocaleString('de-AT', { dateStyle: 'short', timeStyle: 'short' })}
+              </span>
+              <button type="button" className={styles.filterBtn} onClick={() => wiederherstellen(eintrag.value)}>
+                Wiederherstellen
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -493,6 +594,7 @@ function BereichEditor({
 }) {
   const [content, setContent] = useState(section.content)
   const [hochladen, setHochladen] = useState(false)
+  const [bibliothek, setBibliothek] = useState<SiteImage[] | null>(null)
 
   useEffect(() => setContent(section.content), [section])
 
@@ -511,6 +613,14 @@ function BereichEditor({
     } finally {
       setHochladen(false)
     }
+  }
+
+  async function toggleBibliothek() {
+    if (bibliothek) {
+      setBibliothek(null)
+      return
+    }
+    setBibliothek(await fetchSiteImages())
   }
 
   return (
@@ -572,13 +682,39 @@ function BereichEditor({
             {section.blockType === 'image_text' && (
               <div className={styles.bildFeld}>
                 {content.imageUrl && <img className={styles.bildVorschau} src={content.imageUrl} alt="" />}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleBild(e.target.files?.[0] ?? null)}
-                  disabled={hochladen}
-                />
-                {hochladen && <span className={styles.speichertHinweis}>lädt hoch …</span>}
+                <div className={styles.bildAktionen}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleBild(e.target.files?.[0] ?? null)}
+                    disabled={hochladen}
+                  />
+                  <button type="button" className={styles.filterBtn} onClick={toggleBibliothek}>
+                    {bibliothek ? 'Bibliothek schließen' : 'Vorhandenes Foto wählen'}
+                  </button>
+                  {hochladen && <span className={styles.speichertHinweis}>lädt hoch …</span>}
+                </div>
+                {bibliothek && (
+                  <div className={styles.fotoBibliothek}>
+                    {bibliothek.length === 0 && (
+                      <p className={styles.verlaufLeer}>Noch keine Fotos hochgeladen.</p>
+                    )}
+                    {bibliothek.map((foto) => (
+                      <button
+                        key={foto.path}
+                        type="button"
+                        className={styles.fotoKachel}
+                        onClick={() => {
+                          speichern({ ...content, imageUrl: foto.url })
+                          setBibliothek(null)
+                        }}
+                        title={foto.path}
+                      >
+                        <img src={foto.url} alt="" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </>
