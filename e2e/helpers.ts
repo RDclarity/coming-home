@@ -1,4 +1,23 @@
-import type { Page } from '@playwright/test'
+import { test as base, type Page } from '@playwright/test'
+
+/**
+ * Eigene `test`-Instanz statt der aus `@playwright/test` direkt – fängt für
+ * JEDEN Test automatisch die Seitenaufruf-Statistik ab (siehe
+ * lib/analytics.ts, wird bei jeder Navigation ausgelöst, nicht nur auf
+ * CRM-Seiten). Ohne das würde jeder Testlauf echte, sinnlose Zeilen in
+ * Jasmins Live-Statistik hinterlassen – jeder Spec-File importiert deshalb
+ * `test`/`expect` von hier statt direkt von `@playwright/test`.
+ */
+export const test = base.extend({
+  page: async ({ page }, use) => {
+    await page.route('**/rest/v1/page_views**', (route) => {
+      const status = route.request().method() === 'POST' ? 201 : 200
+      return route.fulfill({ status, contentType: 'application/json', body: '[]' })
+    })
+    await use(page)
+  },
+})
+export { expect } from '@playwright/test'
 
 /**
  * Fängt Supabase-Netzwerk-Requests ab, damit Tests NIE echte Daten in Jasmins

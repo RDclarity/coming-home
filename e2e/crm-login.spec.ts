@@ -1,5 +1,4 @@
-import { expect, test } from '@playwright/test'
-import { mockSupabaseAuth } from './helpers'
+import { expect, mockSupabaseAuth, test } from './helpers'
 
 /**
  * /admin ist nicht vorgerendert (siehe scripts/prerender.mjs) und wird
@@ -31,7 +30,7 @@ test('CRM: falsches Passwort zeigt Fehlermeldung, kein Zugriff', async ({ page }
   await page.getByRole('button', { name: 'Anmelden' }).click()
 
   await expect(page.getByText(/invalid login credentials/i)).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Anfragen' })).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'Coming-Home-Backend' })).toHaveCount(0)
 })
 
 test('CRM: erfolgreicher Login zeigt das Dashboard', async ({ page }) => {
@@ -42,8 +41,26 @@ test('CRM: erfolgreicher Login zeigt das Dashboard', async ({ page }) => {
   await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
   await page.getByRole('button', { name: 'Anmelden' }).click()
 
-  await expect(page.getByRole('heading', { name: 'Anfragen' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Coming-Home-Backend' })).toBeVisible()
   // Gemockte Antwort liefert bewusst 0 Leads – Leer-/Loading-Zustand aus
   // Phase 4 (crmStore.isLoading()) muss sich korrekt auflösen.
   await expect(page.getByText('Keine Anfragen in dieser Ansicht.')).toBeVisible()
+})
+
+test('CRM: Statistik-Tab zeigt die Besucherstatistik', async ({ page }) => {
+  await mockSupabaseAuth(page, 'success')
+  await page.goto('/admin')
+
+  await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
+  await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
+  await page.getByRole('button', { name: 'Anmelden' }).click()
+  await expect(page.getByRole('heading', { name: 'Coming-Home-Backend' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Statistik', exact: true }).click()
+
+  // Gemockte page_views-Antwort liefert bewusst 0 Zeilen (siehe helpers.ts) –
+  // Kennzahlen und Leerzustand müssen trotzdem sauber rendern, kein Absturz.
+  await expect(page.getByText('Seitenaufrufe')).toBeVisible()
+  await expect(page.getByText('Besucher (eindeutige Sitzungen)')).toBeVisible()
+  await expect(page.getByText('Noch keine Besuchsdaten im gewählten Zeitraum.')).toBeVisible()
 })

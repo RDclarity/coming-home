@@ -182,7 +182,21 @@ Ist kein Supabase konfiguriert (z. B. in einer lokalen Vorschau ohne `.env`),
 gilt weiterhin nur der alte Passphrase-Sichtschutz
 („cominghome2026", in `src/lib/internAuth.ts` änderbar) – **keine echte
 Zugriffskontrolle**, weil eine rein statische Seite ohne Backend keine
-serverseitige Prüfung machen kann. Das steht auch so auf der Seite selbst.
+serverseitige Prüfung machen kann.
+
+**Eigene Ansicht ohne Website-Chrome:** `/admin` (und `/intern/*`) bekommen in
+`App.tsx` bewusst kein Nav, Footer, Musikplayer oder Cookie-Banner – wer sich
+dort einloggt, sieht ausschließlich das Backend, nicht die Marketing-Seite
+drumherum.
+
+**Besucherstatistik (Tab „Statistik" im Backend):** Zeigt Seitenaufrufe,
+eindeutige Besucher, Geräte- und Quellenverteilung (woher die Besucher:innen
+kommen – Suchmaschine, Social Media, Direktaufruf …) sowie die meistbesuchten
+Seiten. Komplett anonym und ohne externen Dienst, siehe Kommentar in
+`src/lib/analytics.ts` für die Details. Landet in einer eigenen Tabelle
+(`supabase/migrations/00000000000002_page_views.sql`), gleiches
+Sicherheitsmodell wie bei `leads`: `anon` darf nur einfügen, nur ein
+eingeloggter Account darf auswerten.
 
 ## Text-Editor (lokal, noch ohne Backend)
 

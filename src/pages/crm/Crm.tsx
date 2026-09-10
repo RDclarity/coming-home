@@ -5,7 +5,10 @@ import { crmStore } from '../../crm/store'
 import { supabaseConfigured } from '../../crm/supabaseClient'
 import { LEAD_SOURCE_LABELS, LEAD_STATUS_LABELS, type Lead, type LeadStatus } from '../../crm/types'
 import { INTERN_PASSPHRASE } from '../../lib/internAuth'
+import { Statistik } from './Statistik'
 import styles from './Crm.module.css'
+
+type Tab = 'anfragen' | 'statistik'
 
 const STATUS_ORDER: LeadStatus[] = ['neu', 'kontaktiert', 'gebucht', 'abgeschlossen', 'abgesagt']
 
@@ -44,6 +47,7 @@ export function Crm() {
 function Dashboard() {
   const leads = useLeads()
   const isLoading = useCrmLoading()
+  const [tab, setTab] = useState<Tab>('anfragen')
   const [statusFilter, setStatusFilter] = useState<LeadStatus | 'alle'>('alle')
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
@@ -58,77 +62,101 @@ function Dashboard() {
     <section className={styles.sec}>
       <div className={styles.inner}>
         <span className={styles.badge}>Intern</span>
-        <h1 className={styles.title}>Anfragen</h1>
-        <p className={styles.notice}>
-          {supabaseConfigured
-            ? 'Alle eingehenden Anfragen aus den Formularen der Website, egal von welchem Gerät aus sie abgeschickt wurden.'
-            : 'Diese Ansicht zeigt nur Anfragen, die auf diesem Gerät eingegangen sind.'}
-        </p>
+        <h1 className={styles.title}>Coming-Home-Backend</h1>
 
-        <div className={styles.toolbar}>
-          <div className={styles.filters}>
-            <button
-              className={[styles.filterBtn, statusFilter === 'alle' && styles.filterBtnActive]
-                .filter(Boolean)
-                .join(' ')}
-              onClick={() => setStatusFilter('alle')}
-              type="button"
-            >
-              Alle ({leads.length})
-            </button>
-            {STATUS_ORDER.map((status) => {
-              const count = leads.filter((lead) => lead.status === status).length
-              return (
-                <button
-                  key={status}
-                  className={[styles.filterBtn, statusFilter === status && styles.filterBtnActive]
-                    .filter(Boolean)
-                    .join(' ')}
-                  onClick={() => setStatusFilter(status)}
-                  type="button"
-                >
-                  {LEAD_STATUS_LABELS[status]} ({count})
-                </button>
-              )
-            })}
-          </div>
-
-          <button className={styles.filterBtn} type="button" onClick={() => exportCsv(leads)}>
-            Als CSV exportieren
+        <div className={styles.tabs}>
+          <button
+            type="button"
+            className={[styles.tabBtn, tab === 'anfragen' && styles.tabBtnActive].filter(Boolean).join(' ')}
+            onClick={() => setTab('anfragen')}
+          >
+            Anfragen
+          </button>
+          <button
+            type="button"
+            className={[styles.tabBtn, tab === 'statistik' && styles.tabBtnActive].filter(Boolean).join(' ')}
+            onClick={() => setTab('statistik')}
+          >
+            Statistik
           </button>
         </div>
 
-        <div className={styles.layout}>
-          <div className={styles.list}>
-            {isLoading && filtered.length === 0 && (
-              <p className={styles.empty}>Anfragen werden geladen …</p>
-            )}
-            {!isLoading && filtered.length === 0 && (
-              <p className={styles.empty}>Keine Anfragen in dieser Ansicht.</p>
-            )}
-            {filtered.map((lead) => (
-              <button
-                key={lead.id}
-                type="button"
-                className={[styles.row, selected?.id === lead.id && styles.rowActive]
-                  .filter(Boolean)
-                  .join(' ')}
-                onClick={() => setSelectedId(lead.id)}
-              >
-                <span>
-                  <span className={styles.rowName}>{lead.name || '(ohne Namen)'}</span>
-                  <br />
-                  <span className={styles.rowMeta}>
-                    {LEAD_SOURCE_LABELS[lead.source]} · {formatDate(lead.createdAt)}
-                  </span>
-                </span>
-                <span className={styles.statusPill}>{LEAD_STATUS_LABELS[lead.status]}</span>
-              </button>
-            ))}
-          </div>
+        {tab === 'statistik' ? (
+          <Statistik />
+        ) : (
+          <>
+            <p className={styles.notice}>
+              {supabaseConfigured
+                ? 'Alle eingehenden Anfragen aus den Formularen der Website, egal von welchem Gerät aus sie abgeschickt wurden.'
+                : 'Diese Ansicht zeigt nur Anfragen, die auf diesem Gerät eingegangen sind.'}
+            </p>
 
-          {selected && <LeadDetail lead={selected} />}
-        </div>
+            <div className={styles.toolbar}>
+              <div className={styles.filters}>
+                <button
+                  className={[styles.filterBtn, statusFilter === 'alle' && styles.filterBtnActive]
+                    .filter(Boolean)
+                    .join(' ')}
+                  onClick={() => setStatusFilter('alle')}
+                  type="button"
+                >
+                  Alle ({leads.length})
+                </button>
+                {STATUS_ORDER.map((status) => {
+                  const count = leads.filter((lead) => lead.status === status).length
+                  return (
+                    <button
+                      key={status}
+                      className={[styles.filterBtn, statusFilter === status && styles.filterBtnActive]
+                        .filter(Boolean)
+                        .join(' ')}
+                      onClick={() => setStatusFilter(status)}
+                      type="button"
+                    >
+                      {LEAD_STATUS_LABELS[status]} ({count})
+                    </button>
+                  )
+                })}
+              </div>
+
+              <button className={styles.filterBtn} type="button" onClick={() => exportCsv(leads)}>
+                Als CSV exportieren
+              </button>
+            </div>
+
+            <div className={styles.layout}>
+              <div className={styles.list}>
+                {isLoading && filtered.length === 0 && (
+                  <p className={styles.empty}>Anfragen werden geladen …</p>
+                )}
+                {!isLoading && filtered.length === 0 && (
+                  <p className={styles.empty}>Keine Anfragen in dieser Ansicht.</p>
+                )}
+                {filtered.map((lead) => (
+                  <button
+                    key={lead.id}
+                    type="button"
+                    className={[styles.row, selected?.id === lead.id && styles.rowActive]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onClick={() => setSelectedId(lead.id)}
+                  >
+                    <span>
+                      <span className={styles.rowName}>{lead.name || '(ohne Namen)'}</span>
+                      <br />
+                      <span className={styles.rowMeta}>
+                        {LEAD_SOURCE_LABELS[lead.source]} · {formatDate(lead.createdAt)}
+                      </span>
+                    </span>
+                    <span className={styles.statusPill}>{LEAD_STATUS_LABELS[lead.status]}</span>
+                  </button>
+                ))}
+              </div>
+
+              {selected && <LeadDetail lead={selected} />}
+            </div>
+          </>
+        )}
       </div>
     </section>
   )

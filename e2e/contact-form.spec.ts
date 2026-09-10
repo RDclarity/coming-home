@@ -1,5 +1,5 @@
-import { expect, test, type Page } from '@playwright/test'
-import { mockSupabaseLeadInsert } from './helpers'
+import type { Page } from '@playwright/test'
+import { expect, mockSupabaseLeadInsert, test } from './helpers'
 
 /**
  * Das Schritt-für-Schritt-Kontaktformular im Footer (MultiStepContactForm,

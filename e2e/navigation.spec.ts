@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test } from './helpers'
 
 /**
  * Smoke-Test über die wichtigsten Routen: prüft, dass Prerendering +

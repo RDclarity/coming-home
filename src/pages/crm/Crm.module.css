@@ -63,6 +63,32 @@
   margin: -0.6rem 0 1rem;
 }
 
+/* Tabs (Anfragen / Statistik) */
+.tabs {
+  display: flex;
+  gap: 1.6rem;
+  border-bottom: 1px solid #0c0c0c1f;
+  margin-bottom: 1.8rem;
+}
+
+.tabBtn {
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.2rem 0 0.9rem;
+  margin-bottom: -1px;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.tabBtnActive {
+  opacity: 1;
+  border-bottom-color: var(--c-key1);
+}
+
 /* Toolbar */
 .toolbar {
   display: flex;

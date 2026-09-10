@@ -1,8 +1,10 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ConsentBanner } from './components/ConsentBanner'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
+import { trackPageView } from './lib/analytics'
 import { withBase } from './lib/url'
 import { Crm } from './pages/crm/Crm'
 import { Danke } from './pages/Danke'
@@ -19,17 +21,36 @@ import { ServicePage } from './pages/services/ServicePage'
 import { Footer } from './sections/Footer'
 import { Nav } from './sections/Nav'
 
+/** Interne Werkzeuge (CRM unter /admin, Text-Editor unter /intern/editor)
+ * bekommen bewusst KEINE Website-Chrome (Nav, Footer, Musikplayer, Cookie-
+ * Banner) – wer sich dort einloggt, soll ausschließlich das Werkzeug sehen,
+ * nicht die Marketing-Seite drumherum. */
+function istInternesWerkzeug(pathname: string): boolean {
+  return pathname.startsWith('/admin') || pathname.startsWith('/intern/')
+}
+
 export default function App() {
   useScrollToHash()
+  const location = useLocation()
+  const ohneChrome = istInternesWerkzeug(location.pathname)
+
+  useEffect(() => {
+    // Seitenaufrufe fürs Besucherstatistik-Panel im CRM – interne Werkzeuge
+    // selbst bleiben ausgenommen (Jasmins eigene Login-/Bearbeitungsklicks
+    // sind kein Besuchssignal), siehe lib/analytics.ts.
+    if (!ohneChrome) trackPageView(location.pathname)
+  }, [location.pathname, ohneChrome])
 
   return (
     <>
-      <a className="skipLink" href={withBase('/#coming-home')}>
-        Zum Inhalt springen
-      </a>
-      <MusicPlayer />
-      <ConsentBanner />
-      <Nav />
+      {!ohneChrome && (
+        <a className="skipLink" href={withBase('/#coming-home')}>
+          Zum Inhalt springen
+        </a>
+      )}
+      {!ohneChrome && <MusicPlayer />}
+      {!ohneChrome && <ConsentBanner />}
+      {!ohneChrome && <Nav />}
       <main>
         <ErrorBoundary>
           <Routes>
@@ -61,7 +82,7 @@ export default function App() {
           </Routes>
         </ErrorBoundary>
       </main>
-      <Footer />
+      {!ohneChrome && <Footer />}
     </>
   )
 }
