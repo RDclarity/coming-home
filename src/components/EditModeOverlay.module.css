@@ -1,0 +1,35 @@
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999999;
+  background: var(--c-dark);
+  color: var(--c-light);
+  font-family: var(--font-text);
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 0.4rem;
+}
+
+.hoverLabel {
+  position: fixed;
+  z-index: 999999;
+  background: var(--c-key1);
+  color: var(--c-dark);
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  pointer-events: none;
+}
+
+/* Wird per JS direkt per classList auf beliebige Elemente der Live-Seite
+   gesetzt (nicht als React-className), siehe EditModeOverlay.tsx – deshalb
+   bewusst :global und ein eigener, kollisionsarmer Name statt über den
+   normalen (gehashten) CSS-Modules-Mechanismus. */
+:global(.coming-home-edit-hover) {
+  outline: 2px solid var(--c-key1) !important;
+  outline-offset: -2px;
+  cursor: pointer !important;
+}

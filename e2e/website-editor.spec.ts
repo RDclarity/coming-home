@@ -122,3 +122,45 @@ test('Backend: Foto-Bibliothek zeigt vorhandene Fotos zur Wiederverwendung', asy
 
   await expect(page.getByTitle('foto-1.jpg')).toBeVisible()
 })
+
+/**
+ * Klick-zum-Bearbeiten (EditModeOverlay.tsx in der Live-Vorschau schickt
+ * beim Klick auf einen Bereich eine postMessage ans Backend, siehe
+ * lib/editMode.ts). Die Vorschau selbst lädt im Test die echte Seite über
+ * eine andere Origin als /admin (anders als live, wo beides auf
+ * jasmindraxl.at liegt) – deshalb wird hier direkt die Nachricht simuliert,
+ * die die Vorschau schicken würde, statt echt im Iframe zu klicken. Das
+ * deckt genau den Teil ab, der die eigentliche Logik enthält: welcher Tab,
+ * welche Gruppe geht auf.
+ */
+test('Backend: Klick-Nachricht aus der Vorschau öffnet die passende Gruppe', async ({ page }) => {
+  await mockSupabaseAuth(page, 'success')
+  await page.route('**/rest/v1/content_overrides**', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }),
+  )
+  await page.goto('/admin')
+
+  await page.getByPlaceholder('E-Mail').fill('jasmin@example.com')
+  await page.getByPlaceholder('Passwort').fill('richtiges-passwort')
+  await page.getByRole('button', { name: 'Anmelden' }).click()
+  await page.getByRole('button', { name: 'Website', exact: true }).click()
+
+  // Simuliert: Klick auf die "Arbeitsweise"-Sektion in der Vorschau.
+  await page.evaluate(() => {
+    window.postMessage(
+      { source: 'coming-home-edit-mode', sectionId: 'arbeitsweise', pathname: '/' },
+      window.location.origin,
+    )
+  })
+  await expect(page.locator('#gruppe-site\\:arbeitsweise')).toBeVisible()
+  await expect(page.locator('#gruppe-site\\:arbeitsweise textarea').first()).toBeFocused()
+
+  // Simuliert: Klick auf der 1:1-Session-Seite -> passende Begleitungs-Gruppe.
+  await page.evaluate(() => {
+    window.postMessage(
+      { source: 'coming-home-edit-mode', sectionId: 'coming-home', pathname: '/begleitung/1-1-begleitung' },
+      window.location.origin,
+    )
+  })
+  await expect(page.getByText('Begleitung: Individuelle 1:1 Session')).toBeVisible()
+})

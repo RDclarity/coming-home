@@ -19,6 +19,7 @@ import * as articlesModule from '../../data/articles'
 import type { CustomSection, CustomSectionBlockType } from '../../data/customSections'
 import * as servicesModule from '../../data/services'
 import * as siteModule from '../../data/site'
+import type { EditSelectMessage } from '../../lib/editMode'
 import styles from './AdminWebsite.module.css'
 
 // Nur die reinen Text-Exporte (keine Funktionen wie getFaqBySlug) aus den
@@ -115,6 +116,51 @@ function targetForGroup(key: string): { path: string; hash?: string } {
   return { path: '/', hash: SITE_SECTION_ANCHOR[key.slice(5)] }
 }
 
+// Umgekehrte Richtung für den Klick-zum-Bearbeiten-Modus (EditModeOverlay.tsx
+// in der Vorschau, siehe unten): welche Sektions-id auf der Website zu
+// welchem site.ts-Export gehört. Bewusst von Hand statt automatisch
+// invertiert, weil "coming-home" z. B. sowohl für "site" als auch "hero"
+// steht – hier gewinnt immer die inhaltlich naheliegendste Gruppe.
+const ANCHOR_TO_SITE_KEY: Record<string, string> = {
+  'coming-home': 'hero',
+  ankommen: 'ankommen',
+  jasmin: 'jasmin',
+  orientierung: 'orientierung',
+  'dein-weg': 'reise',
+  'ueber-jasmin': 'ueberJasmin',
+  arbeitsweise: 'arbeitsweise',
+  'fuer-wen': 'fuerWen',
+  kennenlernen: 'bewerbung',
+  faq: 'faq',
+  termine: 'termine',
+  audiouebung: 'newsletter',
+  abschluss: 'abschluss',
+  kontakt: 'kontakt',
+}
+
+type EditSelectResolved = { tab: 'texte'; key: string } | { tab: 'bereiche'; bereichId: string }
+
+/** Übersetzt eine Klick-Nachricht aus der Vorschau (EditModeOverlay.tsx) in
+ * "welcher Tab, welche Gruppe/welcher Bereich soll aufgehen". */
+function resolveEditSelect(data: EditSelectMessage): EditSelectResolved | null {
+  const serviceMatch = /^\/begleitung\/([^/]+)\/?$/.exec(data.pathname)
+  if (serviceMatch) {
+    const idx = servicesModule.services.findIndex((s) => s.slug === serviceMatch[1])
+    if (idx >= 0) return { tab: 'texte', key: `services:${idx}` }
+  }
+  const articleMatch = /^\/ratgeber\/([^/]+)\/?$/.exec(data.pathname)
+  if (articleMatch) {
+    const idx = articlesModule.articles.findIndex((a) => a.slug === articleMatch[1])
+    if (idx >= 0) return { tab: 'texte', key: `articles:${idx}` }
+  }
+  if (data.sectionId.startsWith('bereich-')) {
+    return { tab: 'bereiche', bereichId: data.sectionId.slice('bereich-'.length) }
+  }
+  const siteKey = ANCHOR_TO_SITE_KEY[data.sectionId]
+  if (siteKey) return { tab: 'texte', key: `site:${siteKey}` }
+  return null
+}
+
 /**
  * Website-Editor: Texte der ganzen Seite (Startseite, Begleitungen,
  * Ratgeber-Artikel) bearbeiten, neue Bereiche aus fertigen Bausteinen
@@ -127,7 +173,68 @@ export function AdminWebsite() {
   const [publishing, setPublishing] = useState(false)
   const [publishResult, setPublishResult] = useState<string | null>(null)
   const [zeigeVorschau, setZeigeVorschau] = useState(true)
+  const [offeneGruppe, setOffeneGruppe] = useState<string | null>(null)
+  const [scrollZiel, setScrollZiel] = useState<string | null>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+
+  /**
+   * Klick-zum-Bearbeiten (EditModeOverlay.tsx in der Vorschau schickt beim
+   * Klick auf einen Bereich eine postMessage hierher): öffnet automatisch
+   * den passenden Tab + die passende Gruppe und scrollt im EIGENEN Panel
+   * dorthin. Die eigentliche Bearbeitung läuft danach ganz normal über die
+   * bewährten Textfelder – hier wird nur "hingesprungen".
+   */
+  useEffect(() => {
+    function handleMessage(event: MessageEvent) {
+      if (event.origin !== window.location.origin) return
+      const data = event.data as Partial<EditSelectMessage> | undefined
+      if (data?.source !== 'coming-home-edit-mode' || !data.sectionId || typeof data.pathname !== 'string') return
+
+      const resolved = resolveEditSelect(data as EditSelectMessage)
+      if (!resolved) return
+
+      if (resolved.tab === 'texte') {
+        setTab('texte')
+        setOffeneGruppe(resolved.key)
+        setScrollZiel(`gruppe-${resolved.key}`)
+      } else {
+        setTab('bereiche')
+        setScrollZiel(`bereich-editor-${resolved.bereichId}`)
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
+
+  useEffect(() => {
+    // Läuft NACH dem Commit des Renders, der offeneGruppe/tab gesetzt hat –
+    // das Zielelement steht zu diesem Zeitpunkt schon im DOM, kein
+    // zusätzlicher Frame nötig. WICHTIG: scrollZiel erst NACH dem
+    // Scrollen/Fokussieren zurücksetzen (nicht davor) – sonst würde der
+    // dadurch ausgelöste erneute Effekt-Durchlauf sein eigenes Ergebnis
+    // sofort wieder aufräumen, bevor irgendetwas passiert ist.
+    if (!scrollZiel) return
+    // Das Zielelement steht in der Praxis so gut wie immer schon im DOM,
+    // sobald dieser Effekt läuft – ABER nicht garantiert (z. B. kurz nach
+    // dem ersten Laden von /admin, wo React noch mit der Hydration
+    // beschäftigt ist). Deshalb mit ein paar Frames Wiederholung, statt
+    // beim ersten erfolglosen Versuch stillschweigend aufzugeben.
+    let versuche = 0
+    let raf = 0
+    function versuchen() {
+      const el = document.getElementById(scrollZiel!)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        el.querySelector<HTMLElement>('textarea, input')?.focus()
+        setScrollZiel(null)
+        return
+      }
+      versuche += 1
+      if (versuche < 30) raf = requestAnimationFrame(versuchen)
+    }
+    raf = requestAnimationFrame(versuchen)
+    return () => cancelAnimationFrame(raf)
+  }, [scrollZiel])
 
   /**
    * Springt in der Vorschau zur passenden Stelle. Vorschau und Backend
@@ -255,7 +362,12 @@ export function AdminWebsite() {
       <div className={zeigeVorschau ? styles.mitVorschau : undefined}>
         <div>
           {tab === 'texte' ? (
-            <TextEditor onJump={jumpTo} onLiveType={liveType} />
+            <TextEditor
+              onJump={jumpTo}
+              onLiveType={liveType}
+              offeneGruppe={offeneGruppe}
+              onToggleGruppe={setOffeneGruppe}
+            />
           ) : (
             <BereicheEditor onJump={jumpTo} />
           )}
@@ -283,14 +395,17 @@ export function AdminWebsite() {
 function TextEditor({
   onJump,
   onLiveType,
+  offeneGruppe,
+  onToggleGruppe,
 }: {
   onJump: (path: string, hash?: string) => void
   onLiveType: (hash: string | undefined, originalValue: string, newValue: string) => void
+  offeneGruppe: string | null
+  onToggleGruppe: (key: string | null) => void
 }) {
   const [overrides, setOverrides] = useState<Record<string, string>>({})
   const [laden, setLaden] = useState(true)
   const [search, setSearch] = useState('')
-  const [offeneGruppe, setOffeneGruppe] = useState<string | null>(null)
 
   useEffect(() => {
     fetchOverrides()
@@ -346,12 +461,12 @@ function TextEditor({
         {groups.map(([key, fields]) => {
           const target = targetForGroup(key)
           return (
-            <div key={key} className={styles.gruppe}>
+            <div key={key} id={`gruppe-${key}`} className={styles.gruppe}>
               <button
                 type="button"
                 className={styles.gruppenKopf}
                 onClick={() => {
-                  setOffeneGruppe((g) => (g === key ? null : key))
+                  onToggleGruppe(offeneGruppe === key ? null : key)
                   onJump(target.path, target.hash)
                 }}
               >
@@ -624,7 +739,11 @@ function BereichEditor({
   }
 
   return (
-    <div className={styles.gruppe} onFocus={() => onJump('/', `bereich-${section.id}`)}>
+    <div
+      id={`bereich-editor-${section.id}`}
+      className={styles.gruppe}
+      onFocus={() => onJump('/', `bereich-${section.id}`)}
+    >
       <div className={styles.bereichKopf}>
         <span className={styles.gruppenMeta}>{BLOCK_TYPE_LABEL[section.blockType]}</span>
         <div className={styles.bereichAktionen}>

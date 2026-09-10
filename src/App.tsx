@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ConsentBanner } from './components/ConsentBanner'
+import { EditModeOverlay } from './components/EditModeOverlay'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { MobileCtaBar } from './components/MobileCtaBar'
 import { MusicPlayer } from './components/MusicPlayer'
@@ -47,6 +48,7 @@ export default function App() {
 
   return (
     <>
+      <EditModeOverlay />
       {!ohneChrome && (
         <a className="skipLink" href={withBase('/#coming-home')}>
           Zum Inhalt springen

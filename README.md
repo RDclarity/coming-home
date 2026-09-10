@@ -309,6 +309,31 @@ umzustellen, damit auch sie im Editor austauschbar werden, wäre ein
 separater, größerer Umbau – sag Bescheid, falls das als Nächstes sinnvoll
 ist.
 
+**Klick-zum-Bearbeiten in der Vorschau** (nach dem Vorbild von WordPress'
+Gutenberg/Elementor – dort wählt man direkt auf der sichtbaren Seite aus,
+statt in einer Feldliste zu suchen): Man kann jetzt auch **in der
+Live-Vorschau selbst** auf einen Bereich klicken, statt ihn links in der
+Liste zu suchen.
+
+- `lib/editMode.ts` + `components/EditModeOverlay.tsx`: läuft auf JEDER
+  Seite der Website mit, tut aber nur etwas, wenn die Seite innerhalb der
+  Vorschau des Website-Editors läuft (`istInVorschauIframe()` – reiner
+  Fenster-Vergleich, kein Query-Parameter/Cookie). Für echte Besucher:innen
+  komplett unsichtbar und wirkungslos.
+- In diesem Zustand: Bereiche beim Überfahren mit der Maus umrandet, ein
+  Klick schickt per `postMessage` an das Backend, WELCHER Bereich das war.
+- `AdminWebsite.tsx` fängt diese Nachricht ab, öffnet automatisch den
+  richtigen Tab + die richtige Gruppe/den richtigen Bereich und springt im
+  eigenen Feld-Editor dorthin (nicht in der Vorschau selbst) – die
+  eigentliche Bearbeitung läuft weiterhin über die bewährten, getesteten
+  Textfelder, nur der Einstieg dorthin ist jetzt auch über die Vorschau
+  möglich, nicht nur über die Liste links.
+- Bewusst NICHT umgesetzt: echtes Bearbeiten direkt in der Vorschau selbst
+  (contentEditable + eigene Speicherlogik im Iframe) – das wäre ein
+  eigenständiges zweites Editor-System parallel zum bestehenden, mit allen
+  Risiken (Konsistenz, Testbarkeit), für den Zugewinn gegenüber "klicken →
+  richtiges Feld ist automatisch offen" nicht gerechtfertigt.
+
 **Bereiche/„Abteilungen":** feste Bausteine (Text mit Überschrift, Bild mit
 Text, Zitat) statt freiem Seitenaufbau – bewusst so entschieden, damit neue
 Bereiche immer zum bestehenden Design passen. Erscheinen auf der Startseite
