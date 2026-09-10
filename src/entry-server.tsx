@@ -11,8 +11,17 @@ export { articles } from './data/articles'
 export { business } from './data/legal'
 export { faq, jasmin, site } from './data/site'
 export { services } from './data/services'
+export { customSections } from './data/customSections'
+export { applyAtPath } from './cms/flatten'
 export { seoPages } from './seo/pages'
 export { absoluteUrl, SITE_ORIGIN } from './lib/url'
+
+// Namespace-Export (nicht nur einzelne Felder) speziell für den
+// Website-Editor (scripts/prerender.mjs): muss exakt dieselbe Objektform
+// sein wie EDITABLE_SOURCE.site in pages/crm/AdminWebsite.tsx, sonst passen
+// die dort erzeugten Pfade ("site.hero.titleLines[0]") nicht mehr zu dem,
+// was hier gemutiert wird.
+export * as siteModule from './data/site'
 
 /**
  * Server-Einstieg fürs Prerendering (scripts/prerender.mjs). Wird per

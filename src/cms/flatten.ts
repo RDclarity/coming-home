@@ -67,6 +67,24 @@ export function setAtPath<T>(obj: T, path: string, value: string): T {
   return clone
 }
 
+/**
+ * Wie `setAtPath`, aber MUTIERT `obj` direkt statt eine Kopie zu liefern.
+ * Für scripts/prerender.mjs: dort muss genau das schon importierte
+ * `site`/`services`/`articles`-Objekt verändert werden, das App.tsx beim
+ * Rendern ebenfalls verwendet (dieselbe Modul-Instanz) – eine Kopie würde
+ * beim Rendern schlicht ignoriert.
+ */
+export function applyAtPath(obj: unknown, path: string, value: string): void {
+  const tokens = pathTokens(path)
+  let current = obj
+  for (let i = 0; i < tokens.length - 1; i++) {
+    current = (current as Record<string, unknown>)[tokens[i]]
+  }
+  if (current == null) return
+  const lastToken = tokens[tokens.length - 1]
+  ;(current as Record<string, unknown>)[lastToken] = value
+}
+
 function pathTokens(path: string): string[] {
   return path
     .split(/[.[\]]/)

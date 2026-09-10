@@ -241,24 +241,55 @@ E-Mail-Adresse schicken lassen – über eine neue Edge Function
 Einrichtung dort im Datei-Kommentar). Die Zieladresse kommt dabei
 ausschließlich aus dem geprüften Login, nie aus dem Request selbst.
 
-## Text-Editor (lokal, noch ohne Backend)
+## Website-Editor (Tab „Website" im Backend)
 
-Unter **`/intern/editor`** (gleicher Passphrase-Schutz wie das CRM) lassen
-sich alle Texte aus `src/data/site.ts` durchsuchen und bearbeiten –
-technisch generisch über `src/cms/flatten.ts` (zerlegt jedes verschachtelte
-Textobjekt in einzelne Felder), nicht Feld für Feld von Hand verdrahtet.
+Jasmin kann Texte der ganzen Seite (Startseite, alle Begleitungen-Seiten,
+Ratgeber-Artikel), Fotos in frei hinzugefügten Bereichen und ganz neue
+„Abteilungen" selbst bearbeiten – ohne Code, ohne mich. **Bewusst NICHT
+dabei:** Impressum/Datenschutz/AGB (`src/data/legal.ts`) – Rechtstexte
+bleiben Entwicklerinnen-Sache.
 
-**Wichtig, dieselbe Einschränkung wie beim CRM:** Änderungen landen als
-Entwurf in `localStorage` – nur in diesem Browser sichtbar, NICHT live für
-echte Besucher:innen. Über „Änderungen exportieren" lässt sich eine Liste
-aller geänderten Felder (alt → neu) als Datei herunterladen, die dann von
-Hand in die `src/data/*.ts`-Dateien übernommen und neu deployt werden muss.
+**Wie das mit einer komplett statischen Seite zusammengeht:** Die Seite wird
+weiterhin vollständig vorgerendert (schnell, gut bei Google) – Änderungen
+gehen deshalb nicht *sofort* live, sondern werden in Supabase gespeichert
+(`content_overrides`, `custom_sections`) und erst durch einen Klick auf
+**„Veröffentlichen"** wirklich ausgerollt: Das löst über eine Edge Function
+(`supabase/functions/trigger-rebuild/`) einen `repository_dispatch` an
+GitHub aus, der `deploy.yml` denselben Build wie bei einem normalen Push
+laufen lässt – nur dass `scripts/prerender.mjs` jetzt zusätzlich die
+gespeicherten Änderungen aus Supabase abholt und einbaut, bevor die Seite
+vorgerendert wird (siehe ausführlicher Kommentar dort und in der Migration
+`00000000000005_content_editor.sql`). Dauert wie ein normales Deployment
+ca. 1–3 Minuten.
 
-Echtes WordPress-artiges Verhalten (Änderungen sofort für alle live, neue
-Sektionen per Klick hinzufügen) braucht zwingend ein Backend mit Datenbank –
-das ist mit einer rein statischen Seite ohne Server nicht möglich. Sobald
-ein Backend angebunden wird (siehe CRM-Abschnitt), lässt sich dieser Editor
-darauf umstellen.
+**Texte:** generisch über `src/cms/flatten.ts` (zerlegt `site`/`services`/
+`articles` in einzelne Felder, wie schon der frühere lokale Editor) – nach
+Abschnitt gruppiert, mit Suche. Speichert beim Verlassen eines Feldes.
+
+**Fotos:** aktuell nur für neu hinzugefügte Bereiche (Baustein „Bild mit
+Text") möglich – die bestehenden Fotos auf der Seite (Hero, Jasmin-Porträt
+usw.) sind noch direkt im Code der jeweiligen Sektion verdrahtet, nicht über
+`site.ts` steuerbar. Die umzustellen, damit auch sie im Editor austauschbar
+werden, wäre ein separater, größerer Umbau – sag Bescheid, falls das als
+Nächstes sinnvoll ist.
+
+**Bereiche/„Abteilungen":** feste Bausteine (Text mit Überschrift, Bild mit
+Text, Zitat) statt freiem Seitenaufbau – bewusst so entschieden, damit neue
+Bereiche immer zum bestehenden Design passen. Erscheinen auf der Startseite
+zwischen „Workshops & Termine" und der Audioübung (`src/pages/Home.tsx`,
+`src/sections/CustomSections.tsx`).
+
+Setup-Schritt, den nur Jasmin machen kann (wie beim `RESEND_API_KEY`):
+`GITHUB_TOKEN` (Fine-grained Personal Access Token, nur fürs Repo
+„coming-home", Berechtigung „Actions: Read and write") als Supabase-Secret
+hinterlegen, siehe Kommentar in `supabase/functions/trigger-rebuild/`. Ohne
+das speichert der Editor weiterhin alles zuverlässig, nur der
+„Veröffentlichen"-Knopf löst dann noch keinen Build aus.
+
+Der frühere, rein lokale Text-Editor unter `/intern/editor` (Entwürfe nur in
+`localStorage`, musste von Hand exportiert und im Code übernommen werden)
+ist durch diesen Tab ersetzt worden – die Route leitet jetzt auf `/admin`
+weiter.
 
 ## Formulare
 

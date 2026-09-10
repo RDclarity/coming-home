@@ -23,6 +23,8 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const DIST = join(ROOT, 'dist')
 const SSR_ENTRY = join(ROOT, 'dist-ssr', 'entry-server.js')
 
+await ladeDotenvFallsVorhanden()
+
 const {
   render,
   seoPages,
@@ -32,9 +34,89 @@ const {
   jasmin,
   site,
   business,
+  customSections,
+  applyAtPath,
+  siteModule,
   absoluteUrl,
   SITE_ORIGIN,
 } = await import(SSR_ENTRY)
+
+await ladeWebsiteEditorInhalte({ siteModule, services, articles, customSections, applyAtPath })
+
+/**
+ * `npm run build` lädt lokal normalerweise `.env` nur für den Vite-Build
+ * (`import.meta.env`) – dieses reine Node-Skript hier läuft danach separat
+ * und sieht `process.env` sonst leer. In GitHub Actions (siehe deploy.yml)
+ * ist das kein Problem, dort stehen die Variablen schon als echte
+ * Umgebungsvariablen bereit; das hier ist nur der lokale Komfort-Fallback.
+ */
+async function ladeDotenvFallsVorhanden() {
+  if (process.env.VITE_SUPABASE_URL) return
+  try {
+    const raw = await readFile(join(ROOT, '.env'), 'utf8')
+    for (const line of raw.split('\n')) {
+      const match = /^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/.exec(line)
+      if (match && !process.env[match[1]]) process.env[match[1]] = match[2]
+    }
+  } catch {
+    // Kein .env vorhanden – dann bleibt der Website-Editor-Inhalt beim
+    // eingebauten Basis-Text, genau wie überall sonst in diesem Projekt
+    // ohne Supabase-Konfiguration.
+  }
+}
+
+/**
+ * Website-Editor (Backend → Tab "Website"): holt die zuletzt von Jasmin
+ * gespeicherten Text-/Foto-Änderungen (`content_overrides`) und frei
+ * hinzugefügten Bereiche (`custom_sections`) aus Supabase und wendet sie auf
+ * genau die Objekte an, die App.tsx beim Rendern gleich verwendet – siehe
+ * `applyAtPath` in src/cms/flatten.ts (mutiert, statt zu kopieren) und die
+ * ausführliche Erklärung in supabase/migrations/…_content_editor.sql.
+ */
+async function ladeWebsiteEditorInhalte({ siteModule, services, articles, customSections, applyAtPath }) {
+  const url = process.env.VITE_SUPABASE_URL
+  const key = process.env.VITE_SUPABASE_ANON_KEY
+  if (!url || !key) {
+    console.log('prerender: kein Supabase konfiguriert – Website-Editor-Inhalte werden übersprungen')
+    return
+  }
+  const headers = { apikey: key, Authorization: `Bearer ${key}` }
+
+  try {
+    const overridesRes = await fetch(`${url}/rest/v1/content_overrides?select=path,value`, { headers })
+    if (overridesRes.ok) {
+      const overrides = await overridesRes.json()
+      // Exakt dieselbe Form wie EDITABLE_SOURCE in pages/crm/AdminWebsite.tsx
+      // (nur die Nicht-Funktions-Exporte von data/site.ts), sonst passen die
+      // dort erzeugten Pfade nicht zu dem, was hier gemutiert wird.
+      const siteRoot = Object.fromEntries(Object.entries(siteModule).filter(([, v]) => typeof v !== 'function'))
+      const roots = { site: siteRoot, services, articles }
+      for (const { path, value } of overrides) applyAtPath(roots, path, value)
+      console.log(`prerender: ${overrides.length} Text-/Foto-Änderung(en) aus dem Website-Editor übernommen`)
+    } else {
+      console.error('prerender: content_overrides konnte nicht geladen werden', overridesRes.status)
+    }
+  } catch (err) {
+    console.error('prerender: content_overrides konnte nicht geladen werden', err)
+  }
+
+  try {
+    const sectionsRes = await fetch(
+      `${url}/rest/v1/custom_sections?select=id,block_type,content&order=sort_order.asc`,
+      { headers },
+    )
+    if (sectionsRes.ok) {
+      const rows = await sectionsRes.json()
+      customSections.length = 0
+      for (const row of rows) customSections.push({ id: row.id, blockType: row.block_type, content: row.content })
+      console.log(`prerender: ${rows.length} zusätzliche Bereich(e) aus dem Website-Editor übernommen`)
+    } else {
+      console.error('prerender: custom_sections konnte nicht geladen werden', sectionsRes.status)
+    }
+  } catch (err) {
+    console.error('prerender: custom_sections konnte nicht geladen werden', err)
+  }
+}
 
 const isPlaceholder = (value) => typeof value === 'string' && value.startsWith('[Platzhalter')
 

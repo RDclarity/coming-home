@@ -185,15 +185,16 @@ Formular-Submit fälschlich fehlschlagen ließe.
 
 ## 6. Weitere interne Werkzeuge
 
-- **`/admin`** – Lead-Übersicht, siehe oben. Nicht in Sitemap/Nav
-  verlinkt, per `robots.txt` von Indexierung ausgeschlossen.
-- **`/intern/editor`** – Ein rein lokaler (localStorage) "WordPress-artiger"
-  Text-Editor (`src/cms/`) zum Durchsuchen/Bearbeiten der Inhalte aus
-  `data/site.ts`. Änderungen werden **nicht** live für andere
-  Besucher:innen – nur als Entwurf im eigenen Browser, mit Export-Funktion
-  für die manuelle Übernahme in den Code. Bewusst kein echtes Backend dafür
-  gebaut (siehe README) – für den aktuellen Umfang (eine Person pflegt
-  Inhalte, hat aber Code-Zugriff über diese KI) unverhältnismäßiger Aufwand.
+- **`/admin`** – Backend mit vier Tabs: Anfragen (CRM), Statistik
+  (Besucherzahlen), Mitgliederbereich (Programme/Inhalte für die
+  3-/12-Monats-Begleitungen, siehe README) und Website (Texte/Fotos/Bereiche
+  der Seite selbst bearbeiten, siehe README „Website-Editor"). Nicht in
+  Sitemap/Nav verlinkt, per `robots.txt` von Indexierung ausgeschlossen.
+- Der frühere rein lokale (localStorage-only) Text-Editor unter
+  `/intern/editor` ist im Website-Editor-Tab aufgegangen – Änderungen landen
+  jetzt in Supabase und werden per Knopfdruck über einen echten
+  GitHub-Actions-Build veröffentlicht, statt nur als Entwurf im eigenen
+  Browser mit manueller Übernahme in den Code.
 
 ## 7. Deployment
 

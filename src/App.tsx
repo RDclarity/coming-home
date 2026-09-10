@@ -8,7 +8,6 @@ import { trackPageView } from './lib/analytics'
 import { withBase } from './lib/url'
 import { Crm } from './pages/crm/Crm'
 import { Danke } from './pages/Danke'
-import { Editor } from './pages/editor/Editor'
 import { Home } from './pages/Home'
 import { Mitglieder } from './pages/members/Mitglieder'
 import { Agb } from './pages/legal/Agb'
@@ -22,8 +21,8 @@ import { ServicePage } from './pages/services/ServicePage'
 import { Footer } from './sections/Footer'
 import { Nav } from './sections/Nav'
 
-/** Eingeloggte Bereiche (CRM/Verwaltung unter /admin, Text-Editor unter
- * /intern/editor, Mitgliederbereich unter /mitglieder) bekommen bewusst
+/** Eingeloggte Bereiche (Backend unter /admin, Mitgliederbereich unter
+ * /mitglieder, plus /intern/* als alte Weiterleitungen) bekommen bewusst
  * KEINE Website-Chrome (Nav, Footer, Musikplayer, Cookie-Banner) – wer sich
  * dort einloggt, soll nur den jeweiligen Bereich sehen, nicht die
  * Marketing-Seite drumherum. Bleiben außerdem von der Seitenaufruf-Statistik
@@ -76,11 +75,14 @@ export default function App() {
             <Route path="/danke" element={<Danke />} />
 
             {/* Interne Werkzeuge – nicht in Sitemap/robots.txt gelistet, siehe README.
-                /admin ist der Zugang fürs CRM (Lead-Übersicht); /intern/crm bleibt als
-                Weiterleitung erhalten, falls die alte Adresse noch irgendwo verlinkt ist. */}
+                /admin ist der Zugang fürs CRM/Backend (Tabs Anfragen, Statistik,
+                Mitgliederbereich, Website); /intern/crm und /intern/editor bleiben als
+                Weiterleitungen erhalten, falls die alten Adressen noch irgendwo
+                verlinkt sind (der frühere lokale Text-Editor ist im Tab "Website"
+                aufgegangen). */}
             <Route path="/admin" element={<Crm />} />
             <Route path="/intern/crm" element={<Navigate to="/admin" replace />} />
-            <Route path="/intern/editor" element={<Editor />} />
+            <Route path="/intern/editor" element={<Navigate to="/admin" replace />} />
 
             {/* Mitgliederbereich für die 3-/12-Monats-Begleitungen – eigener
                 Supabase-Login (siehe pages/members/Mitglieder.tsx), ebenfalls

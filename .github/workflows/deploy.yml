@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Vom "Veröffentlichen"-Knopf im Website-Editor ausgelöst (siehe
+  # supabase/functions/trigger-rebuild/) – baut mit den zuletzt in Supabase
+  # gespeicherten Text-/Foto-/Bereichs-Änderungen neu (scripts/prerender.mjs
+  # liest diese beim Build), ohne dass sich am Code etwas ändert.
+  repository_dispatch:
+    types: [publish-content]
 
 permissions:
   contents: read

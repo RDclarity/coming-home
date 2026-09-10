@@ -8,10 +8,11 @@ import { LEAD_SOURCE_LABELS, LEAD_STATUS_LABELS, type Lead, type LeadStatus } fr
 import { INTERN_PASSPHRASE } from '../../lib/internAuth'
 import { useProfile } from '../../members/useProfile'
 import { AdminMitglieder } from './AdminMitglieder'
+import { AdminWebsite } from './AdminWebsite'
 import { Statistik } from './Statistik'
 import styles from './Crm.module.css'
 
-type Tab = 'anfragen' | 'statistik' | 'mitglieder'
+type Tab = 'anfragen' | 'statistik' | 'mitglieder' | 'website'
 
 const STATUS_ORDER: LeadStatus[] = ['neu', 'kontaktiert', 'gebucht', 'abgeschlossen', 'abgesagt']
 
@@ -122,12 +123,21 @@ function Dashboard() {
           >
             Mitgliederbereich
           </button>
+          <button
+            type="button"
+            className={[styles.tabBtn, tab === 'website' && styles.tabBtnActive].filter(Boolean).join(' ')}
+            onClick={() => setTab('website')}
+          >
+            Website
+          </button>
         </div>
 
         {tab === 'statistik' ? (
           <Statistik />
         ) : tab === 'mitglieder' ? (
           <AdminMitglieder />
+        ) : tab === 'website' ? (
+          <AdminWebsite />
         ) : (
           <>
             <p className={styles.notice}>
