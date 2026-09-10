@@ -198,6 +198,49 @@ Seiten. Komplett anonym und ohne externen Dienst, siehe Kommentar in
 Sicherheitsmodell wie bei `leads`: `anon` darf nur einfügen, nur ein
 eingeloggter Account darf auswerten.
 
+## Mitgliederbereich (3-/12-Monats-Begleitungen)
+
+Unter **`/mitglieder`** bekommen Teilnehmer:innen der mehrmonatigen
+Begleitungen monatsweise Zugriff auf PDFs, Videos und einen Fragebogen zum
+jeweiligen Videokurs. Eigenes, komplett eingeständiges Datenmodell (siehe
+`supabase/migrations/00000000000003_members.sql`):
+
+- **`profiles`** – eine Zeile pro Supabase-Auth-Account (admin oder member),
+  wird automatisch per Datenbank-Trigger angelegt, sobald Jasmin im
+  Supabase-Dashboard einen neuen Login erstellt (genau wie bisher schon für
+  ihren eigenen CRM-Zugang – kein öffentliches Registrierungsformular).
+- **`programs`**/**`enrollments`** – Programme (z. B. „3-Monats-Begleitung")
+  und wer mit welchem Startdatum eingeschrieben ist.
+- **`program_months`**/**`month_materials`**/**`questionnaires`** – Inhalte
+  je Monat (PDF im privaten Storage-Bucket `program-pdfs`, Video als
+  YouTube/Vimeo-Link) sowie ein Fragebogen dazu.
+
+**Sicherheitsmodell:** Welche Monate ein Mitglied sieht, entscheidet
+ausschließlich die Datenbank per Row Level Security – Monat *N* wird erst
+sichtbar, sobald seit dem Startdatum *N-1* volle Monate vergangen sind
+(Funktion `month_unlocked()`). Das lässt sich nicht durch Tricksen im
+Frontend umgehen.
+
+**Wichtig:** Seit es Teilnehmer-Logins gibt, prüft die Datenbank bei `leads`,
+`lead_notes` und `page_views` nicht mehr nur „ist überhaupt eingeloggt",
+sondern echt „hat role = 'admin'" (Funktion `is_admin()`) – vorher hätte
+jeder neue Mitglieder-Login sonst versehentlich vollen CRM-Zugriff auf
+Jasmins Kundenanfragen bekommen.
+
+**Verwaltung:** Im Backend (`/admin`) gibt es dafür den Tab
+**„Mitgliederbereich"** (`src/pages/crm/AdminMitglieder.tsx`) – Programme und
+Monate anlegen, PDFs hochladen, Video-Links eintragen, Fragebögen
+zusammenstellen (Fragen mit Kurzantwort/Langtext/Einfach-/Mehrfachauswahl)
+und Mitglieder einem Programm mit Startdatum zuordnen.
+
+**Fragebogen als PDF:** Ein Mitglied kann seine Antworten client-seitig
+(lazy geladenes `jsPDF`, kein Bundle-Gewicht ohne tatsächliche Nutzung) als
+PDF erzeugen und sich per Klick an die eigene, im Login hinterlegte
+E-Mail-Adresse schicken lassen – über eine neue Edge Function
+(`supabase/functions/send-questionnaire-pdf/`, Resend wie bei `notify-lead`,
+Einrichtung dort im Datei-Kommentar). Die Zieladresse kommt dabei
+ausschließlich aus dem geprüften Login, nie aus dem Request selbst.
+
 ## Text-Editor (lokal, noch ohne Backend)
 
 Unter **`/intern/editor`** (gleicher Passphrase-Schutz wie das CRM) lassen

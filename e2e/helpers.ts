@@ -74,4 +74,62 @@ export async function mockSupabaseAuth(page: Page, outcome: 'success' | 'invalid
   await page.route('**/rest/v1/lead_notes**', (route) =>
     route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }),
   )
+  // RequireAdmin (Crm.tsx) prüft nach dem Login zusätzlich die Rolle im
+  // eigenen Profil, AdminMitglieder.tsx lädt außerdem ALLE Profile für die
+  // Mitgliederliste – dieselbe Route bedient deshalb beide Formen (ein
+  // einzelnes Objekt für `.maybeSingle()`, ein Array sonst), unterschieden
+  // am Accept-Header, den supabase-js je nach Aufruf unterschiedlich setzt.
+  await page.route('**/rest/v1/profiles**', (route) => {
+    const admin = {
+      id: '00000000-0000-0000-0000-000000000000',
+      email: 'jasmin@example.com',
+      full_name: null,
+      role: 'admin',
+      created_at: new Date().toISOString(),
+    }
+    const einzelobjekt = (route.request().headers()['accept'] ?? '').includes('vnd.pgrst.object')
+    return route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(einzelobjekt ? admin : [admin]),
+    })
+  })
+}
+
+/** Login-Versuch im Mitgliederbereich abfangen – wie mockSupabaseAuth, aber
+ * mit role="member" und ohne Einschreibung, für e2e/mitglieder.spec.ts. */
+export async function mockMemberAuth(page: Page) {
+  const userId = '11111111-1111-1111-1111-111111111111'
+
+  await page.route('**/auth/v1/token**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        access_token: 'e2e-fake-member-access-token',
+        token_type: 'bearer',
+        expires_in: 3600,
+        refresh_token: 'e2e-fake-member-refresh-token',
+        user: { id: userId, email: 'teilnehmerin@example.com', aud: 'authenticated', role: 'authenticated' },
+      }),
+    }),
+  )
+
+  await page.route('**/rest/v1/profiles**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        id: userId,
+        email: 'teilnehmerin@example.com',
+        full_name: 'Teilnehmerin',
+        role: 'member',
+        created_at: new Date().toISOString(),
+      }),
+    }),
+  )
+
+  await page.route('**/rest/v1/enrollments**', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }),
+  )
 }

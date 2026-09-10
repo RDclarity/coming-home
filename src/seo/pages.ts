@@ -5,8 +5,9 @@
  *  2. Die generierte sitemap.xml.
  *  3. (indirekt) robots.txt/llms.txt, die von Hand denselben Pfaden folgen.
  *
- * /admin (CRM), /intern/editor und /danke sind absichtlich NICHT hier
- * gelistet – interne Werkzeuge bzw. die Dankeseite werden nicht vorgerendert,
+ * /admin (CRM), /intern/editor, /mitglieder und /danke sind absichtlich
+ * NICHT hier gelistet – interne/geschützte Bereiche bzw. die Dankeseite
+ * werden nicht vorgerendert,
  * nicht indexiert und nicht in der Sitemap geführt.
  */
 

@@ -2,13 +2,16 @@ import { useMemo, useState, useSyncExternalStore, type FormEvent } from 'react'
 import { InternGate } from '../../components/InternGate'
 import { SupabaseLoginGate } from '../../components/SupabaseLoginGate'
 import { crmStore } from '../../crm/store'
+import { signOut } from '../../crm/auth'
 import { supabaseConfigured } from '../../crm/supabaseClient'
 import { LEAD_SOURCE_LABELS, LEAD_STATUS_LABELS, type Lead, type LeadStatus } from '../../crm/types'
 import { INTERN_PASSPHRASE } from '../../lib/internAuth'
+import { useProfile } from '../../members/useProfile'
+import { AdminMitglieder } from './AdminMitglieder'
 import { Statistik } from './Statistik'
 import styles from './Crm.module.css'
 
-type Tab = 'anfragen' | 'statistik'
+type Tab = 'anfragen' | 'statistik' | 'mitglieder'
 
 const STATUS_ORDER: LeadStatus[] = ['neu', 'kontaktiert', 'gebucht', 'abgeschlossen', 'abgesagt']
 
@@ -27,7 +30,7 @@ export function Crm() {
   if (supabaseConfigured) {
     return (
       <SupabaseLoginGate title="Coming-Home-CRM">
-        <Dashboard />
+        <RequireAdmin />
       </SupabaseLoginGate>
     )
   }
@@ -42,6 +45,39 @@ export function Crm() {
       <Dashboard />
     </InternGate>
   )
+}
+
+/**
+ * Zusätzlich zum Login (SupabaseLoginGate prüft nur "eingeloggt oder nicht")
+ * noch die Rolle prüfen: seit dem Mitgliederbereich gibt es auch normale
+ * Teilnehmer-Logins über denselben Supabase-Auth-Pool – die sollen hier
+ * NICHT reinkommen, auch wenn die Datenbank (RLS) ihnen ohnehin nur leere
+ * Listen liefern würde. Klarer und weniger verwirrend, sie erst gar nicht
+ * die CRM-Oberfläche sehen zu lassen.
+ */
+function RequireAdmin() {
+  const { profile, loading } = useProfile()
+
+  if (loading) return null
+
+  if (!profile || profile.role !== 'admin') {
+    return (
+      <section className={styles.sec}>
+        <div className={styles.inner}>
+          <span className={styles.badge}>Intern</span>
+          <h1 className={styles.title}>Kein Zugriff</h1>
+          <p className={styles.notice}>
+            Dieser Login ist nicht für das Coming-Home-Backend freigeschaltet.
+          </p>
+          <button type="button" className={styles.filterBtn} onClick={() => signOut()}>
+            Abmelden
+          </button>
+        </div>
+      </section>
+    )
+  }
+
+  return <Dashboard />
 }
 
 function Dashboard() {
@@ -79,10 +115,19 @@ function Dashboard() {
           >
             Statistik
           </button>
+          <button
+            type="button"
+            className={[styles.tabBtn, tab === 'mitglieder' && styles.tabBtnActive].filter(Boolean).join(' ')}
+            onClick={() => setTab('mitglieder')}
+          >
+            Mitgliederbereich
+          </button>
         </div>
 
         {tab === 'statistik' ? (
           <Statistik />
+        ) : tab === 'mitglieder' ? (
+          <AdminMitglieder />
         ) : (
           <>
             <p className={styles.notice}>

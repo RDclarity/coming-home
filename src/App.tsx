@@ -10,6 +10,7 @@ import { Crm } from './pages/crm/Crm'
 import { Danke } from './pages/Danke'
 import { Editor } from './pages/editor/Editor'
 import { Home } from './pages/Home'
+import { Mitglieder } from './pages/members/Mitglieder'
 import { Agb } from './pages/legal/Agb'
 import { Datenschutz } from './pages/legal/Datenschutz'
 import { Impressum } from './pages/legal/Impressum'
@@ -21,18 +22,21 @@ import { ServicePage } from './pages/services/ServicePage'
 import { Footer } from './sections/Footer'
 import { Nav } from './sections/Nav'
 
-/** Interne Werkzeuge (CRM unter /admin, Text-Editor unter /intern/editor)
- * bekommen bewusst KEINE Website-Chrome (Nav, Footer, Musikplayer, Cookie-
- * Banner) – wer sich dort einloggt, soll ausschließlich das Werkzeug sehen,
- * nicht die Marketing-Seite drumherum. */
-function istInternesWerkzeug(pathname: string): boolean {
-  return pathname.startsWith('/admin') || pathname.startsWith('/intern/')
+/** Eingeloggte Bereiche (CRM/Verwaltung unter /admin, Text-Editor unter
+ * /intern/editor, Mitgliederbereich unter /mitglieder) bekommen bewusst
+ * KEINE Website-Chrome (Nav, Footer, Musikplayer, Cookie-Banner) – wer sich
+ * dort einloggt, soll nur den jeweiligen Bereich sehen, nicht die
+ * Marketing-Seite drumherum. Bleiben außerdem von der Seitenaufruf-Statistik
+ * ausgenommen (siehe lib/analytics.ts) – dafür fehlt eingeloggten Accounts
+ * ohnehin die nötige `anon`-Einfüge-Berechtigung auf `page_views`. */
+function istEingeloggterBereich(pathname: string): boolean {
+  return pathname.startsWith('/admin') || pathname.startsWith('/intern/') || pathname.startsWith('/mitglieder')
 }
 
 export default function App() {
   useScrollToHash()
   const location = useLocation()
-  const ohneChrome = istInternesWerkzeug(location.pathname)
+  const ohneChrome = istEingeloggterBereich(location.pathname)
 
   useEffect(() => {
     // Seitenaufrufe fürs Besucherstatistik-Panel im CRM – interne Werkzeuge
@@ -77,6 +81,11 @@ export default function App() {
             <Route path="/admin" element={<Crm />} />
             <Route path="/intern/crm" element={<Navigate to="/admin" replace />} />
             <Route path="/intern/editor" element={<Editor />} />
+
+            {/* Mitgliederbereich für die 3-/12-Monats-Begleitungen – eigener
+                Supabase-Login (siehe pages/members/Mitglieder.tsx), ebenfalls
+                nicht in Sitemap/robots.txt gelistet. */}
+            <Route path="/mitglieder" element={<Mitglieder />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
