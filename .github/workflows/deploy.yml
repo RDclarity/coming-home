@@ -4,10 +4,22 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Holt bei JEDEM Build automatisch die zuletzt im Website-Editor
+  # gespeicherten Text-/Foto-/Bereichs-Änderungen aus Supabase (siehe
+  # scripts/prerender.mjs) – dieser Zeitplan sorgt dafür, dass gespeicherte
+  # Änderungen auch OHNE Knopfdruck innerhalb von höchstens 15 Minuten von
+  # selbst live gehen. Bewusst die einfachste Lösung ganz ohne zusätzliches
+  # Secret: ein GitHub-Token, das gezielt nur dieses eine Repo ansprechen
+  # dürfte, lässt sich nicht automatisiert erzeugen (nur per Web-UI) – ein
+  # bereits vorhandener, aber viel zu breit berechtigter Token käme dafür
+  # nicht infrage (gleiches Prinzip wie bei den Supabase-Themen C1/C2).
+  schedule:
+    - cron: '*/15 * * * *'
   # Vom "Veröffentlichen"-Knopf im Website-Editor ausgelöst (siehe
-  # supabase/functions/trigger-rebuild/) – baut mit den zuletzt in Supabase
-  # gespeicherten Text-/Foto-/Bereichs-Änderungen neu (scripts/prerender.mjs
-  # liest diese beim Build), ohne dass sich am Code etwas ändert.
+  # supabase/functions/trigger-rebuild/) – löst sofort denselben Build aus,
+  # FALLS irgendwann ein eng auf dieses Repo begrenzter GitHub-Token als
+  # Supabase-Secret GITHUB_TOKEN hinterlegt wird (siehe Kommentar dort).
+  # Ohne dieses Secret bleibt es bei "spätestens alle 15 Minuten" oben.
   repository_dispatch:
     types: [publish-content]
 

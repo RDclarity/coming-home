@@ -97,11 +97,13 @@ export function AdminWebsite() {
       const result = await publish()
       setPublishResult(
         result.skipped
-          ? result.skipped
-          : 'Wird veröffentlicht – in ein paar Minuten sind die Änderungen live.',
+          ? 'Kein Grund zur Sorge: Gespeicherte Änderungen gehen ohnehin automatisch spätestens alle 15 Minuten live – dieser Knopf hätte es nur beschleunigt.'
+          : 'Wird jetzt sofort veröffentlicht – in ein paar Minuten sind die Änderungen live.',
       )
     } catch {
-      setPublishResult('Veröffentlichen hat leider nicht geklappt. Versuch es gern nochmal.')
+      setPublishResult(
+        'Sofort-Veröffentlichen hat gerade nicht geklappt – kein Problem, deine Änderungen sind trotzdem gespeichert und gehen spätestens in 15 Minuten von selbst live.',
+      )
     } finally {
       setPublishing(false)
     }
@@ -134,7 +136,7 @@ export function AdminWebsite() {
             onClick={handlePublish}
             disabled={publishing}
           >
-            {publishing ? 'Wird veröffentlicht …' : 'Veröffentlichen'}
+            {publishing ? 'Wird veröffentlicht …' : 'Jetzt sofort veröffentlichen'}
           </button>
           <button type="button" className={styles.filterBtn} onClick={() => setZeigeVorschau((v) => !v)}>
             {zeigeVorschau ? 'Vorschau ausblenden' : 'Vorschau einblenden'}
@@ -145,9 +147,10 @@ export function AdminWebsite() {
       {publishResult && <p className={styles.notice}>{publishResult}</p>}
 
       <p className={styles.notice}>
-        Änderungen werden beim Verlassen eines Felds sofort gespeichert. Live auf der echten Seite
-        sind sie aber erst, sobald du oben auf <strong>„Veröffentlichen"</strong> klickst – das baut
-        die Seite neu und dauert ein paar Minuten.
+        Änderungen werden beim Verlassen eines Felds sofort gespeichert und gehen danach von ganz
+        allein spätestens innerhalb von 15 Minuten live – du musst nichts weiter tun.{' '}
+        <strong>„Jetzt sofort veröffentlichen"</strong> ist nur für den Fall da, dass es mal schneller
+        gehen soll.
       </p>
 
       <div className={zeigeVorschau ? styles.mitVorschau : undefined}>
@@ -156,7 +159,8 @@ export function AdminWebsite() {
         {zeigeVorschau && (
           <div className={styles.vorschauSpalte}>
             <p className={styles.vorschauLabel}>
-              Aktuell live (nicht deine ungespeicherten Änderungen – erst nach „Veröffentlichen")
+              Aktuell live (deine letzten Änderungen erscheinen hier erst, sobald automatisch neu
+              gebaut wurde – spätestens nach 15 Minuten)
             </p>
             <iframe className={styles.vorschauFrame} src="https://jasmindraxl.at/" title="Aktuelle Website" />
           </div>

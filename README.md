@@ -251,16 +251,23 @@ bleiben Entwicklerinnen-Sache.
 
 **Wie das mit einer komplett statischen Seite zusammengeht:** Die Seite wird
 weiterhin vollständig vorgerendert (schnell, gut bei Google) – Änderungen
-gehen deshalb nicht *sofort* live, sondern werden in Supabase gespeichert
-(`content_overrides`, `custom_sections`) und erst durch einen Klick auf
-**„Veröffentlichen"** wirklich ausgerollt: Das löst über eine Edge Function
-(`supabase/functions/trigger-rebuild/`) einen `repository_dispatch` an
-GitHub aus, der `deploy.yml` denselben Build wie bei einem normalen Push
-laufen lässt – nur dass `scripts/prerender.mjs` jetzt zusätzlich die
-gespeicherten Änderungen aus Supabase abholt und einbaut, bevor die Seite
-vorgerendert wird (siehe ausführlicher Kommentar dort und in der Migration
-`00000000000005_content_editor.sql`). Dauert wie ein normales Deployment
-ca. 1–3 Minuten.
+werden beim Speichern in Supabase abgelegt (`content_overrides`,
+`custom_sections`) und gehen **von ganz allein spätestens alle 15 Minuten**
+live: `.github/workflows/deploy.yml` baut die Seite in diesem Rhythmus per
+Cron automatisch neu, `scripts/prerender.mjs` holt dabei jedes Mal die
+zuletzt gespeicherten Änderungen aus Supabase und backt sie ein (siehe
+ausführlicher Kommentar dort und in der Migration
+`00000000000005_content_editor.sql`). **Kein Setup-Schritt nötig** – das
+funktioniert von Anfang an, ganz ohne zusätzliches Secret.
+
+Der Button **„Jetzt sofort veröffentlichen"** ist optional und beschleunigt
+das nur: löst über eine Edge Function (`supabase/functions/trigger-rebuild/`)
+einen `repository_dispatch` an GitHub aus, der denselben Build sofort statt
+erst beim nächsten automatischen Lauf anstößt. Dafür bräuchte es einen
+GitHub-Token, der gezielt nur auf dieses eine Repo beschränkt ist – so einen
+Token kann man nicht automatisiert erzeugen (nur per GitHub-Web-UI), deshalb
+ist das bewusst ein optionaler Schritt für später und keine Voraussetzung
+(siehe unten).
 
 **Texte:** generisch über `src/cms/flatten.ts` (zerlegt `site`/`services`/
 `articles` in einzelne Felder, wie schon der frühere lokale Editor) – nach
@@ -279,12 +286,12 @@ Bereiche immer zum bestehenden Design passen. Erscheinen auf der Startseite
 zwischen „Workshops & Termine" und der Audioübung (`src/pages/Home.tsx`,
 `src/sections/CustomSections.tsx`).
 
-Setup-Schritt, den nur Jasmin machen kann (wie beim `RESEND_API_KEY`):
-`GITHUB_TOKEN` (Fine-grained Personal Access Token, nur fürs Repo
-„coming-home", Berechtigung „Actions: Read and write") als Supabase-Secret
-hinterlegen, siehe Kommentar in `supabase/functions/trigger-rebuild/`. Ohne
-das speichert der Editor weiterhin alles zuverlässig, nur der
-„Veröffentlichen"-Knopf löst dann noch keinen Build aus.
+**Optionaler Setup-Schritt** (nur nötig, wenn der Sofort-Knopf statt der
+automatischen 15-Minuten-Freischaltung genutzt werden soll), den nur ihr
+selbst machen könnt (wie beim `RESEND_API_KEY`): `GITHUB_TOKEN`
+(Fine-grained Personal Access Token, nur fürs Repo „coming-home",
+Berechtigung „Actions: Read and write") als Supabase-Secret hinterlegen,
+siehe Kommentar in `supabase/functions/trigger-rebuild/`.
 
 Der frühere, rein lokale Text-Editor unter `/intern/editor` (Entwürfe nur in
 `localStorage`, musste von Hand exportiert und im Code übernommen werden)
