@@ -1,0 +1,18 @@
+.bar {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .bar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom));
+    background: var(--c-light);
+    border-top: 1px solid #0c0c0c1a;
+    box-shadow: 0 -8px 24px -14px #00000040;
+  }
+}

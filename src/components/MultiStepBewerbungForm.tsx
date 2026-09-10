@@ -92,7 +92,14 @@ export function MultiStepBewerbungForm() {
   }
 
   function currentStepIsValid(): boolean {
-    if (step === 'begleitung' || step === 'final') return true // optional / beim Absenden geprüft
+    // Situation/Motivation sind bewusst NICHT verpflichtend: zwei offene,
+    // persönliche Fragen als Pflichtfeld vor dem Absenden schrecken
+    // erfahrungsgemäß Leute ab, die noch unentschlossen sind oder es gerade
+    // eilig haben – wer mag, beantwortet sie trotzdem, aber niemand hängt
+    // deswegen fest.
+    if (step === 'begleitung' || step === 'situation' || step === 'motivation' || step === 'final') {
+      return true
+    }
     return values[step].trim().length > 0
   }
 
@@ -275,7 +282,9 @@ export function MultiStepBewerbungForm() {
         <div
           className={[styles.step, step === 'situation' && styles.stepActive].filter(Boolean).join(' ')}
         >
-          <span className={styles.stepLabel}>Schritt 6 von {QUESTION_COUNT}</span>
+          <span className={styles.stepLabel}>
+            Schritt 6 von {QUESTION_COUNT} <span className={styles.stepOptional}>(optional)</span>
+          </span>
           <label className={styles.stepQuestion} htmlFor="bw-situation">
             Wo stehst du gerade in deinem Leben?
           </label>
@@ -284,7 +293,7 @@ export function MultiStepBewerbungForm() {
             id="bw-situation"
             className={styles.input}
             name="situation"
-            placeholder="Ein paar Sätze reichen"
+            placeholder="Wenn du magst – ein paar Sätze reichen"
             rows={3}
             value={values.situation}
             onChange={(event) => setValue('situation', event.target.value)}
@@ -295,7 +304,9 @@ export function MultiStepBewerbungForm() {
         <div
           className={[styles.step, step === 'motivation' && styles.stepActive].filter(Boolean).join(' ')}
         >
-          <span className={styles.stepLabel}>Schritt 7 von {QUESTION_COUNT}</span>
+          <span className={styles.stepLabel}>
+            Schritt 7 von {QUESTION_COUNT} <span className={styles.stepOptional}>(optional)</span>
+          </span>
           <label className={styles.stepQuestion} htmlFor="bw-motivation">
             Warum möchtest du diesen Weg jetzt gehen?
           </label>
@@ -304,7 +315,7 @@ export function MultiStepBewerbungForm() {
             id="bw-motivation"
             className={styles.input}
             name="motivation"
-            placeholder="Was bewegt dich gerade dazu"
+            placeholder="Wenn du magst – was dich gerade dazu bewegt"
             rows={3}
             value={values.motivation}
             onChange={(event) => setValue('motivation', event.target.value)}
@@ -320,6 +331,11 @@ export function MultiStepBewerbungForm() {
               </strong>
               {values.telefon && <> · {values.telefon}</>}
               {values.email && <> · {values.email}</>}
+            </p>
+
+            <p className={styles.reassurance}>
+              Unverbindlich – damit gehst du noch keine Verpflichtung ein. Ich melde mich persönlich
+              bei dir, und wir schauen gemeinsam, ob es passt.
             </p>
 
             <label className={styles.checkboxRow}>

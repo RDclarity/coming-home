@@ -5,6 +5,14 @@
   color: var(--c-light);
 }
 
+@media (max-width: 860px) {
+  /* Platz für die fixierte mobile CTA-Leiste (MobileCtaBar) am unteren
+     Rand – sonst läge sie am Ende der Seite über dem Kontaktformular. */
+  .sec {
+    padding-bottom: calc(clamp(2rem, 4vw, 3rem) + 4.5rem + env(safe-area-inset-bottom));
+  }
+}
+
 .inner {
   max-width: var(--wide);
   margin: 0 auto;

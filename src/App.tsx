@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ConsentBanner } from './components/ConsentBanner'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { MobileCtaBar } from './components/MobileCtaBar'
 import { MusicPlayer } from './components/MusicPlayer'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { trackPageView } from './lib/analytics'
@@ -53,6 +54,7 @@ export default function App() {
       )}
       {!ohneChrome && <MusicPlayer />}
       {!ohneChrome && <ConsentBanner />}
+      {!ohneChrome && <MobileCtaBar />}
       {!ohneChrome && <Nav />}
       <main>
         <ErrorBoundary>

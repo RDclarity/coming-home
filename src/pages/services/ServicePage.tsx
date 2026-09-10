@@ -4,11 +4,30 @@ import { Button } from '../../components/Button'
 import { Eyebrow } from '../../components/Eyebrow'
 import { Reveal } from '../../components/Reveal'
 import { getFaqBySlug } from '../../data/site'
-import { categoryLabels, getServiceBySlug, services } from '../../data/services'
+import { categoryLabels, getServiceBySlug, services, type Service } from '../../data/services'
 import { withBase } from '../../lib/url'
 import { Abschluss } from '../../sections/Abschluss'
 import { NotFound } from '../NotFound'
 import styles from './ServicePage.module.css'
+
+// Wohin die Haupt-CTA führt, je nach Angebotsart: Einzelsession und
+// Tagesseminar sind eine einmalige, überschaubare Entscheidung – dafür
+// reicht das kurze Kontaktformular. Die mehrmonatigen Begleitungen sind
+// bewusst als Bewerbungsprozess angelegt (siehe data/site.ts, bewerbung.intro2)
+// – nur die gehören wirklich zum Bewerbungsbogen. Vorher führte JEDES Angebot
+// zum selben, aufwendigeren Bewerbungsbogen – unnötige Hürde für alle, die
+// eigentlich nur eine einzelne Session oder einen Workshop-Platz wollten.
+const CTA_HREF_BY_CATEGORY: Record<Service['category'], string> = {
+  einzelsession: '/#kontakt',
+  workshop: '/#kontakt',
+  begleitung: '/#kennenlernen',
+}
+
+const CTA_LABEL_FALLBACK_BY_CATEGORY: Record<Service['category'], string> = {
+  einzelsession: 'Anfragen',
+  workshop: 'Platz anfragen',
+  begleitung: 'Kennenlerngespräch vereinbaren',
+}
 
 // Ein Foto von Jasmin pro Angebot – dieselbe Session, aber jeweils eine
 // andere Stimmung passend zum jeweiligen Format.
@@ -74,8 +93,12 @@ export function ServicePage() {
             </ul>
 
             <div className={styles.actions}>
-              <Button href="/#kennenlernen" size="lg" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
-                {service.ctaLabel ?? 'Kennenlerngespräch vereinbaren'}
+              <Button
+                href={CTA_HREF_BY_CATEGORY[service.category]}
+                size="lg"
+                style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}
+              >
+                {service.ctaLabel ?? CTA_LABEL_FALLBACK_BY_CATEGORY[service.category]}
               </Button>
               <Button href="/begleitungen" variant="outline" style={{ color: 'var(--c-light)' }}>
                 Alle Begleitungen

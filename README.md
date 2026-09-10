@@ -318,6 +318,33 @@ oder `newsletter` ist.
 automatische E-Mail-Benachrichtigung an `anfrage@jasmindraxl.at` aktivieren,
 siehe `supabase/functions/notify-lead/`.
 
+### Conversion-Optimierung (2026-09-10)
+
+Bis dahin führte JEDE Haupt-CTA auf der ganzen Seite – Hero, Nav, jede
+einzelne Begleitungs-Detailseite, egal ob Einzelsession oder Jahres-
+begleitung – zum selben Bewerbungsbogen (`#kennenlernen`, zwei verpflichtende
+offene Fragen zu Lebenssituation/Motivation). Für eine einmalige 1:1-Session
+oder einen Workshop-Platz ist das eine unnötig hohe Hürde. Geändert:
+
+- **CTA-Ziel richtet sich nach `service.category`**
+  (`pages/services/ServicePage.tsx`, `CTA_HREF_BY_CATEGORY`): Einzelsession
+  und Workshop führen jetzt zum kurzen Kontaktformular (`#kontakt`), nur die
+  mehrmonatigen Begleitungen weiterhin zum Bewerbungsbogen – passend zur
+  eigenen Beschreibung dieser Begleitungen (`bewerbung.intro2`), dass genau
+  dafür ein Bewerbungsprozess gedacht ist.
+- **„Wo stehst du gerade in deinem Leben?" und „Warum möchtest du diesen Weg
+  jetzt gehen?"** im Bewerbungsbogen sind jetzt optional statt Pflichtfelder
+  (`MultiStepBewerbungForm.tsx`) – wer mag, beantwortet sie trotzdem, aber
+  niemand hängt am Absenden fest.
+- Kurzer Vertrauens-Hinweis vor dem Absenden-Button („Unverbindlich – damit
+  gehst du noch keine Verpflichtung ein …").
+- **`components/MobileCtaBar.tsx`**: fixierte CTA-Leiste ganz unten, nur auf
+  schmalen Bildschirmen – die Haupt-CTA war auf Mobil bisher nur über das
+  Hamburger-Menü erreichbar (`Nav.module.css` blendet den Header-Button dort
+  komplett aus), ein bekannter Grund für weniger Formularabschlüsse auf dem
+  Handy. Erscheint erst nach einer eventuellen Cookie-Entscheidung (sonst
+  Überlappung mit `ConsentBanner`, beide unten fixiert).
+
 ## Tracking (Google Analytics, Google Ads, Meta Pixel)
 
 Komplett vorbereitet, aber standardmäßig inaktiv – jedes Tool bleibt aus,

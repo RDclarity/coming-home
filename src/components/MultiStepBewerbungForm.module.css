@@ -208,6 +208,13 @@ textarea.input {
   opacity: 1;
 }
 
+.reassurance {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  opacity: 0.65;
+  margin: 0;
+}
+
 .err {
   color: #a4342a;
   font-size: 0.85rem;

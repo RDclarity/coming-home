@@ -39,7 +39,11 @@ export type Service = {
   relatedSlugs: string[]
   relatedArticleSlugs: string[]
   metaDescription: string
-  /** Überschreibt den sonst generischen "Kennenlerngespräch vereinbaren"-Button im Hero. */
+  /** Überschreibt den sonst nach `category` gewählten CTA-Text im Hero
+   * (siehe CTA_LABEL_FALLBACK_BY_CATEGORY in ServicePage.tsx). Wohin der
+   * Button führt, hängt ausschließlich von `category` ab, nicht von diesem
+   * Feld – Einzelsession/Workshop zum kurzen Kontaktformular, Begleitung
+   * zum Bewerbungsbogen (siehe CTA_HREF_BY_CATEGORY dort). */
   ctaLabel?: string
 }
 
