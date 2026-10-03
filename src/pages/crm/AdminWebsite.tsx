@@ -43,7 +43,7 @@ const SITE_SECTION_LABELS: Record<string, string> = {
   ueberJasmin: 'Startseite – Über Jasmin',
   arbeitsweise: 'Startseite – Arbeitsweise',
   fuerWen: 'Startseite – Für wen',
-  bewerbung: 'Startseite – Bewerbungsbogen',
+  bewerbung: 'Startseite – Kennenlerngespräch',
   faq: 'Startseite – Häufige Fragen',
   termine: 'Startseite – Workshops & Termine',
   newsletter: 'Startseite – Audioübung',

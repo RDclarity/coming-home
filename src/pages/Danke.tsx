@@ -11,10 +11,6 @@ const COPY: Record<FormType, { title: string; text: string }> = {
     title: 'Danke für deine Nachricht.',
     text: 'Sie ist angekommen. Ich melde mich bald persönlich bei dir.',
   },
-  bewerbung: {
-    title: 'Danke für dein Vertrauen.',
-    text: 'Deine Bewerbung ist angekommen. Ich melde mich innerhalb der nächsten Tage persönlich bei dir.',
-  },
   newsletter: {
     title: 'Danke.',
     text: 'Schau in dein Postfach – die Audioübung ist unterwegs zu dir.',
@@ -29,8 +25,11 @@ const DEFAULT_COPY = {
 /**
  * Eigene Route statt einer nur eingeblendeten Erfolgsmeldung innerhalb des
  * jeweiligen Formulars – nach dem Absenden landet man wirklich auf dieser
- * Seite (siehe MultiStepContactForm.tsx, MultiStepBewerbungForm.tsx,
- * Newsletter.tsx: navigate('/danke', { state: { formType } })).
+ * Seite (siehe MultiStepContactForm.tsx, Newsletter.tsx:
+ * navigate('/danke', { state: { formType } })). Das Kennenlerngespräch
+ * (TerminKalender.tsx) bucht direkt und zeigt seine Bestätigung inline,
+ * ohne hierher zu navigieren – ein Kalender-Slot ist bereits seine eigene
+ * Bestätigung.
  *
  * Wird bewusst NICHT vorgerendert/in der Sitemap geführt (siehe
  * src/seo/pages.ts) – sie ist nur nach einem echten Formularversand über

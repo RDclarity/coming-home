@@ -32,7 +32,7 @@ const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT as string | undefined
 const LEAD_NOTIFY_ENDPOINT = import.meta.env.VITE_LEAD_NOTIFY_ENDPOINT as string | undefined
 const FALLBACK_MAIL = 'anfrage@jasmindraxl.at'
 
-export type FormType = 'bewerbung' | 'kontakt' | 'newsletter'
+export type FormType = 'kontakt' | 'newsletter'
 
 export type SubmitResult = { ok: true } | { ok: false; message: string }
 

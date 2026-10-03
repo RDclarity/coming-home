@@ -12,10 +12,11 @@ import styles from './ServicePage.module.css'
 
 // Wohin die Haupt-CTA führt, je nach Angebotsart: Einzelsession und
 // Tagesseminar sind eine einmalige, überschaubare Entscheidung – dafür
-// reicht das kurze Kontaktformular. Die mehrmonatigen Begleitungen sind
-// bewusst als Bewerbungsprozess angelegt (siehe data/site.ts, bewerbung.intro2)
-// – nur die gehören wirklich zum Bewerbungsbogen. Vorher führte JEDES Angebot
-// zum selben, aufwendigeren Bewerbungsbogen – unnötige Hürde für alle, die
+// reicht das kurze Kontaktformular. Die mehrmonatigen Begleitungen führen
+// stattdessen zur Direktbuchung eines kostenlosen Kennenlerngesprächs
+// (siehe data/site.ts, bewerbung.intro2, und TerminKalender.tsx) – nur die
+// brauchen wirklich ein Vorgespräch. Vorher führte JEDES Angebot zum
+// selben, aufwendigeren Bewerbungsbogen – unnötige Hürde für alle, die
 // eigentlich nur eine einzelne Session oder einen Workshop-Platz wollten.
 const CTA_HREF_BY_CATEGORY: Record<Service['category'], string> = {
   einzelsession: '/#kontakt',

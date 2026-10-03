@@ -1,0 +1,239 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.hinweis {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--c-key1);
+  background: color-mix(in srgb, var(--c-key1) 10%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.lade {
+  margin: 0;
+  font-size: 0.92rem;
+  opacity: 0.65;
+}
+
+.tageStreifen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  flex: 0 0 auto;
+  padding: 0.65rem 1.05rem;
+  border: 1px solid color-mix(in srgb, var(--c-dark) 16%, transparent);
+  background: transparent;
+  color: var(--c-dark);
+  font-family: var(--font-text);
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tag:hover {
+  border-color: var(--c-key1);
+}
+
+.tagAktiv,
+.tagAktiv:hover {
+  background: var(--c-key1);
+  border-color: var(--c-key1);
+  color: var(--c-white);
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.4rem;
+  scroll-margin-top: 1rem;
+}
+
+.slot {
+  flex: 0 0 auto;
+  min-width: 4.6rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--c-key1) 55%, transparent);
+  background: transparent;
+  color: var(--c-key1);
+  font-family: var(--font-text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.slot:hover {
+  background: color-mix(in srgb, var(--c-key1) 12%, transparent);
+}
+
+.slotAktiv,
+.slotAktiv:hover {
+  background: var(--c-dark);
+  border-color: var(--c-dark);
+  color: var(--c-white);
+}
+
+.footnote {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.55;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.change {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-bottom: 0.2rem;
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  color: var(--c-key1);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--c-key1) 50%, transparent);
+  cursor: pointer;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-family: var(--font-text);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--c-dark) 18%, transparent);
+  background: var(--c-white);
+  color: var(--c-dark);
+  font-family: var(--font-text);
+  font-size: 0.98rem;
+  padding: 0.75rem 0.9rem;
+  resize: vertical;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--c-key1);
+  outline-offset: 1px;
+}
+
+.inputFehler {
+  border-color: #a4342a;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  opacity: 0.82;
+  cursor: pointer;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+  accent-color: var(--c-key1);
+  flex-shrink: 0;
+}
+
+.err {
+  margin: 0;
+  color: #a4342a;
+  font-size: 0.88rem;
+}
+
+.submit {
+  align-self: flex-start;
+  padding: 1rem 2.2rem;
+  border: 1px solid transparent;
+  background: var(--c-dark);
+  color: var(--c-white);
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.submit:hover {
+  opacity: 0.82;
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1rem 0;
+}
+
+.successDot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--c-key1);
+  color: var(--c-white);
+  font-size: 1.1rem;
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.successText {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
