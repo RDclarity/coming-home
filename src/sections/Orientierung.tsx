@@ -1,7 +1,7 @@
 import { Button } from '../components/Button'
 import { Eyebrow } from '../components/Eyebrow'
 import { Reveal } from '../components/Reveal'
-import { orientierung, site } from '../data/site'
+import { orientierung } from '../data/site'
 import styles from './Orientierung.module.css'
 
 export function Orientierung() {
@@ -19,18 +19,15 @@ export function Orientierung() {
               <span className={styles.cardNum}>{card.num}</span>
               <h3 className={styles.cardLabel}>{card.label}</h3>
               <p className={styles.cardTagline}>{card.tagline}</p>
-              <p className={styles.cardDesc}>{card.desc}</p>
               <p className={styles.cardOffers}>{card.offers}</p>
+              <p className={styles.cardPrice}>{card.price}</p>
+              <Button href={card.cta.href} variant="outline" size="sm">
+                {card.cta.label}
+              </Button>
             </Reveal>
           ))}
         </div>
 
-        <Reveal className={styles.foot}>
-          <p className={styles.closing}>{orientierung.closing}</p>
-          <Button href="/#kennenlernen" variant="outline" size="lg">
-            {site.ctaLabel}
-          </Button>
-        </Reveal>
       </div>
     </section>
   )

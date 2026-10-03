@@ -29,14 +29,6 @@ export function Jasmin() {
             <p className={styles.intro}>{jasmin.intro}</p>
           </Reveal>
 
-          <Reveal className={styles.body} delay={80}>
-            {jasmin.paragraphs.map((text) => (
-              <p key={text} className={styles.para}>
-                {text}
-              </p>
-            ))}
-          </Reveal>
-
           <Reveal className={styles.creds} delay={140}>
             <h3 className={styles.credLabel}>{jasmin.credentialsLabel}</h3>
             <ul className={styles.credList}>

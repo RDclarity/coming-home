@@ -14,7 +14,7 @@ import styles from './ServicePage.module.css'
 // Tagesseminar sind eine einmalige, überschaubare Entscheidung – dafür
 // reicht das kurze Kontaktformular. Die mehrmonatigen Begleitungen führen
 // stattdessen zur Direktbuchung eines kostenlosen Kennenlerngesprächs
-// (siehe data/site.ts, bewerbung.intro2, und TerminKalender.tsx) – nur die
+// (siehe data/site.ts, bewerbung, und TerminKalender.tsx) – nur die
 // brauchen wirklich ein Vorgespräch. Vorher führte JEDES Angebot zum
 // selben, aufwendigeren Bewerbungsbogen – unnötige Hürde für alle, die
 // eigentlich nur eine einzelne Session oder einen Workshop-Platz wollten.

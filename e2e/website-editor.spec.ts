@@ -145,15 +145,15 @@ test('Backend: Klick-Nachricht aus der Vorschau öffnet die passende Gruppe', as
   await page.getByRole('button', { name: 'Anmelden' }).click()
   await page.getByRole('button', { name: 'Website', exact: true }).click()
 
-  // Simuliert: Klick auf die "Arbeitsweise"-Sektion in der Vorschau.
+  // Simuliert: Klick auf die "Angebote"-Sektion in der Vorschau.
   await page.evaluate(() => {
     window.postMessage(
-      { source: 'coming-home-edit-mode', sectionId: 'arbeitsweise', pathname: '/' },
+      { source: 'coming-home-edit-mode', sectionId: 'orientierung', pathname: '/' },
       window.location.origin,
     )
   })
-  await expect(page.locator('#gruppe-site\\:arbeitsweise')).toBeVisible()
-  await expect(page.locator('#gruppe-site\\:arbeitsweise textarea').first()).toBeFocused()
+  await expect(page.locator('#gruppe-site\\:orientierung')).toBeVisible()
+  await expect(page.locator('#gruppe-site\\:orientierung textarea').first()).toBeFocused()
 
   // Simuliert: Klick auf der 1:1-Session-Seite -> passende Begleitungs-Gruppe.
   await page.evaluate(() => {

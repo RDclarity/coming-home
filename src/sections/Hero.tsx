@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '../components/Button'
-import { CyclingWord } from '../components/CyclingWord'
 import { Reveal } from '../components/Reveal'
 import { hero, site } from '../data/site'
 import { withBase } from '../lib/url'
@@ -77,30 +76,17 @@ export function Hero() {
             {hero.lead}
           </Reveal>
 
-          <Reveal as="p" className={styles.modalities} delay={220}>
-            {/* Nur an den Trennpunkten umbrechen, nie mitten in "1:1 Begleitung". */}
-            {hero.modalities.split(' · ').map((item, index) => (
-              <span key={item}>
-                {index > 0 && ' · '}
-                <span className={styles.modality}>{item}</span>
-              </span>
-            ))}
-          </Reveal>
-
-          <Reveal className={styles.actions} delay={280}>
+          <Reveal className={styles.actions} delay={220}>
             <Button href="/#kennenlernen" size="lg" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
               {site.ctaLabel}
             </Button>
-          </Reveal>
-
-          <Reveal as="p" className={styles.brand} delay={340}>
-            {hero.brandLines.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
+            <ul className={styles.trust}>
+              {hero.trust.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </Reveal>
         </div>
-
-        <CyclingWord />
       </div>
     </section>
   )

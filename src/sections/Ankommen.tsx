@@ -13,7 +13,6 @@ export function Ankommen() {
         <Reveal className={styles.intro}>
           <Eyebrow>{ankommen.eyebrow}</Eyebrow>
           <h2 className={styles.heading}>{ankommen.heading}</h2>
-          <p className={styles.lead}>{ankommen.lead}</p>
         </Reveal>
 
         <div className={styles.statements}>
