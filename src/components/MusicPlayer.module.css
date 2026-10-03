@@ -1,9 +1,10 @@
 .btn {
-  /* Knapp unter der sticky Nav (statt genau in der Ecke), damit der Button
-     nicht mit dem "Coming Home"-Schriftzug/Burger-Menü kollidiert. */
+  /* Unten links statt oben unter der Nav: dort überdeckte der Button beim
+     Scrollen Überzeilen und Überschriften der Sektionen. Unten links liegt
+     er außerhalb der Inhaltsspalte. */
   position: fixed;
-  top: calc(1.1rem + 80px);
-  left: 1.1rem;
+  bottom: 1.4rem;
+  left: 1.4rem;
   z-index: 45;
   width: 2.6rem;
   height: 2.6rem;
@@ -70,25 +71,31 @@
 
 .hint {
   position: fixed;
-  top: calc(1.1rem + 80px + 0.55rem);
-  left: calc(1.1rem + 2.6rem + 0.3rem);
+  bottom: calc(1.4rem + 0.45rem);
+  left: calc(1.4rem + 2.6rem + 0.35rem);
   z-index: 45;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.3rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+  /* Eigene dunkle Fläche: so bleibt der Hinweis auf hellem wie dunklem
+     Grund lesbar (vorher weiße Schrift mit Schatten – auf Creme unlesbar). */
+  background: #181817b8;
+  backdrop-filter: blur(6px);
+  border-radius: 999px;
   font-family: var(--font-text);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--c-white);
-  text-shadow: 0 1px 4px #00000080;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .hintArrow {
-  width: 34px;
-  height: 15px;
+  width: 26px;
+  height: 12px;
   color: var(--c-key1);
   flex-shrink: 0;
 }
@@ -127,5 +134,18 @@
 
   .btn::after {
     display: none;
+  }
+}
+
+/* Handy: über der fixierten Termin-Leiste (MobileCtaBar) */
+@media (max-width: 860px) {
+  .btn {
+    bottom: calc(5.6rem + env(safe-area-inset-bottom));
+    left: 0.9rem;
+  }
+
+  .hint {
+    bottom: calc(5.6rem + 0.45rem + env(safe-area-inset-bottom));
+    left: calc(0.9rem + 2.6rem + 0.35rem);
   }
 }

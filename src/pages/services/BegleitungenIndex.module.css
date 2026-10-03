@@ -22,7 +22,7 @@
   font-style: italic;
   font-size: clamp(1.3rem, 2.4vw, 1.7rem);
   line-height: 1.4;
-  color: var(--c-key1);
+  color: var(--c-key1-ink);
   margin: 0 0 1.1rem;
   max-width: 56ch;
 }

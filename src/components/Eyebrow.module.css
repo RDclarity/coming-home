@@ -7,7 +7,9 @@
   font-weight: 500;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--c-key1);
+  /* Heller Grund (Standard): tiefer Sand-Ton für Lesbarkeit. Dunkle
+     Sektionen setzen --accent-text: var(--c-key1). */
+  color: var(--accent-text, var(--c-key1-ink));
 }
 
 .center {

@@ -78,7 +78,13 @@ export function Hero() {
           </Reveal>
 
           <Reveal as="p" className={styles.modalities} delay={220}>
-            {hero.modalities}
+            {/* Nur an den Trennpunkten umbrechen, nie mitten in "1:1 Begleitung". */}
+            {hero.modalities.split(' · ').map((item, index) => (
+              <span key={item}>
+                {index > 0 && ' · '}
+                <span className={styles.modality}>{item}</span>
+              </span>
+            ))}
           </Reveal>
 
           <Reveal className={styles.actions} delay={280}>

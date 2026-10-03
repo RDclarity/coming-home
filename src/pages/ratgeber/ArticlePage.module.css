@@ -11,7 +11,7 @@
 }
 
 .category {
-  color: var(--c-key1);
+  color: var(--c-key1-ink);
 }
 
 .title {
@@ -139,7 +139,7 @@
 }
 
 .relatedLink:hover {
-  color: var(--c-key1);
+  color: var(--c-key1-ink);
 }
 
 .serviceLinks {

@@ -5,6 +5,9 @@
   color: var(--c-light);
   --b-line-bg: var(--c-light);
   --b-line-fg: var(--c-dark);
+  /* Eyebrow auf dunklem Grund im hellen Sand halten. */
+  --accent-text: var(--c-key1);
+  --grid-line: color-mix(in srgb, var(--c-light) 16%, transparent);
 }
 
 .inner {
@@ -22,12 +25,14 @@
   margin: 1.2rem 0 0;
 }
 
+/* Haarlinien-Raster: das Raster zeichnet die obere und linke Kante, jede
+   Karte ihre rechte und untere – so ist jede Karte rundum geschlossen,
+   egal ob drei Spalten nebeneinander oder gestapelt (mobil). */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: #ffffff18;
-  border: 1px solid #ffffff18;
+  border-top: 1px solid var(--grid-line);
+  border-left: 1px solid var(--grid-line);
   margin-bottom: clamp(3rem, 7vw, 5rem);
 }
 
@@ -36,6 +41,8 @@
   flex-direction: column;
   padding: clamp(2rem, 4vw, 3rem);
   background: var(--c-dark);
+  border-right: 1px solid var(--grid-line);
+  border-bottom: 1px solid var(--grid-line);
   transition: background 0.3s ease;
 }
 

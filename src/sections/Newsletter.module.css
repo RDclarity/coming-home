@@ -51,6 +51,20 @@
 .emailField {
   flex: 1;
   min-width: 0;
+  /* Fokusrahmen im tiefen Sand-Ton – das helle Sand-Gold ginge auf dem
+     Sand-Grund unter. */
+  --field-accent: var(--c-key1-ink, #74604b);
+}
+
+/* Eckig wie Buttons und Boxen der ganzen Seite; Innenabstand so gewählt,
+   dass das Feld genau so hoch ist wie der große Button daneben (am Desktop
+   zusätzlich per Stretch auf Zeilenhöhe gezogen). */
+.emailField .emailInput {
+  flex: 1;
+  border-radius: 0;
+  padding: 1.15rem 1.2rem;
+  line-height: 1.31;
+  font-size: 1rem;
 }
 
 .consent {
@@ -65,7 +79,7 @@
 
 .consent input {
   margin-top: 0.2rem;
-  accent-color: var(--c-key1);
+  accent-color: var(--c-key1-ink, #74604b);
   flex-shrink: 0;
 }
 

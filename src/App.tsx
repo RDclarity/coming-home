@@ -5,6 +5,7 @@ import { EditModeOverlay } from './components/EditModeOverlay'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { MobileCtaBar } from './components/MobileCtaBar'
 import { MusicPlayer } from './components/MusicPlayer'
+import { TerminOverlay } from './components/TerminOverlay'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import { trackPageView } from './lib/analytics'
 import { withBase } from './lib/url'
@@ -98,6 +99,7 @@ export default function App() {
         </ErrorBoundary>
       </main>
       {!ohneChrome && <Footer />}
+      {!ohneChrome && <TerminOverlay />}
     </>
   )
 }

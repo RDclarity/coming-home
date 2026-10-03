@@ -9,6 +9,7 @@
   justify-content: center;
   background: var(--c-dark);
   color: var(--c-white);
+  --accent-text: var(--c-key1);
 }
 
 .bgLayer {
@@ -186,4 +187,8 @@
   .brand {
     margin-top: 2.2rem;
   }
+}
+
+.modality {
+  white-space: nowrap;
 }

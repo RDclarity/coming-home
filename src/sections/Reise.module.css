@@ -81,7 +81,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   border: 1px solid var(--c-key1);
-  color: var(--c-key1);
+  color: var(--c-key1-ink);
   padding: 0.3rem 0.85rem;
   margin-bottom: 1.1rem;
 }

@@ -7,18 +7,21 @@ export function Ankommen() {
   return (
     <section id="ankommen" className={styles.sec}>
       <div className={styles.inner}>
-        <div className={styles.textBlock}>
-          <Reveal>
-            <Eyebrow>{ankommen.eyebrow}</Eyebrow>
-            <h2 className={styles.heading}>{ankommen.heading}</h2>
-            <p className={styles.lead}>{ankommen.lead}</p>
-          </Reveal>
+        {/* Links: Einstieg (Label, Überschrift, Einleitung) – rechts: die
+            kursiven „Vielleicht …"-Sätze samt Schlusszeile. Auf schmalen
+            Viewports einspaltig untereinander. */}
+        <Reveal className={styles.intro}>
+          <Eyebrow>{ankommen.eyebrow}</Eyebrow>
+          <h2 className={styles.heading}>{ankommen.heading}</h2>
+          <p className={styles.lead}>{ankommen.lead}</p>
+        </Reveal>
 
+        <div className={styles.statements}>
           <ul className={styles.list}>
             {ankommen.items.map((item, index) => (
               <Reveal as="li" key={item} className={styles.item} delay={index * 90}>
                 <span className={styles.dot} aria-hidden="true" />
-                {item}
+                <span>{item}</span>
               </Reveal>
             ))}
           </ul>

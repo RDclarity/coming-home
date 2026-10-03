@@ -55,7 +55,7 @@ export function Newsletter() {
             <div className={styles.row}>
               <label className={`${fieldStyles.field} ${styles.emailField}`}>
                 <input
-                  className={fieldStyles.input}
+                  className={`${fieldStyles.input} ${styles.emailInput}`}
                   type="email"
                   name="email"
                   required

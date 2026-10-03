@@ -227,7 +227,7 @@ export const bewerbung = {
   intro:
     'Die drei- und zwölfmonatigen Begleitungen sind eine intensive Reise – kein Programm, das du einfach konsumierst.',
   intro2: 'Deshalb starten wir mit einem kurzen, kostenlosen Kennenlerngespräch. Wähl direkt einen Termin.',
-  formTitle: 'Termin wählen',
+  formTitle: 'Kostenloses Kennenlerngespräch',
 } as const
 
 export const faq = {

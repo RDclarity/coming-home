@@ -44,6 +44,7 @@
   text-decoration: none;
   color: inherit;
   opacity: 0.8;
+  white-space: nowrap;
   position: relative;
   transition: opacity 0.3s ease;
 }
@@ -105,9 +106,10 @@
   display: none;
 }
 
-@media (max-width: 860px) {
-  .links,
-  .ctaDesktop {
+/* Unter ~1200px passen Links + CTA nicht mehr in eine Zeile – die Links
+   brachen dann zweizeilig um. Lieber früher aufs Menü wechseln. */
+@media (max-width: 1200px) {
+  .links {
     display: none;
   }
 
@@ -128,5 +130,13 @@
     font-size: 1.05rem;
     text-decoration: none;
     color: inherit;
+  }
+}
+
+/* Erst auf dem Handy übernimmt die fixierte Leiste unten (MobileCtaBar) die
+   Haupt-CTA – bis dahin bleibt sie neben dem Menü-Button sichtbar. */
+@media (max-width: 860px) {
+  .ctaDesktop {
+    display: none;
   }
 }

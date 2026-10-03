@@ -28,7 +28,10 @@
   align-items: center;
   justify-content: center;
   gap: clamp(2.5rem, 6vw, 6rem);
-  margin: 0 auto clamp(2.5rem, 6vw, 4.5rem);
+  /* Der untere Marker (Label + Kreis, mittig auf der Ringkante) ragt samt
+     Atem-Animation gut 3,5rem unter den Ring hinaus – der Abstand zum
+     Kartenraster muss das auch auf Tablet-Breite abdecken. */
+  margin: 0 auto clamp(4.25rem, 7vw, 4.5rem);
   max-width: 62rem;
   padding-left: clamp(0rem, 4vw, 4rem);
 }
@@ -209,8 +212,7 @@
   font-weight: 600;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  opacity: 0.7;
-  color: var(--c-key1);
+  color: var(--c-key1-ink, #74604b);
   margin-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
 }
 
@@ -244,6 +246,12 @@
     flex-direction: column;
     gap: clamp(1.8rem, 6vw, 2.6rem);
     padding-left: 0;
+  }
+
+  /* Unterer Marker („Berührung") ragt über den Ring hinaus – Platz
+     schaffen, damit er nicht mit dem Einladungstext darunter kollidiert. */
+  .ringWrap {
+    margin-bottom: 2.75rem;
   }
 
   .invite {

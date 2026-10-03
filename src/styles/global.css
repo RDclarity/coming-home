@@ -5,7 +5,12 @@
   /* Farbwelt */
   --c-black: #181817;
   --c-dark: #181817;
-  --c-key1: #b9603a; /* warme Terracotta, Akzent (Claude-Design-Überarbeitung) */
+  --c-key1: #c7b7a5; /* warmes Sand-Gold, Akzent */
+  /* Dieselbe Sand-Gold-Note, nur tiefer – für Akzent-TEXT auf hellem Grund
+     (Creme/Sand). Das helle --c-key1 ist dort als Schrift kaum lesbar
+     (Kontrast < 2:1); dieser Ton erreicht AA. Auf dunklem Grund bleibt
+     --c-key1 die richtige Wahl. */
+  --c-key1-ink: #74604b;
   --c-key2: #625e58; /* gedecktes Braungrau */
   --c-light: #e9e0d4; /* Sand */
   --c-white: #f7f4ee; /* Creme */

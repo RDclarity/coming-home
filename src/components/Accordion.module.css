@@ -41,7 +41,7 @@
   flex-shrink: 0;
   margin-top: 0.05rem;
   font-style: normal;
-  color: var(--c-key1);
+  color: var(--c-key1-ink);
   transition: transform 0.25s ease;
 }
 

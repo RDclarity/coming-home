@@ -1,0 +1,87 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--c-dark) 62%, transparent);
+  backdrop-filter: blur(6px);
+  animation: einblenden 0.25s ease;
+}
+
+.panel {
+  position: relative;
+  width: min(980px, 100%);
+  max-height: calc(100dvh - 3rem);
+  overflow: auto;
+  background: var(--c-white);
+  color: var(--c-dark);
+  box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.55);
+  animation: aufsteigen 0.35s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.schliessen {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--c-dark);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.schliessen:hover {
+  background: color-mix(in srgb, var(--c-dark) 8%, transparent);
+}
+
+@keyframes einblenden {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes aufsteigen {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@media (max-width: 760px) {
+  .backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .panel {
+    max-height: 94dvh;
+  }
+
+  /* Mobil liegt oben die dunkle Info-Spalte – Kreuz hell statt dunkel. */
+  .schliessen {
+    color: var(--c-white);
+  }
+
+  .schliessen:hover {
+    background: color-mix(in srgb, var(--c-white) 14%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .panel {
+    animation: none;
+  }
+}

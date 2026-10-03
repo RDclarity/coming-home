@@ -27,15 +27,28 @@ import {
   BUCHBAR_TAGE,
   DAUER_MINUTEN,
   ZEITFENSTER_TEXT,
+  ZEITZONE,
   slotsFuerTag,
   tagInWien,
   tagPlus,
   tagSchluessel,
   uhrzeitInWien,
+  wochentag,
   type Tag,
 } from './terminZeiten'
 
-export { BUCHBAR_TAGE, DAUER_MINUTEN, ZEITFENSTER_TEXT, slotsFuerTag, tagInWien, tagPlus, tagSchluessel, uhrzeitInWien }
+export {
+  BUCHBAR_TAGE,
+  DAUER_MINUTEN,
+  ZEITFENSTER_TEXT,
+  ZEITZONE,
+  slotsFuerTag,
+  tagInWien,
+  tagPlus,
+  tagSchluessel,
+  uhrzeitInWien,
+  wochentag,
+}
 export type { Tag }
 
 /** Fehler mit HTTP-Status (409 = Slot vergeben, 429 = zu viele Anfragen). */

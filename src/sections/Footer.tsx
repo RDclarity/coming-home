@@ -25,7 +25,31 @@ export function Footer() {
             <p className={styles.closing}>{site.claim}</p>
           </div>
 
-          <nav className={styles.nav} aria-label="Rechtliches und Kontakt">
+          <nav className={styles.col} aria-labelledby="footer-entdecken">
+            <span id="footer-entdecken" className={styles.colLabel}>
+              Entdecken
+            </span>
+            <a className={styles.link} href={withBase('/begleitungen')}>
+              Alle Begleitungen
+            </a>
+            <a className={styles.link} href={withBase('/ratgeber')}>
+              Ratgeber
+            </a>
+          </nav>
+
+          <nav className={styles.col} aria-labelledby="footer-rechtliches">
+            <span id="footer-rechtliches" className={styles.colLabel}>
+              Rechtliches
+            </span>
+            {kontakt.links.map((link) => (
+              <a key={link.href} className={styles.link} href={withBase(link.href)}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className={styles.col}>
+            <span className={styles.colLabel}>{kontakt.eyebrow}</span>
             <a className={styles.link} href={`mailto:${site.email}`}>
               {site.email}
             </a>
@@ -37,18 +61,7 @@ export function Footer() {
             >
               Instagram
             </a>
-            <a className={styles.link} href={withBase('/begleitungen')}>
-              Alle Begleitungen
-            </a>
-            <a className={styles.link} href={withBase('/ratgeber')}>
-              Ratgeber
-            </a>
-            {kontakt.links.map((link) => (
-              <a key={link.href} className={styles.link} href={withBase(link.href)}>
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          </div>
         </div>
 
         <div className={styles.bottom}>
