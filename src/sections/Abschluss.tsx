@@ -16,17 +16,17 @@ export function Abschluss() {
       />
       <div className={styles.scrim} aria-hidden="true" />
 
+      {/* Signatur-Moment der Seite: der Inhalt steht in einem großen,
+          hellen Torbogen – der Durchgang nach Hause. */}
       <Reveal className={styles.inner}>
-        <h2 className={styles.heading}>{abschluss.heading}</h2>
-        <p className={styles.text}>{abschluss.text}</p>
-        <Button
-          href="/#kennenlernen"
-          size="lg"
-          style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}
-        >
-          {site.ctaLabel}
-        </Button>
-        <p className={styles.sub}>{abschluss.sub}</p>
+        <div className={styles.arch}>
+          <h2 className={styles.heading}>{abschluss.heading}</h2>
+          <p className={styles.text}>{abschluss.text}</p>
+          <Button href="/#kennenlernen" variant="solid" size="lg">
+            {site.ctaLabel}
+          </Button>
+          <p className={styles.sub}>{abschluss.sub}</p>
+        </div>
       </Reveal>
     </section>
   )

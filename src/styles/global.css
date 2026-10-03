@@ -1,28 +1,62 @@
-@import '@fontsource-variable/cormorant-garamond';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/manrope';
 
+/*
+ * Designsystem "Ankommen" (Redesign Oktober 2026) – siehe DESIGN.md.
+ * Leitmotiv: der Torbogen als Durchgang nach Hause. Erdige, lebendige
+ * Farben (Leinen, Moos, Ton-Rosé, Salbei), weiche Fraunces-Serife,
+ * runde, atmende Formen.
+ *
+ * Die alten Variablennamen (--c-white, --c-dark, --c-key1 …) bleiben als
+ * Aliase bestehen, damit Unterseiten und Backend nicht brechen.
+ */
 :root {
   /* Farbwelt */
-  --c-black: #181817;
-  --c-dark: #181817;
-  --c-key1: #c7b7a5; /* warmes Sand-Gold, Akzent */
-  /* Dieselbe Sand-Gold-Note, nur tiefer – für Akzent-TEXT auf hellem Grund
-     (Creme/Sand). Das helle --c-key1 ist dort als Schrift kaum lesbar
-     (Kontrast < 2:1); dieser Ton erreicht AA. Auf dunklem Grund bleibt
-     --c-key1 die richtige Wahl. */
-  --c-key1-ink: #74604b;
-  --c-key2: #625e58; /* gedecktes Braungrau */
-  --c-light: #e9e0d4; /* Sand */
-  --c-white: #f7f4ee; /* Creme */
+  --c-linen: #f4efe7; /* Seitengrund */
+  --c-paper: #fbf8f3; /* Karten, Felder */
+  --c-sage: #dde2d3; /* ruhige Flächen */
+  --c-sage-deep: #8e9b80; /* Linien/Icons auf Salbei */
+  --c-moss: #27332b; /* dunkle Sektionen */
+  --c-moss-2: #33423a; /* Karten auf Moos */
+  --c-ink: #1e2520; /* Text */
+  --c-ink-soft: #57605a; /* Sekundärtext */
+  --c-line: #dcd4c6; /* Linien auf Leinen */
+  --c-clay: #b4664e; /* Akzent – Flächen, Buttons */
+  --c-clay-hover: #9d5540;
+  --c-clay-ink: #964f3a; /* Akzent als Text auf hellem Grund (AA) */
+  --c-clay-light: #e2a188; /* Akzent als Text auf Moos */
+
+  /* Aliase für bestehende Module */
+  --c-white: var(--c-linen);
+  --c-light: var(--c-linen);
+  --c-dark: var(--c-moss);
+  --c-black: var(--c-ink);
+  --c-key1: var(--c-clay);
+  --c-key1-ink: var(--c-clay-ink);
+  --c-key2: var(--c-ink-soft);
 
   /* Typografie */
-  --font-header: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
-  --font-text: 'Inter Variable', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-header: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-text: 'Manrope Variable', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --fs-display: clamp(2.8rem, 7vw, 5.6rem);
+  --fs-h2: clamp(2.1rem, 4.6vw, 3.6rem);
+  --fs-h3: clamp(1.35rem, 2.2vw, 1.7rem);
+  --fs-lead: clamp(1.08rem, 1.5vw, 1.25rem);
+
+  /* Form */
+  --arch: 999px 999px 0 0; /* Torbogen: oben rund, unten gerade */
+  --radius: 22px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 20px 50px -30px rgb(39 51 43 / 0.35);
 
   /* Layout */
-  --wide: 1250px;
-  --narrow: 880px;
-  --section-y: clamp(4.5rem, 10vw, 8rem);
+  --wide: 1200px;
+  --narrow: 760px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(5rem, 11vw, 9rem);
 
   color-scheme: light;
 }
@@ -35,8 +69,7 @@
 
 html {
   scroll-behavior: smooth;
-  /* Platz für die klebende Navigation beim Ankersprung */
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -48,11 +81,11 @@ html {
 
 body {
   margin: 0;
-  background: var(--c-white);
-  color: var(--c-dark);
+  background: var(--c-linen);
+  color: var(--c-ink);
   font-family: var(--font-text);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 1.03rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -62,13 +95,23 @@ h2,
 h3,
 h4 {
   font-family: var(--font-header);
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  font-weight: 380;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
   margin: 0;
+}
+
+em,
+i {
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 img {
@@ -84,8 +127,13 @@ button {
   color: inherit;
 }
 
+::selection {
+  background: var(--c-clay-light);
+  color: var(--c-ink);
+}
+
 :focus-visible {
-  outline: 2px solid var(--c-key1);
+  outline: 2px solid var(--c-clay);
   outline-offset: 3px;
 }
 
@@ -94,12 +142,12 @@ button {
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--c-dark);
-  color: var(--c-white);
-  padding: 0.9rem 1.4rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  background: var(--c-moss);
+  color: var(--c-linen);
+  padding: 0.8rem 1.3rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-size: 0.9rem;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -110,7 +158,7 @@ button {
 /* Einblenden beim Scrollen */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(18px);
   transition:
     opacity 0.9s cubic-bezier(0.22, 0.8, 0.3, 1),
     transform 0.9s cubic-bezier(0.22, 0.8, 0.3, 1);

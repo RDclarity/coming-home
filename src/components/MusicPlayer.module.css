@@ -1,3 +1,7 @@
+/*
+ * Musik-Umschalter im Designsystem "Ankommen": Moos-Kreis mit Leinen-Note,
+ * ein Ton-Rosé-Ring atmet langsam nach außen.
+ */
 .btn {
   /* Unten links statt oben unter der Nav: dort überdeckte der Button beim
      Scrollen Überzeilen und Überschriften der Sektionen. Unten links liegt
@@ -6,19 +10,19 @@
   bottom: 1.4rem;
   left: 1.4rem;
   z-index: 45;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
-  border: 1px solid #ffffff2e;
-  background: #18181796;
-  backdrop-filter: blur(6px);
-  color: var(--c-white);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: var(--c-moss);
+  color: var(--c-linen);
+  box-shadow: var(--shadow-soft), 0 6px 16px -8px rgb(0 0 0 / 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition:
-    background 0.3s ease,
+    background-color 0.3s ease,
     border-color 0.3s ease;
   /* Der Button "atmet" durchgehend, unabhängig davon, ob Musik läuft – ein
      ruhiger, eigener Herzschlag der Seite statt eines reinen Play-Icons. */
@@ -28,16 +32,19 @@
 .btn::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -1px;
   border-radius: 50%;
-  border: 1px solid var(--c-key1);
+  border: 1.5px solid var(--c-clay);
   opacity: 0;
   pointer-events: none;
   animation: btnBreatheRing 5.6s ease-in-out infinite;
 }
 
-.btn:hover {
-  border-color: var(--c-key1);
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--c-moss-2);
+    border-color: var(--c-clay-light);
+  }
 }
 
 @keyframes btnBreathe {
@@ -47,7 +54,7 @@
   }
   45%,
   58% {
-    transform: scale(1.08);
+    transform: scale(1.07);
   }
 }
 
@@ -58,10 +65,10 @@
     opacity: 0;
   }
   40% {
-    opacity: 0.55;
+    opacity: 0.7;
   }
   75% {
-    transform: scale(1.6);
+    transform: scale(1.55);
     opacity: 0;
   }
   100% {
@@ -71,24 +78,26 @@
 
 .hint {
   position: fixed;
-  bottom: calc(1.4rem + 0.45rem);
-  left: calc(1.4rem + 2.6rem + 0.35rem);
+  bottom: calc(1.4rem + 0.5rem);
+  left: calc(1.4rem + 2.75rem + 0.4rem);
   z-index: 45;
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
-  /* Eigene dunkle Fläche: so bleibt der Hinweis auf hellem wie dunklem
-     Grund lesbar (vorher weiße Schrift mit Schatten – auf Creme unlesbar). */
-  background: #181817b8;
+  gap: 0.35rem;
+  padding: 0.32rem 0.85rem 0.32rem 0.4rem;
+  /* Eigene Moos-Fläche: so bleibt der Hinweis auf hellem wie dunklem
+     Grund lesbar. */
+  background: color-mix(in srgb, var(--c-moss) 92%, transparent);
   backdrop-filter: blur(6px);
-  border-radius: 999px;
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 16px -10px rgb(0 0 0 / 0.4);
   font-family: var(--font-text);
-  font-size: 0.66rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--c-white);
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--c-linen);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -96,13 +105,13 @@
 .hintArrow {
   width: 26px;
   height: 12px;
-  color: var(--c-key1);
+  color: var(--c-clay-light);
   flex-shrink: 0;
 }
 
 .note {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   fill: currentColor;
   transform-origin: center;
 }
@@ -111,8 +120,12 @@
   animation: notePulse 1.6s ease-in-out infinite;
 }
 
+.muted {
+  background: var(--c-moss-2);
+}
+
 .muted .note {
-  opacity: 0.45;
+  color: color-mix(in srgb, var(--c-linen) 50%, transparent);
 }
 
 @keyframes notePulse {
@@ -149,6 +162,7 @@
     z-index: 55;
     width: 2.4rem;
     height: 2.4rem;
+    box-shadow: none;
   }
 
   .hint {

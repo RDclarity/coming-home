@@ -12,11 +12,15 @@ export function Footer() {
     <footer id="kontakt" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.contact}>
-          <Eyebrow>{kontakt.eyebrow}</Eyebrow>
-          <h2 className={styles.heading}>{kontakt.heading}</h2>
-          <p className={styles.ctext}>{kontakt.text}</p>
+          <div className={styles.intro}>
+            <Eyebrow>{kontakt.eyebrow}</Eyebrow>
+            <h2 className={styles.heading}>{kontakt.heading}</h2>
+            <p className={styles.ctext}>{kontakt.text}</p>
+          </div>
 
-          <MultiStepContactForm />
+          <div className={styles.formCard}>
+            <MultiStepContactForm />
+          </div>
         </Reveal>
 
         <div className={styles.meta}>

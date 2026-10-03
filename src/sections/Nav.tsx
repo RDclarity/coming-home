@@ -32,7 +32,7 @@ export function Nav() {
 
         <div className={styles.right}>
           <span className={styles.ctaDesktop}>
-            <Button href="/#kennenlernen" size="sm" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
+            <Button href="/#kennenlernen" size="sm">
               {site.ctaLabel}
             </Button>
           </span>
@@ -62,7 +62,7 @@ export function Nav() {
               {link.label}
             </a>
           ))}
-          <Button href="/#kennenlernen" size="sm" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
+          <Button href="/#kennenlernen" size="sm">
             {site.ctaLabel}
           </Button>
         </nav>

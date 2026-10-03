@@ -1,9 +1,15 @@
+/* „So einfach geht's" – Leinen. Drei kleine Torbögen mit Nummer, verbunden
+   durch eine feine gestrichelte Ton-Linie: ein leichter, klarer Weg zum
+   Gespräch. Darunter groß der Haupt-Button. */
 .sec {
   width: 100%;
-  padding: var(--section-y) 1.5rem;
-  background: var(--c-dark);
-  color: var(--c-light);
-  --accent-text: var(--c-key1);
+  padding: var(--section-y) var(--gutter);
+  background: var(--c-linen);
+  color: var(--c-ink);
+  --badge-w: 3.6rem;
+  --badge-h: 4.4rem;
+  --step-gap: clamp(1.5rem, 4vw, 3rem);
+  --path: color-mix(in srgb, var(--c-clay) 55%, transparent);
 }
 
 .inner {
@@ -22,64 +28,131 @@
 }
 
 .heading {
-  font-size: clamp(2rem, 4.4vw, 3.1rem);
-  line-height: 1.12;
+  font-size: var(--fs-h2);
   margin: 1.2rem 0 0;
-  color: var(--c-white);
-  max-width: 18ch;
+  max-width: 15ch;
 }
 
+/* --- Schritte ------------------------------------------------------ */
 .steps {
   list-style: none;
-  margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+  margin: clamp(3.4rem, 7vw, 5rem) 0 0;
   padding: 0;
   width: 100%;
+  max-width: 62rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid #ffffff1f;
-  border-left: 1px solid #ffffff1f;
+  gap: var(--step-gap);
 }
 
 .step {
-  padding: clamp(2rem, 3.5vw, 2.8rem) clamp(1.4rem, 2.5vw, 2.2rem);
-  border-right: 1px solid #ffffff1f;
-  border-bottom: 1px solid #ffffff1f;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.7rem;
+  gap: 1.3rem;
+  min-width: 0;
+}
+
+/* Verbindungslinie von diesem Bogen zum nächsten */
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--badge-h) * 0.55);
+  left: calc(50% + var(--badge-w) / 2 + 0.9rem);
+  width: calc(100% + var(--step-gap) - var(--badge-w) - 1.8rem);
+  height: 0;
+  border-top: 1.5px dashed var(--path);
+  pointer-events: none;
 }
 
 .stepNum {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--badge-w);
+  height: var(--badge-h);
+  padding-top: 0.5rem;
+  border-radius: var(--arch);
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  box-shadow: var(--shadow-soft);
   font-family: var(--font-header);
-  font-size: 2.6rem;
+  font-weight: 380;
+  font-size: 1.6rem;
   line-height: 1;
-  color: var(--c-key1);
+  font-variant-numeric: lining-nums;
+  color: var(--c-clay-ink);
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
 }
 
 .stepTitle {
-  font-family: var(--font-text);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--c-white);
-  margin-top: 0.4rem;
+  font-size: var(--fs-h3);
+  font-weight: 380;
+  line-height: 1.15;
 }
 
 .stepText {
   font-size: 1rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--c-light) 78%, transparent);
-  max-width: 22ch;
+  color: var(--c-ink-soft);
+  max-width: 24ch;
 }
 
 .action {
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  margin-top: clamp(3rem, 6vw, 4.2rem);
 }
 
+/* --- Mobil: vertikaler Weg ----------------------------------------- */
 @media (max-width: 760px) {
   .steps {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.2rem;
+    --step-gap: 2.2rem;
+    max-width: 26rem;
+    text-align: left;
+  }
+
+  .step {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .step:not(:last-child)::after {
+    top: calc(var(--badge-h) + 0.6rem);
+    bottom: calc(-1 * var(--step-gap) + 0.6rem);
+    left: calc(var(--badge-w) / 2);
+    width: 0;
+    height: auto;
+    border-top: none;
+    border-left: 1.5px dashed var(--path);
+  }
+
+  .stepBody {
+    align-items: flex-start;
+    padding-top: 0.9rem;
+  }
+
+  .stepText {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sec {
+    --badge-w: 3.1rem;
+    --badge-h: 3.8rem;
+  }
+
+  .stepNum {
+    font-size: 1.4rem;
   }
 }

@@ -1,64 +1,110 @@
+/*
+ * Abschluss – der Signatur-Moment im Designsystem "Ankommen".
+ * Stimmungsbild mit moosgrüner Lasur, darauf ein großer, heller Torbogen
+ * (Leinen, leicht durchscheinend) als Durchgang nach Hause, umrahmt von einer
+ * zarten Bogenlinie.
+ */
 .sec {
   position: relative;
   width: 100%;
-  padding: clamp(5rem, 14vw, 10rem) 1.5rem;
+  min-height: min(100svh, 62rem);
+  padding: clamp(4.5rem, 11vw, 8rem) var(--gutter);
   overflow: hidden;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  --accent-text: var(--c-key1);
+  background: var(--c-moss);
+  color: var(--c-ink);
+  --accent-text: var(--c-clay-light);
+  --b-line-fg: var(--c-linen);
 }
 
 .bg {
   position: absolute;
   inset: 0;
+  z-index: -2;
   /* background-image kommt als Inline-Style aus Abschluss.tsx (withBase). */
   background-size: cover;
   background-position: center;
 }
 
+/* Moos-Lasur für Lesbarkeit und Farbklang mit dem Footer darunter. */
 .scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, #1a171221, #1a17128c);
+  z-index: -1;
+  background:
+    radial-gradient(
+      ellipse at 50% 60%,
+      color-mix(in srgb, var(--c-moss) 25%, transparent) 0%,
+      color-mix(in srgb, var(--c-moss) 70%, transparent) 75%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--c-moss) 35%, transparent),
+      color-mix(in srgb, var(--c-moss) 85%, transparent)
+    );
 }
 
 .inner {
   position: relative;
-  z-index: 2;
-  max-width: 780px;
-  margin: 0 auto;
-  text-align: center;
+  width: min(100%, 38rem);
+}
+
+/* Der große Bogen. Oben vollrund (--arch skaliert auf die halbe Breite),
+   deshalb großzügiger Innenabstand oben, damit die Überschrift frei steht. */
+.arch {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.6rem;
-  color: var(--c-white);
+  text-align: center;
+  padding: clamp(5rem, 17vw, 9.5rem) clamp(1.5rem, 6vw, 4rem) clamp(2.6rem, 6vw, 4rem);
+  border-radius: var(--arch);
+  background: color-mix(in srgb, var(--c-linen) 90%, transparent);
+  box-shadow: 0 40px 90px -40px rgb(0 0 0 / 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Zarte äußere Bogenlinie – wie ein Türrahmen. */
+.arch::before {
+  content: '';
+  position: absolute;
+  inset: clamp(-1.4rem, -2.4vw, -0.8rem);
+  bottom: 0;
+  border: 1px solid color-mix(in srgb, var(--c-linen) 45%, transparent);
+  border-bottom: none;
+  border-radius: var(--arch);
+  pointer-events: none;
 }
 
 .heading {
-  font-size: clamp(2.1rem, 5.5vw, 4rem);
-  line-height: 1.14;
-  font-style: italic;
-  text-wrap: balance;
-  color: var(--c-white);
-  text-shadow: 0 1px 34px #00000055;
+  font-size: clamp(2.2rem, 5.4vw, 3.7rem);
+  line-height: 1.06;
+  max-width: 13ch;
+  color: var(--c-ink);
 }
 
 .text {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  max-width: 44ch;
-  opacity: 0.9;
-  margin-bottom: 1.2rem;
-  color: var(--c-light);
-  text-shadow: 0 1px 24px #00000055;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  max-width: 34ch;
+  margin: 1.3rem 0 2.2rem;
+  color: var(--c-ink-soft);
 }
 
 .sub {
-  font-size: 0.85rem;
+  margin-top: 1.3rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   line-height: 1.5;
-  opacity: 0.7;
-  margin-top: 1rem;
+  color: var(--c-ink-soft);
+}
+
+@media (max-width: 480px) {
+  .arch :global(a) {
+    width: 100%;
+  }
 }

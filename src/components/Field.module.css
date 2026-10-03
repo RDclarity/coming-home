@@ -1,53 +1,63 @@
+/*
+ * Formularfelder im Designsystem "Ankommen": Papier-Fläche, 1px Linie,
+ * --radius-sm, Fokus in Ton-Rosé. Auf dunklem Grund kann eine Sektion
+ * --field-label-fg überschreiben.
+ */
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  --field-accent: var(--c-key1);
+  --field-accent: var(--c-clay);
 }
 
 .label {
   font-family: var(--font-text);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--c-dark);
-  opacity: 0.85;
+  font-size: 0.88rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--field-label-fg, var(--c-ink));
 }
 
 .req {
   font-style: normal;
-  color: var(--field-accent);
+  color: var(--c-clay-ink);
   margin-left: 0.15em;
 }
 
 .input {
   font-family: var(--font-text);
   font-size: 1rem;
-  color: var(--c-dark);
-  background: #ffffffcc;
-  border: 1px solid #2b271f2e;
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
+  line-height: 1.4;
+  color: var(--c-ink);
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.05rem;
   width: 100%;
   transition:
     border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    background 0.3s ease;
+    box-shadow 0.3s ease;
 }
 
 .input::placeholder {
-  color: #2b271f80;
+  color: var(--c-ink-soft);
 }
 
 .input:focus {
   outline: none;
   border-color: var(--field-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-accent) 18%, transparent);
-  background: #ffffff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-accent) 22%, transparent);
 }
 
 textarea.input {
   resize: vertical;
   min-height: 120px;
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input {
+    transition: none;
+  }
 }

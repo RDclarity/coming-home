@@ -5,6 +5,12 @@ import { hero, site } from '../data/site'
 import { withBase } from '../lib/url'
 import styles from './Hero.module.css'
 
+/**
+ * Hero im Designsystem "Ankommen": Text auf Leinen links, rechts das Video
+ * in einem großen Torbogen (Leitmotiv: Durchgang nach Hause). Dahinter ein
+ * weicher Kreis, der im Atemrhythmus weiter und enger wird (4 s ein, 6 s
+ * aus) – zeigt ohne Worte, worum es bei Jasmin geht.
+ */
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
@@ -30,34 +36,10 @@ export function Hero() {
 
   return (
     <section id="coming-home" className={styles.hero}>
-      <div className={styles.bgLayer} aria-hidden="true">
-        <img
-          className={styles.bgImg}
-          src={withBase('/images/hero-video-poster.webp')}
-          alt=""
-          width={576}
-          height={1024}
-          fetchPriority="high"
-        />
-        <video
-          ref={videoRef}
-          className={[styles.bgVideo, videoReady && styles.bgVideoReady].filter(Boolean).join(' ')}
-          muted
-          autoPlay
-          loop
-          playsInline
-          preload="auto"
-          poster={withBase('/images/hero-video-poster.jpg')}
-        >
-          <source src={withBase('/videos/hero-bg.mp4')} type="video/mp4" />
-        </video>
-        <span className={styles.scrim} />
-      </div>
-
       <div className={styles.inner}>
         <div className={styles.textCol}>
           <Reveal as="span" className={styles.overline}>
-            <span className={styles.overlineDash} aria-hidden="true" />
+            <span className={styles.overlineArch} aria-hidden="true" />
             {hero.overline}
           </Reveal>
 
@@ -77,7 +59,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal className={styles.actions} delay={220}>
-            <Button href="/#kennenlernen" size="lg" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
+            <Button href="/#kennenlernen" size="lg">
               {site.ctaLabel}
             </Button>
             <ul className={styles.trust}>
@@ -87,6 +69,34 @@ export function Hero() {
             </ul>
           </Reveal>
         </div>
+
+        <Reveal className={styles.visual} delay={120}>
+          <span className={styles.breath} aria-hidden="true" />
+          <span className={styles.archOutline} aria-hidden="true" />
+          <div className={styles.arch}>
+            <img
+              className={styles.media}
+              src={withBase('/images/hero-video-poster.webp')}
+              alt=""
+              width={576}
+              height={1024}
+              fetchPriority="high"
+            />
+            <video
+              ref={videoRef}
+              className={[styles.media, styles.video, videoReady && styles.videoReady].filter(Boolean).join(' ')}
+              muted
+              autoPlay
+              loop
+              playsInline
+              preload="auto"
+              poster={withBase('/images/hero-video-poster.jpg')}
+              aria-hidden="true"
+            >
+              <source src={withBase('/videos/hero-bg.mp4')} type="video/mp4" />
+            </video>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

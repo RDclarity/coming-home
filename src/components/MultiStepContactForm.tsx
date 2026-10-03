@@ -137,7 +137,12 @@ export function MultiStepContactForm() {
 
       <div className={styles.progress} aria-hidden="true">
         {STEPS.map((s, index) => (
-          <span key={s} className={styles.progressDot}>
+          <span
+            key={s}
+            className={[styles.progressDot, index === stepIndex && styles.progressDotCurrent]
+              .filter(Boolean)
+              .join(' ')}
+          >
             <span
               className={[styles.progressDotFill, index <= stepIndex && styles.progressDotFillActive]
                 .filter(Boolean)

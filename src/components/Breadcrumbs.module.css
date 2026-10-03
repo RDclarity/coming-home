@@ -1,27 +1,38 @@
+/* Brotkrumen im Designsystem "Ankommen": klein, ruhig, ohne Versalien.
+   Erbt die Textfarbe der Umgebung (hell auf Moos, dunkel auf Leinen) und
+   hellt sie per color-mix statt opacity ab. */
 .nav {
   font-family: var(--font-text);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  opacity: 0.6;
-  margin-bottom: 1.6rem;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: color-mix(in srgb, currentColor 72%, transparent);
+  margin-bottom: 1.8rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
 }
 
 .nav a {
   color: inherit;
   text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.2s ease;
 }
 
-.nav a:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .nav a:hover {
+    color: var(--accent-text, var(--c-clay-ink));
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
 }
 
 .sep {
-  opacity: 0.5;
+  color: color-mix(in srgb, currentColor 55%, transparent);
 }
 
 .current {
-  opacity: 0.85;
+  font-weight: 650;
 }

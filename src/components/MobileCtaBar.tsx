@@ -41,7 +41,7 @@ export function MobileCtaBar() {
 
   return (
     <div className={styles.bar}>
-      <Button href="/#kennenlernen" full style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
+      <Button href="/#kennenlernen" full>
         {site.ctaLabel}
       </Button>
     </div>

@@ -26,9 +26,7 @@ export function Accordion({ items }: { items: readonly AccordionItem[] }) {
               onClick={() => setOpenIndex(open ? null : index)}
             >
               <span className={styles.q}>{item.q}</span>
-              <span className={styles.icon} aria-hidden="true">
-                +
-              </span>
+              <span className={styles.icon} aria-hidden="true" />
             </button>
             <div id={panelId} role="region" aria-labelledby={buttonId} className={styles.body}>
               <div className={styles.bodyInner}>

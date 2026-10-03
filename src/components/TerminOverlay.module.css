@@ -1,3 +1,8 @@
+/*
+ * Buchungs-Overlay im Designsystem "Ankommen": Leinen-Panel mit großen,
+ * weichen Ecken auf einem gedämpften Moos-Schleier. Mobil ein Sheet von
+ * unten mit runden oberen Ecken.
+ */
 .backdrop {
   position: fixed;
   inset: 0;
@@ -6,44 +11,57 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: color-mix(in srgb, var(--c-dark) 62%, transparent);
-  backdrop-filter: blur(6px);
-  animation: einblenden 0.25s ease;
+  background: color-mix(in srgb, var(--c-moss) 58%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: einblenden 0.3s ease;
 }
 
 .panel {
   position: relative;
-  width: min(980px, 100%);
+  width: min(1000px, 100%);
   max-height: calc(100dvh - 3rem);
   overflow: auto;
-  background: var(--c-white);
-  color: var(--c-dark);
-  box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.55);
-  animation: aufsteigen 0.35s cubic-bezier(0.22, 0.8, 0.3, 1);
+  overscroll-behavior: contain;
+  border-radius: calc(var(--radius) + 6px);
+  background: var(--c-linen);
+  color: var(--c-ink);
+  box-shadow:
+    var(--shadow-soft),
+    0 40px 100px -40px rgb(0 0 0 / 0.45);
+  animation: aufsteigen 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
+/* Desktop: Kreuz liegt auf der Leinen-Spalte. */
 .schliessen {
   position: absolute;
-  top: 0.9rem;
-  right: 0.9rem;
+  top: 1rem;
+  right: 1rem;
   z-index: 2;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid var(--c-line);
   border-radius: 50%;
-  background: transparent;
-  color: var(--c-dark);
-  font-size: 1.6rem;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.schliessen:hover {
-  background: color-mix(in srgb, var(--c-dark) 8%, transparent);
+@media (hover: hover) {
+  .schliessen:hover {
+    border-color: var(--c-clay);
+    color: var(--c-clay-ink);
+  }
 }
 
 @keyframes einblenden {
@@ -55,7 +73,13 @@
 @keyframes aufsteigen {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px) scale(0.985);
+  }
+}
+
+@keyframes sheet {
+  from {
+    transform: translateY(100%);
   }
 }
 
@@ -66,16 +90,24 @@
   }
 
   .panel {
-    max-height: 94dvh;
+    height: 100%;
+    max-height: calc(100dvh - 0.75rem);
+    border-radius: calc(var(--radius) + 6px) calc(var(--radius) + 6px) 0 0;
+    animation: sheet 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
   }
 
-  /* Mobil liegt oben die dunkle Info-Spalte – Kreuz hell statt dunkel. */
+  /* Mobil liegt oben die Moos-Info-Spalte – Kreuz hell auf Moos. */
   .schliessen {
-    color: var(--c-white);
+    top: 0.85rem;
+    right: 0.85rem;
+    border-color: rgb(255 255 255 / 0.18);
+    background: rgb(255 255 255 / 0.08);
+    color: var(--c-linen);
   }
 
   .schliessen:hover {
-    background: color-mix(in srgb, var(--c-white) 14%, transparent);
+    border-color: rgb(255 255 255 / 0.35);
+    color: var(--c-linen);
   }
 }
 
@@ -83,5 +115,9 @@
   .backdrop,
   .panel {
     animation: none;
+  }
+
+  .schliessen {
+    transition: none;
   }
 }

@@ -1,35 +1,53 @@
+/* Fehlerseite im Designsystem "Ankommen": Leinen, großer zarter Torbogen
+   hinter der Überschrift, Pill-Buttons. */
 .sec {
+  position: relative;
   width: 100%;
   min-height: 70vh;
   display: flex;
   align-items: center;
-  padding: clamp(7rem, 14vw, 10rem) 1.5rem clamp(4rem, 8vw, 6rem);
-  background: var(--c-white);
-  color: var(--c-dark);
+  padding: clamp(7rem, 14vw, 10rem) var(--gutter) clamp(4rem, 8vw, 6rem);
+  background: var(--c-linen);
+  color: var(--c-ink);
+  overflow: hidden;
+}
+
+.sec::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(30rem, 80vw);
+  aspect-ratio: 3 / 4;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--c-ink) 15%, transparent);
+  border-bottom: none;
+  border-radius: var(--arch);
+  pointer-events: none;
 }
 
 .inner {
+  position: relative;
   max-width: 34rem;
   margin: 0 auto;
   text-align: center;
 }
 
 .title {
-  font-size: clamp(2rem, 4.4vw, 3rem);
-  line-height: 1.14;
-  margin: 1.2rem 0 1rem;
+  font-size: var(--fs-h2);
+  margin: 1.2rem 0 1.1rem;
 }
 
 .text {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  opacity: 0.8;
-  margin: 0 0 2rem;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--c-ink-soft);
+  margin: 0 0 2.2rem;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.9rem;
   justify-content: center;
 }

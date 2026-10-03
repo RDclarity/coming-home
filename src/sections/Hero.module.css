@@ -1,106 +1,49 @@
 .hero {
   position: relative;
   width: 100%;
-  padding: 7rem 1.5rem 5.5rem;
   overflow: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--c-dark);
-  color: var(--c-white);
-  --accent-text: var(--c-key1);
-}
-
-.bgLayer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.bgImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 28%;
-  display: block;
-}
-
-.bgVideo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 28%;
-  opacity: 0;
-  transition: opacity 0.9s ease;
-}
-
-.bgVideoReady {
-  opacity: 1;
-}
-
-.scrim {
-  position: absolute;
-  inset: 0;
-  background: var(--c-black);
-  opacity: 0.46;
-}
-
-.hero .overline,
-.hero .title,
-.hero .lead,
-.hero .trust {
-  text-shadow: 0 1px 34px #00000055;
+  background: var(--c-linen);
+  color: var(--c-ink);
+  padding: clamp(2.5rem, 6vw, 5rem) var(--gutter) clamp(4rem, 8vw, 6.5rem);
 }
 
 .inner {
-  position: relative;
-  z-index: 1;
-  width: 100%;
   max-width: var(--wide);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 40rem) 1fr;
-  column-gap: clamp(2rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
   align-items: center;
+  min-height: min(78svh, 760px);
 }
 
 .textCol {
-  display: flex;
-  flex-direction: column;
+  min-width: 0;
 }
 
 .overline {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  font-family: var(--font-text);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 1.8rem;
-  color: var(--c-light);
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  font-weight: 650;
+  color: var(--c-clay-ink);
 }
 
-.overlineDash {
-  display: inline-block;
-  width: 2.4rem;
-  height: 1.5px;
-  background: var(--c-light);
-  opacity: 0.85;
+.overlineArch {
+  width: 0.8rem;
+  height: 1rem;
+  border: 1.5px solid currentColor;
+  border-bottom: none;
+  border-radius: var(--arch);
 }
 
 .title {
-  font-family: var(--font-header);
-  font-size: clamp(2.9rem, 6.6vw, 5.4rem);
-  line-height: 1.03;
-  letter-spacing: -0.015em;
-  font-weight: 500;
-  margin: 0;
+  font-size: var(--fs-display);
+  line-height: 1;
+  margin: 1.4rem 0 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .tLine {
@@ -109,102 +52,169 @@
 
 .emph {
   font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--c-clay-ink);
+  margin-top: 0.08em;
 }
 
 .lead {
-  font-family: var(--font-text);
-  font-size: clamp(1rem, 1.4vw, 1.12rem);
-  line-height: 1.72;
-  opacity: 0.86;
-  margin: 2rem 0 0;
-  max-width: 40rem;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--c-ink-soft);
+  max-width: 30rem;
+  margin: 1.8rem 0 0;
 }
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
   margin-top: 2.4rem;
 }
 
-@media (max-width: 900px) {
-  .hero {
-    padding: 6rem 1.25rem 4rem;
-  }
-
-  .inner {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    padding: 5.5rem 1.15rem 3.5rem;
-  }
-
-  .title {
-    font-size: clamp(2.4rem, 12vw, 3.3rem);
-  }
-
-  .lead {
-    font-size: 1rem;
-    margin-top: 1.6rem;
-  }
-
-  .actions {
-    margin-top: 2rem;
-  }
-
-  .actions a {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Vertrauens-Zeile direkt unter dem Button: nimmt die drei größten
-   Hürden vorweg (Zeit, Kosten, Verbindlichkeit). */
 .trust {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.4rem;
-  font-family: var(--font-text);
-  font-size: 0.72rem;
+  gap: 0.4rem 1.3rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--c-white);
-  opacity: 0.85;
+  color: var(--c-ink-soft);
 }
 
 .trust li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .trust li::before {
-  content: '✓';
-  color: var(--c-key1);
-  letter-spacing: 0;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--c-clay);
 }
 
-.actions {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.2rem;
+/* ---- Rechte Seite: Torbogen mit Video, atmender Kreis dahinter --------- */
+
+.visual {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 440px);
+}
+
+.arch {
+  position: relative;
+  z-index: 2;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+  overflow: hidden;
+  background: var(--c-sage);
+  box-shadow: var(--shadow-soft);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  /* Das Video ist violett gegradet – leicht angewärmt passt es zu Leinen,
+     Moos und Ton-Rosé. */
+  filter: sepia(0.22) saturate(0.85) hue-rotate(-10deg) brightness(1.04);
+}
+
+.video {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.videoReady {
+  opacity: 1;
+}
+
+/* Zarter, leicht versetzter Bogen als Tiefe – wie ein zweiter Türrahmen. */
+.archOutline {
+  position: absolute;
+  z-index: 1;
+  inset: -1.1rem -1.1rem 1.1rem 1.1rem;
+  border: 1.5px solid color-mix(in srgb, var(--c-clay) 45%, transparent);
+  border-bottom: none;
+  border-radius: var(--arch);
+}
+
+/* Atmender Kreis: 4 s einatmen (weiten), 6 s ausatmen (zusammenziehen). */
+.breath {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 46%;
+  width: 135%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--c-sage) 95%, transparent) 0%,
+    color-mix(in srgb, var(--c-sage) 60%, transparent) 45%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%) scale(0.86);
+  animation: atmen 10s ease-in-out infinite;
+}
+
+@keyframes atmen {
+  0% {
+    transform: translate(-50%, -50%) scale(0.86);
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.86);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breath {
+    animation: none;
+  }
+}
+
+/* ---- Mobil ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 3rem;
+  }
+
+  .visual {
+    width: min(78%, 360px);
+  }
 }
 
 @media (max-width: 480px) {
+  .title {
+    font-size: clamp(2.6rem, 12.5vw, 3.4rem);
+  }
+
+  .lead {
+    margin-top: 1.4rem;
+  }
+
   .actions {
     align-items: stretch;
+    margin-top: 2rem;
   }
 
   .trust {
     justify-content: center;
-    font-size: 0.66rem;
+    font-size: 0.82rem;
   }
 }

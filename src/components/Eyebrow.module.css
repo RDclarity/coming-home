@@ -1,26 +1,29 @@
+/* Überzeile im Designsystem "Ankommen": kleiner Bogen + Text in normaler
+   Schreibweise. Heller Grund: Ton-Rosé (dunkle Variante); auf Moos setzt die
+   Sektion --accent-text. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.6rem;
   font-family: var(--font-text);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  /* Heller Grund (Standard): tiefer Sand-Ton für Lesbarkeit. Dunkle
-     Sektionen setzen --accent-text: var(--c-key1). */
-  color: var(--accent-text, var(--c-key1-ink));
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--accent-text, var(--c-clay-ink));
 }
 
 .center {
   justify-content: center;
 }
 
+/* Der Strich wird zum kleinen Torbogen – das Leitmotiv im Kleinen. */
 .dash {
   display: inline-block;
-  width: 2.4rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.85;
+  width: 0.75rem;
+  height: 0.95rem;
+  border: 1.5px solid currentColor;
+  border-bottom: none;
+  border-radius: var(--arch);
   flex: none;
 }

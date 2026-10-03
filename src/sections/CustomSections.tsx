@@ -17,6 +17,7 @@ export function CustomSections() {
           return (
             <section key={section.id} id={`bereich-${section.id}`} className={styles.quoteSec}>
               <Reveal className={styles.quoteInner}>
+                <span className={styles.quoteArch} aria-hidden="true" />
                 <p className={styles.quoteText}>„{section.content.quote}"</p>
                 {section.content.attribution && (
                   <p className={styles.quoteAttribution}>{section.content.attribution}</p>
