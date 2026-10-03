@@ -26,7 +26,18 @@ export function MobileCtaBar() {
     // Seitenaufruf reicht.
   }, [])
 
-  if (!zeigen) return null
+  // Auf dem ersten Screen steht der Termin-Button schon groß im Hero – die
+  // Leiste erst einblenden, wenn man daran vorbeigescrollt ist, statt zwei
+  // gleiche Buttons übereinander zu zeigen.
+  const [unterHero, setUnterHero] = useState(false)
+  useEffect(() => {
+    const pruefen = () => setUnterHero(window.scrollY > window.innerHeight * 0.75)
+    pruefen()
+    window.addEventListener('scroll', pruefen, { passive: true })
+    return () => window.removeEventListener('scroll', pruefen)
+  }, [])
+
+  if (!zeigen || !unterHero) return null
 
   return (
     <div className={styles.bar}>

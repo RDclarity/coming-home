@@ -53,7 +53,7 @@ export function Jasmin() {
           </Reveal>
 
           <Reveal delay={200}>
-            <Button href="/#ueber-jasmin" variant="outline">
+            <Button href="/#kennenlernen" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
               {jasmin.cta}
             </Button>
           </Reveal>

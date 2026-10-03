@@ -13,9 +13,9 @@ test('Startseite lädt mit Kerninhalt', async ({ page }) => {
   await expect(page.getByRole('link', { name: /kennenlerngespräch vereinbaren/i }).first()).toBeVisible()
 })
 
-test('Navigation führt zur Begleitungen-Übersicht', async ({ page }) => {
+test('Footer führt zur Begleitungen-Übersicht', async ({ page }) => {
   await page.goto('/')
-  await page.getByRole('link', { name: 'Begleitungen', exact: true }).click()
+  await page.getByRole('link', { name: 'Alle Begleitungen', exact: true }).click()
   await expect(page).toHaveURL(/\/begleitungen\/?$/)
   await expect(page.getByRole('heading', { name: 'Alle Begleitungen im Überblick' })).toBeVisible()
   await expect(page.getByText('Coming Home trägt meine Handschrift.')).toBeVisible()

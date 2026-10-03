@@ -4,29 +4,29 @@ import { Arbeitsweise } from '../sections/Arbeitsweise'
 import { Bewerbung } from '../sections/Bewerbung'
 import { CustomSections } from '../sections/CustomSections'
 import { Faq } from '../sections/Faq'
-import { FuerWen } from '../sections/FuerWen'
 import { Hero } from '../sections/Hero'
 import { Jasmin } from '../sections/Jasmin'
 import { Newsletter } from '../sections/Newsletter'
 import { Orientierung } from '../sections/Orientierung'
-import { Reise } from '../sections/Reise'
 import { Termine } from '../sections/Termine'
-import { UeberJasmin } from '../sections/UeberJasmin'
 
+/**
+ * Reihenfolge nach Conversion (Okt. 2026): Problem erkennen → Angebot sehen →
+ * Vertrauen in Jasmin → Methode → Termin buchen → Workshop → Einwände (FAQ) →
+ * leiser Einstieg (Audioübung) → letzter Aufruf. Doppelte Abschnitte (Reise,
+ * Über Jasmin, Für wen) wurden gestrichen.
+ */
 export function Home() {
   return (
     <>
       <Hero />
       <Ankommen />
-      <Jasmin />
       <Orientierung />
-      <Reise />
-      <UeberJasmin />
+      <Jasmin />
       <Arbeitsweise />
-      <FuerWen />
       <Bewerbung />
-      <Faq />
       <Termine />
+      <Faq />
       <CustomSections />
       <Newsletter />
       <Abschluss />

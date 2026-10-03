@@ -137,15 +137,21 @@
   }
 }
 
-/* Handy: über der fixierten Termin-Leiste (MobileCtaBar) */
+/* Handy: oben in der Navigationsleiste links neben dem Menü-Button. Unten
+   lag der Button über dem Hero-Button bzw. der Termin-Leiste. Für den
+   "Musik an"-Hinweis ist dort kein Platz – das Noten-Symbol reicht. */
 @media (max-width: 860px) {
   .btn {
-    bottom: calc(5.6rem + env(safe-area-inset-bottom));
-    left: 0.9rem;
+    top: calc(env(safe-area-inset-top) + 0.95rem);
+    bottom: auto;
+    left: auto;
+    right: 4.9rem;
+    z-index: 55;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 
   .hint {
-    bottom: calc(5.6rem + 0.45rem + env(safe-area-inset-bottom));
-    left: calc(0.9rem + 2.6rem + 0.35rem);
+    display: none;
   }
 }
