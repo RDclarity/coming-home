@@ -1,64 +1,43 @@
-/*
- * Buchung im Designsystem "Ankommen": links eine Moos-Spalte mit dem
- * Wesentlichen, rechts auf Leinen der Kalender mit runden Tagen und
- * Uhrzeiten als Pills. Hauptaktion immer Ton-Rosé.
- */
 .layout {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  min-height: 560px;
+  grid-template-columns: 290px minmax(0, 1fr);
+  min-height: 540px;
 }
 
 /* ---- Linke Spalte: was, wie lange, wie ---------------------------------- */
 
 .info {
-  --accent-text: var(--c-clay-light);
-  --b-line-fg: var(--c-linen);
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.3rem;
-  padding: 2.8rem 2.3rem 2.4rem;
-  background: var(--c-moss);
-  color: var(--c-linen);
-  overflow: hidden;
+  gap: 1.4rem;
+  padding: 2.6rem 2.2rem;
+  background: var(--c-dark);
+  color: var(--c-light);
 }
 
-/* Zarter Torbogen als Hintergrundlinie – das Leitmotiv, sehr leise. */
-.info::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -2px;
-  width: 78%;
-  aspect-ratio: 3 / 4;
-  transform: translateX(-50%);
-  border: 1px solid color-mix(in srgb, var(--c-linen) 14%, transparent);
-  border-bottom: none;
-  border-radius: var(--arch);
-  pointer-events: none;
-}
-
-.info > * {
-  position: relative;
-  z-index: 1;
+.eyebrow {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--c-key1);
 }
 
 .titel {
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  line-height: 1.05;
-  color: var(--c-linen);
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--c-white);
 }
 
 .fakten {
   list-style: none;
-  margin: 0.2rem 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  font-size: 0.97rem;
-  color: color-mix(in srgb, var(--c-linen) 82%, transparent);
+  font-size: 0.95rem;
+  opacity: 0.88;
 }
 
 .fakten li {
@@ -69,106 +48,91 @@
 
 .fakten li::before {
   content: '';
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--c-clay-light);
+  background: var(--c-key1);
   flex: none;
 }
 
 .auswahl {
   margin-top: auto;
-  padding: 1.1rem 1.2rem;
-  border-radius: var(--radius-sm);
-  background: var(--c-moss-2);
-  font-size: 0.93rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid color-mix(in srgb, var(--c-light) 18%, transparent);
+  font-size: 0.92rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--c-linen) 80%, transparent);
 }
 
 .auswahl strong {
-  font-weight: 650;
-  color: var(--c-linen);
+  font-weight: 600;
+  color: var(--c-white);
 }
 
 /* ---- Rechte Spalte -------------------------------------------------------- */
 
 .main {
   min-width: 0;
-  padding: 2.8rem 2.8rem 2.4rem;
-  background: var(--c-linen);
+  padding: 2.6rem 2.6rem 2.2rem;
 }
 
 .schrittTitel {
-  font-size: clamp(1.5rem, 2.2vw, 1.75rem);
+  font-size: 1.55rem;
   margin: 0 0 1.6rem;
-  padding-right: 2.8rem; /* Platz für den Schließen-Button */
+  padding-right: 2.5rem; /* Platz für den Schließen-Button */
 }
 
 .hinweis {
-  margin: 0 0 1.3rem;
-  padding: 0.85rem 1.1rem;
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--c-clay) 14%, var(--c-paper));
-  color: var(--c-ink);
-  font-size: 0.92rem;
+  margin: 0 0 1.2rem;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--c-key1);
+  background: color-mix(in srgb, var(--c-key1) 22%, transparent);
+  font-size: 0.9rem;
 }
 
 .picker {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 180px;
-  gap: 2.4rem;
+  grid-template-columns: minmax(0, 1fr) 170px;
+  gap: 2.2rem;
 }
 
 .monatKopf {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 
 .monatName {
   font-family: var(--font-header);
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-size: 1.3rem;
   text-transform: capitalize;
 }
 
 .pfeile {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .pfeil {
-  width: 2.4rem;
-  height: 2.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--c-line);
+  width: 2.3rem;
+  height: 2.3rem;
+  border: none;
   border-radius: 50%;
-  background: var(--c-paper);
-  color: var(--c-ink);
-  font-size: 1.25rem;
+  background: transparent;
+  font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 @media (hover: hover) {
   .pfeil:hover:not(:disabled) {
-    border-color: var(--c-clay);
-    color: var(--c-clay-ink);
+    background: color-mix(in srgb, var(--c-dark) 7%, transparent);
   }
 }
 
 .pfeil:disabled {
-  background: transparent;
-  color: color-mix(in srgb, var(--c-ink) 25%, transparent);
+  opacity: 0.2;
   cursor: default;
 }
 
@@ -176,21 +140,22 @@
 .tage {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .wochentage {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   text-align: center;
-  font-size: 0.8rem;
-  font-weight: 650;
-  color: var(--c-ink-soft);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
 }
 
 .tag {
   position: relative;
   width: 100%;
-  max-width: 2.95rem;
+  max-width: 2.9rem;
   aspect-ratio: 1;
   margin: 0 auto;
   display: flex;
@@ -199,40 +164,38 @@
   border: none;
   border-radius: 50%;
   background: transparent;
-  font-family: var(--font-text);
-  font-size: 0.93rem;
-  color: color-mix(in srgb, var(--c-ink) 32%, transparent);
+  font-size: 0.92rem;
+  color: var(--c-dark);
+  opacity: 0.28;
   cursor: default;
   transition:
     background-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
+    color 0.2s ease;
 }
 
 .tagFrei {
-  font-weight: 650;
-  color: var(--c-ink);
-  background: var(--c-sage);
+  opacity: 1;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--c-key1) 32%, transparent);
   cursor: pointer;
 }
 
 @media (hover: hover) {
   .tagFrei:hover {
-    background: color-mix(in srgb, var(--c-sage-deep) 45%, var(--c-sage));
+    background: color-mix(in srgb, var(--c-key1) 60%, transparent);
   }
 }
 
 .tagAktiv,
 .tagAktiv:hover {
-  background: var(--c-clay);
-  color: #fff;
-  box-shadow: 0 8px 18px -10px rgb(180 102 78 / 0.9);
+  background: var(--c-dark);
+  color: var(--c-white);
 }
 
 .heute::after {
   content: '';
   position: absolute;
-  bottom: 16%;
+  bottom: 18%;
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -244,10 +207,10 @@
 }
 
 .slotsTag {
-  margin: 0 0 1rem;
-  font-size: 0.9rem;
-  font-weight: 650;
-  min-height: 2.4rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  min-height: 2.3rem;
   display: flex;
   align-items: center;
 }
@@ -255,60 +218,46 @@
 .slots {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-height: 330px;
+  gap: 0.45rem;
+  max-height: 320px;
   overflow-y: auto;
-  padding: 0.15rem 0.35rem 0.15rem 0.15rem;
+  padding-right: 0.3rem;
 }
 
 .slot {
   flex: none;
-  padding: 0.7rem 0.6rem;
-  border: 1.5px solid color-mix(in srgb, var(--c-ink) 30%, transparent);
-  border-radius: var(--radius-pill);
+  padding: 0.72rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--c-dark) 22%, transparent);
   background: transparent;
-  color: var(--c-ink);
+  color: var(--c-dark);
   font-family: var(--font-text);
-  font-size: 0.95rem;
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
+  font-size: 0.92rem;
+  font-weight: 600;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease,
     color 0.2s ease;
-}
-
-.slot:active,
-.slot[aria-pressed='true'] {
-  background: var(--c-clay);
-  border-color: var(--c-clay);
-  color: #fff;
 }
 
 @media (hover: hover) {
   .slot:hover {
-    background: var(--c-clay);
-    border-color: var(--c-clay);
-    color: #fff;
+    background: var(--c-dark);
+    border-color: var(--c-dark);
+    color: var(--c-white);
   }
 }
 
 .leise {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.6;
-  color: var(--c-ink-soft);
-}
-
-.leise a {
-  color: var(--c-clay-ink);
+  opacity: 0.6;
 }
 
 .fussnote {
-  margin: 1.8rem 0 0;
-  font-size: 0.82rem;
-  color: var(--c-ink-soft);
+  margin: 1.6rem 0 0;
+  font-size: 0.78rem;
+  opacity: 0.5;
 }
 
 /* ---- Kontaktdaten ----------------------------------------------------------- */
@@ -316,13 +265,13 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.05rem;
+  gap: 1rem;
 }
 
 .reihe {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.05rem;
+  gap: 1rem;
 }
 
 .feld {
@@ -332,35 +281,31 @@
 }
 
 .label {
-  font-size: 0.86rem;
-  font-weight: 650;
-  color: var(--c-ink-soft);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .input {
   width: 100%;
-  border: 1px solid var(--c-line);
-  border-radius: var(--radius-sm);
-  background: var(--c-paper);
-  color: var(--c-ink);
+  border: 1px solid color-mix(in srgb, var(--c-dark) 18%, transparent);
+  background: #fff;
+  color: var(--c-dark);
   font-family: var(--font-text);
   font-size: 1rem;
-  padding: 0.8rem 1rem;
+  padding: 0.75rem 0.9rem;
   resize: vertical;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
 }
 
-.input:focus,
 .input:focus-visible {
-  outline: none;
-  border-color: var(--c-clay);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-clay) 22%, transparent);
+  outline: 2px solid var(--c-key1);
+  outline-offset: 1px;
 }
 
 .inputFehler {
-  border-color: var(--c-clay-ink);
+  border-color: #a4342a;
 }
 
 .honeypot {
@@ -374,30 +319,23 @@
 .consent {
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: var(--c-ink-soft);
+  gap: 0.6rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  opacity: 0.82;
   cursor: pointer;
 }
 
-.consent a {
-  color: var(--c-clay-ink);
-}
-
 .consent input {
-  width: 1.05rem;
-  height: 1.05rem;
   margin-top: 0.2rem;
-  accent-color: var(--c-clay);
+  accent-color: var(--c-key1);
   flex-shrink: 0;
 }
 
 .err {
   margin: 0;
-  color: var(--c-clay-ink);
-  font-size: 0.86rem;
-  font-weight: 600;
+  color: #a4342a;
+  font-size: 0.84rem;
 }
 
 .aktionen {
@@ -405,54 +343,38 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
 .zurueck {
   border: none;
   background: none;
-  padding: 0.6rem 0;
-  font-family: var(--font-text);
-  font-size: 0.93rem;
-  font-weight: 600;
-  color: var(--c-ink-soft);
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  opacity: 0.6;
   cursor: pointer;
-  transition: color 0.2s ease;
 }
 
-@media (hover: hover) {
-  .zurueck:hover {
-    color: var(--c-ink);
-  }
+.zurueck:hover {
+  opacity: 1;
 }
 
 .submit {
   padding: 1rem 2.2rem;
   border: none;
-  border-radius: var(--radius-pill);
-  background: var(--c-clay);
-  color: #fff;
+  background: var(--c-dark);
+  color: var(--c-white);
   font-family: var(--font-text);
-  font-weight: 650;
-  font-size: 1rem;
-  line-height: 1.2;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 10px 24px -14px rgb(180 102 78 / 0.9);
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-@media (hover: hover) {
-  .submit:hover:not(:disabled) {
-    background: var(--c-clay-hover);
-    box-shadow: 0 14px 30px -14px rgb(180 102 78 / 0.95);
-  }
-}
-
-.submit:active:not(:disabled) {
-  transform: translateY(1px);
+.submit:hover {
+  opacity: 0.86;
 }
 
 .submit:disabled {
@@ -466,36 +388,31 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.1rem;
-  padding-top: 1.6rem;
+  gap: 1rem;
+  padding-top: 2rem;
 }
 
 .haken {
-  width: 3.4rem;
-  height: 3.4rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--c-sage);
-  color: var(--c-moss);
-  font-size: 1.4rem;
+  background: var(--c-key1);
+  color: var(--c-dark);
+  font-size: 1.3rem;
 }
 
 .fertigTitel {
-  font-size: clamp(2rem, 3.2vw, 2.5rem);
+  font-size: 2rem;
 }
 
 .fertigText {
   max-width: 34rem;
-  font-size: 1.02rem;
+  font-size: 1rem;
   line-height: 1.7;
-  color: var(--c-ink-soft);
-}
-
-.fertigText strong {
-  color: var(--c-ink);
-  font-weight: 650;
+  opacity: 0.85;
 }
 
 /* ---- Mobil ------------------------------------------------------------------ */
@@ -508,43 +425,39 @@
 
   .info {
     gap: 0.8rem;
-    padding: 1.9rem 1.4rem 1.5rem;
-  }
-
-  .info::after {
-    display: none;
+    padding: 1.6rem 1.4rem 1.4rem;
   }
 
   .titel {
-    font-size: 1.75rem;
-    padding-right: 2.8rem;
+    font-size: 1.6rem;
+    padding-right: 2.5rem;
   }
 
   .fakten {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.4rem 1.1rem;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
   }
 
   .auswahl {
-    margin-top: 0.3rem;
-    padding: 0.8rem 1rem;
+    margin-top: 0.2rem;
+    padding-top: 0.8rem;
   }
 
   .main {
-    padding: 1.7rem 1.4rem 2rem;
+    padding: 1.6rem 1.4rem 1.8rem;
   }
 
   .schrittTitel {
-    font-size: 1.4rem;
-    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+    margin-bottom: 1.1rem;
     padding-right: 0;
   }
 
   .picker {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.4rem;
   }
 
   .slots {
@@ -552,7 +465,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     max-height: none;
     overflow: visible;
-    padding: 0;
+    padding-right: 0;
   }
 
   .slotsTag {
@@ -566,15 +479,5 @@
   .aktionen {
     flex-direction: column-reverse;
     align-items: stretch;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tag,
-  .slot,
-  .pfeil,
-  .input,
-  .submit {
-    transition: none;
   }
 }

@@ -58,54 +58,54 @@ export function ServicePage() {
   return (
     <>
       <section className={styles.hero}>
-        <div className={[styles.heroInner, heroImage && styles.heroInnerMedia].filter(Boolean).join(' ')}>
-          <div className={styles.heroText}>
-            <Reveal>
-              <Breadcrumbs
-                items={[
-                  { label: 'Begleitungen', href: '/begleitungen' },
-                  { label: service.shortTitle },
-                ]}
-              />
-              <Eyebrow>{categoryLabels[service.category]}</Eyebrow>
-              <h1 className={styles.title}>{service.title}</h1>
-              <p className={styles.tagline}>{service.tagline}</p>
-            </Reveal>
+        {heroImage && (
+          <>
+            <div
+              className={styles.heroBg}
+              style={{ backgroundImage: `url(${withBase(heroImage)})` }}
+              aria-hidden="true"
+            />
+            <div className={styles.heroScrim} aria-hidden="true" />
+          </>
+        )}
+        <div className={styles.heroInner}>
+          <Reveal>
+            <Breadcrumbs
+              items={[
+                { label: 'Begleitungen', href: '/begleitungen' },
+                { label: service.shortTitle },
+              ]}
+            />
+            <Eyebrow style={{ color: 'var(--c-key1)' }}>{categoryLabels[service.category]}</Eyebrow>
+            <h1 className={styles.title}>{service.title}</h1>
+            <p className={styles.tagline}>{service.tagline}</p>
+          </Reveal>
 
-            <Reveal delay={80}>
-              <div className={styles.priceRow}>
-                <span className={styles.price}>{service.priceLabel}</span>
-                {service.priceNote && <span className={styles.priceNote}>{service.priceNote}</span>}
-              </div>
+          <Reveal delay={80}>
+            <div className={styles.priceRow}>
+              <span className={styles.price}>{service.priceLabel}</span>
+              {service.priceNote && <span className={styles.priceNote}>{service.priceNote}</span>}
+            </div>
 
-              <ul className={styles.metaList}>
-                <li>⏱ {service.duration}</li>
-                <li>📍 {service.location}</li>
-                <li>Persönlich geleitet von Jasmin</li>
-              </ul>
+            <ul className={styles.metaList}>
+              <li>⏱ {service.duration}</li>
+              <li>📍 {service.location}</li>
+              <li>Persönlich geleitet von Jasmin</li>
+            </ul>
 
-              <div className={styles.actions}>
-                <Button href={CTA_HREF_BY_CATEGORY[service.category]} size="lg">
-                  {service.ctaLabel ?? CTA_LABEL_FALLBACK_BY_CATEGORY[service.category]}
-                </Button>
-                <Button href="/begleitungen" variant="outline" size="lg">
-                  Alle Begleitungen
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-
-          {heroImage && (
-            <Reveal delay={140} className={styles.heroMedia}>
-              <img
-                className={styles.heroImg}
-                src={withBase(heroImage)}
-                alt=""
-                aria-hidden="true"
-                decoding="async"
-              />
-            </Reveal>
-          )}
+            <div className={styles.actions}>
+              <Button
+                href={CTA_HREF_BY_CATEGORY[service.category]}
+                size="lg"
+                style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}
+              >
+                {service.ctaLabel ?? CTA_LABEL_FALLBACK_BY_CATEGORY[service.category]}
+              </Button>
+              <Button href="/begleitungen" variant="outline" style={{ color: 'var(--c-light)' }}>
+                Alle Begleitungen
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -1,61 +1,36 @@
-/* „Kennst du das?" – Leinen. Große Fraunces-Überschrift vor einem zarten
-   Torbogen, rechts drei ruhige Sätze und die Schlusszeile als Papierkarte. */
 .sec {
   width: 100%;
-  padding: var(--section-y) var(--gutter);
-  background: var(--c-linen);
-  color: var(--c-ink);
-  overflow: hidden;
+  padding: var(--section-y) 1.5rem;
+  background: var(--c-white);
+  color: var(--c-dark);
 }
 
 .inner {
   max-width: var(--wide);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(2.8rem, 7vw, 4rem);
-}
-
-/* --- Einstieg ------------------------------------------------------ */
-.intro {
-  position: relative;
-  isolation: isolate;
-}
-
-/* Das eine große Bogen-Element der Sektion: 1px, sehr zart. */
-.archLine {
-  position: absolute;
-  z-index: -1;
-  left: clamp(-2.5rem, -3vw, -1rem);
-  top: clamp(-2.5rem, -4vw, -1.5rem);
-  width: clamp(16rem, 38vw, 30rem);
-  aspect-ratio: 4 / 5;
-  border: 1px solid var(--c-clay);
-  border-bottom: none;
-  border-radius: var(--arch);
-  opacity: 0.16;
-  pointer-events: none;
+  grid-template-columns: 1fr;
+  gap: clamp(2.6rem, 6vw, 3.4rem);
 }
 
 .heading {
-  font-size: var(--fs-h2);
-  font-weight: 370;
-  line-height: 1.04;
-  margin: 1.3rem 0 0;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.08;
+  margin: 1.4rem 0 1.8rem;
+  max-width: 16ch;
 }
 
-.headingEm {
-  display: block;
-  font-style: italic;
-  font-weight: 340;
-  color: var(--c-clay-ink);
+.lead {
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+  opacity: 0.82;
+  margin: 0;
+  max-width: 44ch;
 }
 
-/* --- Sätze --------------------------------------------------------- */
 .statements {
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 .list {
@@ -71,92 +46,69 @@
   align-items: flex-start;
   gap: 1.1rem;
   font-family: var(--font-header);
-  font-weight: 360;
-  font-size: clamp(1.2rem, 2.1vw, 1.5rem);
-  line-height: 1.38;
-  letter-spacing: -0.01em;
-  padding: clamp(1.15rem, 2.2vw, 1.5rem) 0;
-  border-bottom: 1px solid var(--c-line);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.32;
+  padding: clamp(1.1rem, 2.2vw, 1.5rem) 0;
+  border-bottom: 1px solid #2b271f1f;
 }
 
 .item:first-child {
   padding-top: 0;
 }
 
+.item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--c-clay);
+  background: var(--c-key1);
   flex: none;
-  margin-top: 0.68em;
+  margin-top: 0.62em;
 }
 
-/* --- Schlusszeile: die Erkenntnis als ruhige Papierkarte ------------ */
-.closing {
-  position: relative;
-  margin-top: clamp(2rem, 4.5vw, 3rem);
-  padding: clamp(1.8rem, 3.5vw, 2.6rem) clamp(1.6rem, 3.5vw, 2.6rem);
-  background: var(--c-paper);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-}
-
-/* kleiner Torbogen als Akzent – wie in der Eyebrow, nur etwas größer */
-.closingMark {
-  display: block;
-  width: 1.1rem;
-  height: 1.4rem;
-  border: 1.5px solid var(--c-clay);
-  border-bottom: none;
-  border-radius: var(--arch);
-  margin-bottom: 1.1rem;
-}
-
-.closingText {
+/* Schlusszeile: dunkle Cormorant-Kursive, von den Sätzen darüber durch
+   eine kurze Sand-Linie abgesetzt – lesbar statt blassem Sand auf Creme. */
+.closingAccent {
   font-family: var(--font-header);
   font-style: italic;
-  font-weight: 360;
-  font-size: clamp(1.4rem, 2.6vw, 1.95rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: var(--c-ink);
-  max-width: 26ch;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  line-height: 1.38;
+  margin: clamp(2rem, 4vw, 2.8rem) 0 0;
+  max-width: 34ch;
+  color: var(--c-dark);
 }
 
-/* --- Desktop: zwei Spalten ----------------------------------------- */
+.closingAccent::before {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: var(--c-key1-ink, #74604b);
+  margin-bottom: 1.2rem;
+}
+
 @media (min-width: 900px) {
   .inner {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    column-gap: clamp(3.5rem, 8vw, 8rem);
+    column-gap: clamp(3.5rem, 7vw, 7rem);
     align-items: start;
   }
 
-  .intro {
-    padding-top: clamp(1rem, 3vw, 3rem);
-  }
-
-  /* Die Sätze starten auf Höhe der Überschrift, nicht des Labels. */
+  /* Rechte Spalte optisch an der Überschrift (statt am kleinen Label)
+     ausrichten. */
   .statements {
-    padding-top: clamp(3.5rem, 6vw, 5.5rem);
+    padding-top: 2.6rem;
   }
 }
 
-@media (max-width: 899px) {
-  .heading {
-    max-width: 13ch;
-  }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 860px) {
   .item {
     gap: 0.85rem;
-  }
-}
-
-/* Mobil läuft der große Bogen sonst durch die Satz-Liste. */
-@media (max-width: 899px) {
-  .archLine {
-    display: none;
   }
 }

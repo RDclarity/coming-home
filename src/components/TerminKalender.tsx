@@ -16,7 +16,6 @@ import {
   type Tag,
 } from '../lib/termin'
 import { withBase } from '../lib/url'
-import { Eyebrow } from './Eyebrow'
 import styles from './TerminKalender.module.css'
 
 /**
@@ -184,7 +183,7 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
   return (
     <div ref={layoutRef} className={styles.layout}>
       <aside className={styles.info}>
-        <Eyebrow>Kennenlerngespräch</Eyebrow>
+        <span className={styles.eyebrow}>Kennenlerngespräch</span>
         <h2 id="termin-titel" className={styles.titel}>
           Lass uns sprechen.
         </h2>

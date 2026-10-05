@@ -47,7 +47,7 @@ export function Danke() {
         <h1 className={styles.title}>{copy.title}</h1>
         <p className={styles.text}>{copy.text}</p>
         <div className={styles.actions}>
-          <Button href="/">
+          <Button href="/" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
             Zur Startseite
           </Button>
           <Button href="/begleitungen" variant="outline">

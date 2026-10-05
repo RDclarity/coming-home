@@ -10,19 +10,15 @@ export function Jasmin() {
     <section id="jasmin" className={styles.sec}>
       <div className={styles.inner}>
         <Reveal className={styles.media}>
-          {/* Porträt im Torbogen, dahinter ein zarter, versetzter Bogen als Tiefe. */}
-          <div className={styles.portrait}>
-            <span className={styles.archOutline} aria-hidden="true" />
-            <div className={styles.frame}>
-              <img
-                className={styles.img}
-                src={withBase('/images/jasmin-dance.webp')}
-                alt="Jasmin, Begleiterin für Breathwork und Körperarbeit"
-                width={1277}
-                height={1920}
-                loading="lazy"
-              />
-            </div>
+          <div className={styles.frame}>
+            <img
+              className={styles.img}
+              src={withBase('/images/jasmin-dance.webp')}
+              alt="Jasmin, Begleiterin für Breathwork und Körperarbeit"
+              width={1277}
+              height={1920}
+              loading="lazy"
+            />
           </div>
         </Reveal>
 
@@ -39,7 +35,7 @@ export function Jasmin() {
               {jasmin.credentials.map((cred) => (
                 <li key={cred.title} className={styles.credItem}>
                   <span className={styles.credDot} aria-hidden="true" />
-                  <span className={styles.credText}>
+                  <span>
                     <strong className={styles.credTitle}>{cred.title}</strong>{' '}
                     <span className={styles.credDetail}>{cred.detail}</span>
                   </span>
@@ -49,7 +45,7 @@ export function Jasmin() {
           </Reveal>
 
           <Reveal delay={200}>
-            <Button href="/#kennenlernen" size="lg">
+            <Button href="/#kennenlernen" style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
               {jasmin.cta}
             </Button>
           </Reveal>

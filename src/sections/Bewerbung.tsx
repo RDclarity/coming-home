@@ -17,24 +17,18 @@ export function Bewerbung() {
           <h2 className={styles.heading}>{bewerbung.heading}</h2>
         </Reveal>
 
-        {/* Drei kleine Torbögen mit Nummer, verbunden durch eine feine
-            gestrichelte Linie – horizontal am Desktop, vertikal mobil. */}
         <ol className={styles.steps}>
           {bewerbung.steps.map((step, index) => (
-            <Reveal as="li" key={step.title} className={styles.step} delay={index * 120}>
-              <span className={styles.stepNum} aria-hidden="true">
-                {index + 1}
-              </span>
-              <div className={styles.stepBody}>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepText}>{step.text}</p>
-              </div>
+            <Reveal as="li" key={step.title} className={styles.step} delay={index * 100}>
+              <span className={styles.stepNum}>{index + 1}</span>
+              <h3 className={styles.stepTitle}>{step.title}</h3>
+              <p className={styles.stepText}>{step.text}</p>
             </Reveal>
           ))}
         </ol>
 
-        <Reveal className={styles.action} delay={360}>
-          <Button size="lg" onClick={oeffneTerminOverlay}>
+        <Reveal className={styles.action} delay={200}>
+          <Button size="lg" onClick={oeffneTerminOverlay} style={{ backgroundColor: 'var(--c-key1)', color: 'var(--c-dark)' }}>
             {bewerbung.cta}
           </Button>
         </Reveal>

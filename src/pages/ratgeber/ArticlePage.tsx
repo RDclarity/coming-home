@@ -57,7 +57,7 @@ export function ArticlePage() {
                 { label: article.title },
               ]}
             />
-            <Eyebrow>{article.category}</Eyebrow>
+            <Eyebrow style={{ color: 'var(--c-key1)' }}>{article.category}</Eyebrow>
             <h1 className={styles.title}>{article.title}</h1>
             <p className={styles.dek}>{article.dek}</p>
             <p className={styles.meta}>

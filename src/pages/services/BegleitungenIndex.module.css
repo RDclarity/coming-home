@@ -1,60 +1,37 @@
-/*
- * Übersicht aller Begleitungen im Designsystem "Ankommen": Leinen-Hero mit
- * zartem Torbogen im Hintergrund, darunter Paper-Karten mit Bogen-Glyphe.
- */
 .hero {
-  position: relative;
   width: 100%;
-  padding: clamp(7.5rem, 13vw, 10rem) var(--gutter) clamp(3.5rem, 7vw, 5rem);
-  background: var(--c-linen);
-  color: var(--c-ink);
-  overflow: hidden;
-}
-
-/* Ein großer, sehr leiser Bogen hinter der Überschrift. */
-.hero::before {
-  content: '';
-  position: absolute;
-  right: max(var(--gutter), calc((100% - var(--wide)) / 2));
-  bottom: 0;
-  width: clamp(14rem, 30vw, 24rem);
-  aspect-ratio: 3 / 4;
-  border: 1px solid color-mix(in srgb, var(--c-ink) 15%, transparent);
-  border-bottom: none;
-  border-radius: var(--arch);
-  pointer-events: none;
+  padding: clamp(7rem, 12vw, 9.5rem) 1.5rem clamp(3rem, 7vw, 4.5rem);
+  background: var(--c-white);
+  color: var(--c-dark);
 }
 
 .heroInner {
-  position: relative;
   max-width: var(--wide);
   margin: 0 auto;
 }
 
 .title {
-  font-size: clamp(2.6rem, 6vw, 4.6rem);
-  line-height: 1.04;
-  margin: 0.6rem 0 1.6rem;
-  max-width: 16ch;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  margin: 1.2rem 0 1rem;
+  max-width: 20ch;
 }
 
 .leadEmphasis {
   font-family: var(--font-header);
   font-style: italic;
-  font-weight: 350;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-  line-height: 1.35;
-  color: var(--c-clay-ink);
-  margin: 0 0 1.3rem;
-  max-width: 40ch;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  line-height: 1.4;
+  color: var(--c-key1-ink);
+  margin: 0 0 1.1rem;
+  max-width: 56ch;
 }
 
 .lead {
-  font-size: var(--fs-lead);
+  font-size: 1.1rem;
   line-height: 1.7;
-  color: var(--c-ink-soft);
-  max-width: 58ch;
+  opacity: 0.82;
+  max-width: 56ch;
 }
 
 .lead + .lead {
@@ -63,9 +40,8 @@
 
 .list {
   width: 100%;
-  padding: clamp(1rem, 3vw, 2rem) var(--gutter) var(--section-y);
-  background: var(--c-linen);
-  color: var(--c-ink);
+  padding: 0 1.5rem clamp(5rem, 10vw, 7rem);
+  background: var(--c-white);
 }
 
 .listInner {
@@ -74,20 +50,13 @@
 }
 
 .groupTitle {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: var(--fs-h3);
-  font-weight: 400;
-  margin: clamp(3.5rem, 7vw, 5rem) 0 1.4rem;
-}
-
-/* Feine Linie nach dem Gruppentitel */
-.groupTitle::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--c-line);
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: clamp(3rem, 6vw, 4rem) 0 1.2rem;
 }
 
 .groupTitle:first-child {
@@ -96,107 +65,63 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  background: var(--c-paper);
-  border-radius: var(--radius);
-  padding: clamp(1.8rem, 3vw, 2.4rem);
+  background: var(--c-light);
+  border: 1px solid #0c0c0c14;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
   text-decoration: none;
   color: inherit;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
-/* Kleine Bogen-Glyphe oben in jeder Karte */
-.card::before {
-  content: '';
-  display: block;
-  width: 1.1rem;
-  height: 1.4rem;
-  margin-bottom: 1.4rem;
-  border: 1.5px solid var(--c-clay);
-  border-bottom: none;
-  border-radius: var(--arch);
-  transition: background-color 0.3s ease;
-}
-
-@media (hover: hover) {
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .card:hover::before {
-    background: color-mix(in srgb, var(--c-clay) 18%, transparent);
-  }
-
-  .card:hover .cardTitle {
-    color: var(--c-clay-ink);
-  }
+.card:hover {
+  border-color: var(--c-key1);
 }
 
 .cardTitle {
-  font-size: clamp(1.4rem, 2vw, 1.6rem);
-  font-weight: 400;
-  margin: 0 0 0.7rem;
-  transition: color 0.2s ease;
+  font-family: var(--font-header);
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin: 0 0 0.6rem;
 }
 
 .cardTagline {
   font-family: var(--font-header);
   font-style: italic;
-  font-weight: 350;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  font-size: 1.05rem;
-  line-height: 1.45;
-  color: var(--c-ink-soft);
-  margin: 0 0 1.6rem;
+  font-size: 1rem;
+  opacity: 0.75;
+  margin: 0 0 1.4rem;
 }
 
 .cardFoot {
   margin-top: auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.4rem 0.8rem;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--c-line);
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid #0c0c0c14;
 }
 
 .cardPrice {
   font-family: var(--font-header);
-  font-weight: 400;
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: 1.15rem;
 }
 
 .cardDuration {
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--c-ink-soft);
+  font-size: 0.82rem;
+  opacity: 0.6;
 }
 
 @media (max-width: 900px) {
-  .hero::before {
-    display: none;
-  }
-
   .grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card,
-  .card::before,
-  .cardTitle {
-    transition: none;
   }
 }

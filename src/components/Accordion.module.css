@@ -1,7 +1,3 @@
-/*
- * Akkordeon im Designsystem "Ankommen": luftige Zeilen, weiche Trennlinien
- * (--c-line), Fragen in Fraunces, runder +/−-Schalter in Ton-Rosé.
- */
 .root {
   display: flex;
   flex-direction: column;
@@ -9,108 +5,54 @@
 }
 
 .entry {
-  border-bottom: 1px solid var(--c-line);
+  border-bottom: 1px solid color-mix(in srgb, var(--c-key1) 60%, transparent);
 }
 
 .entry:first-child {
-  border-top: 1px solid var(--c-line);
+  border-top: 1px solid color-mix(in srgb, var(--c-key1) 60%, transparent);
 }
 
 .trigger {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
-  padding: clamp(1.35rem, 2.6vw, 1.8rem) 0;
+  padding: 1.5rem 0;
   text-align: left;
-  color: var(--c-ink);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--c-dark);
 }
 
 .q {
+  font-weight: 500;
   flex: 1;
-  font-family: var(--font-header);
-  font-weight: 400;
-  font-size: clamp(1.15rem, 1.9vw, 1.4rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
-  text-wrap: balance;
-  transition: color 0.3s ease;
 }
 
-/* Runder Schalter: zwei Balken bilden das Plus, der senkrechte klappt beim
-   Öffnen weg → Minus. */
 .icon {
-  position: relative;
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1;
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--c-clay) 55%, transparent);
-  color: var(--c-clay-ink);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    color 0.3s ease,
-    transform 0.35s ease;
-}
-
-.icon::before,
-.icon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.85rem;
-  height: 1.5px;
-  border-radius: 1px;
-  background: currentColor;
-  transform: translate(-50%, -50%);
-  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.3, 1);
-}
-
-.icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+  margin-top: 0.05rem;
+  font-style: normal;
+  color: var(--c-key1-ink);
+  transition: transform 0.25s ease;
 }
 
 .open .icon {
-  background: var(--c-clay);
-  border-color: var(--c-clay);
-  color: #fff;
-  transform: rotate(180deg);
-}
-
-.open .icon::after {
-  transform: translate(-50%, -50%) rotate(0deg);
-}
-
-@media (hover: hover) {
-  .trigger:hover .q {
-    color: var(--c-clay-ink);
-  }
-
-  .trigger:hover .icon {
-    border-color: var(--c-clay);
-  }
-
-  .open .trigger:hover .icon {
-    background: var(--c-clay-hover);
-    border-color: var(--c-clay-hover);
-  }
-}
-
-.trigger:focus-visible {
-  outline-offset: 4px;
+  transform: rotate(45deg);
 }
 
 .body {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
+  transition: grid-template-rows 0.35s cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
 .open .body {
@@ -122,25 +64,17 @@
 }
 
 .answer {
-  color: var(--c-ink-soft);
-  line-height: 1.7;
+  font-family: var(--font-text);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  opacity: 0.8;
   margin: 0;
-  padding: 0 4rem clamp(1.5rem, 2.8vw, 2rem) 0;
+  padding-bottom: 1.5rem;
   max-width: 62ch;
 }
 
-@media (max-width: 560px) {
-  .answer {
-    padding-right: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .body,
-  .q,
-  .icon,
-  .icon::before,
-  .icon::after {
+  .body {
     transition: none;
   }
 }

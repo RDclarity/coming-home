@@ -1,40 +1,32 @@
-/* Cookie-Hinweis im Designsystem "Ankommen": runde Moos-Karte mit
-   Pill-Buttons (Hauptaktion Ton-Rosé, Nebenaktion Umriss in Leinen). */
 .banner {
-  --accent-text: var(--c-clay-light);
-  --b-line-fg: var(--c-linen);
   position: fixed;
-  left: 1rem;
-  right: 1rem;
-  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 1.1rem;
   z-index: 60;
   max-width: 34rem;
   margin: 0 auto;
-  background: var(--c-moss);
-  color: var(--c-linen);
-  border-radius: var(--radius);
-  padding: 1.5rem 1.6rem;
+  background: var(--c-dark);
+  color: var(--c-white);
+  border: 1px solid #ffffff26;
+  padding: 1.3rem 1.4rem;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  box-shadow:
-    var(--shadow-soft),
-    0 18px 44px -18px rgb(0 0 0 / 0.5);
-  animation: einblenden 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+  gap: 1rem;
+  box-shadow: 0 12px 40px -12px #00000066;
 }
 
 .text {
   font-family: var(--font-text);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--c-linen) 82%, transparent);
+  opacity: 0.88;
   margin: 0;
 }
 
 .text a {
-  color: var(--c-clay-light);
+  color: var(--c-key1);
   text-decoration: underline;
-  text-underline-offset: 0.15em;
 }
 
 .actions {
@@ -47,52 +39,24 @@
 .declineBtn,
 .acceptBtn {
   font-family: var(--font-text);
-  font-size: 0.92rem;
-  font-weight: 650;
-  letter-spacing: 0;
-  text-transform: none;
-  line-height: 1.2;
-  padding: 0.72rem 1.35rem;
-  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.2rem;
   cursor: pointer;
-  border: 1.5px solid color-mix(in srgb, var(--c-linen) 35%, transparent);
+  border: 1px solid currentColor;
   background: transparent;
-  color: var(--c-linen);
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease;
+  color: inherit;
 }
 
 .acceptBtn {
-  border-color: var(--c-clay);
-  background: var(--c-clay);
-  color: #fff;
-}
-
-@media (hover: hover) {
-  .declineBtn:hover {
-    border-color: var(--c-linen);
-    background: rgb(255 255 255 / 0.06);
-  }
-
-  .acceptBtn:hover {
-    border-color: var(--c-clay-hover);
-    background: var(--c-clay-hover);
-  }
-}
-
-@keyframes einblenden {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
+  border-color: var(--c-key1);
+  background: var(--c-key1);
+  color: var(--c-dark);
 }
 
 @media (max-width: 480px) {
-  .banner {
-    padding: 1.3rem 1.3rem;
-  }
-
   .actions {
     justify-content: stretch;
   }
@@ -101,16 +65,5 @@
   .acceptBtn {
     flex: 1 1 auto;
     text-align: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .banner {
-    animation: none;
-  }
-
-  .declineBtn,
-  .acceptBtn {
-    transition: none;
   }
 }

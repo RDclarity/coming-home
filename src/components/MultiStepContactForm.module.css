@@ -1,54 +1,37 @@
-/*
- * Schritt-Formular im Designsystem "Ankommen" – sitzt im Footer auf einer
- * Moos-Karte (--c-moss-2). Felder in Papier mit runden Ecken, Fortschritt als
- * weiche Punkte, Pill-Buttons.
- */
 .form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
-  text-align: left;
 }
 
-/* ---------- Fortschritt: weiche Punkte, der aktuelle wird zur Pille ---------- */
 .progress {
   display: flex;
-  align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .progressDot {
-  position: relative;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: var(--radius-pill);
-  background: rgb(255 255 255 / 0.16);
+  flex: 1;
+  height: 3px;
+  background: #f0e9dd26;
+  border-radius: 2px;
   overflow: hidden;
-  transition: width 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
-}
-
-.progressDotCurrent {
-  width: 1.6rem;
 }
 
 .progressDotFill {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--c-clay-light);
-  transform: scale(0);
-  transition: transform 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
+  height: 100%;
+  width: 0%;
+  background: var(--c-key1);
+  transition: width 0.4s cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
 .progressDotFillActive {
-  transform: scale(1);
+  width: 100%;
 }
 
-/* ---------- Schritte ---------- */
 .stepWrap {
   position: relative;
-  min-height: 8.5rem;
+  min-height: 7.5rem;
 }
 
 .step {
@@ -56,7 +39,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.9rem;
   opacity: 0;
   transform: translateX(16px);
   pointer-events: none;
@@ -74,66 +57,63 @@
 
 .stepLabel {
   font-family: var(--font-text);
-  font-size: 0.85rem;
-  font-weight: 650;
-  letter-spacing: 0.01em;
-  color: var(--c-clay-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .stepQuestion {
   font-family: var(--font-header);
-  font-weight: 380;
-  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.35rem;
-  color: var(--c-linen);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  margin: 0;
 }
 
 .stepOptional {
-  font-weight: 500;
-  color: color-mix(in srgb, var(--c-linen) 70%, transparent);
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.55;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .input {
-  width: 100%;
   font-family: var(--font-text);
-  font-size: 1.05rem;
-  line-height: 1.4;
-  color: var(--c-ink);
-  background: var(--c-paper);
-  border: 1px solid var(--c-line);
-  border-radius: var(--radius-sm);
-  padding: 0.95rem 1.1rem;
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+  font-size: 1.15rem;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #f0e9dd3a;
+  padding: 0.5rem 0.1rem;
+  transition: border-color 0.3s ease;
 }
 
 .input::placeholder {
-  color: var(--c-ink-soft);
+  color: currentColor;
+  opacity: 0.35;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--c-clay);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-clay-light) 55%, transparent);
+  border-color: var(--c-key1);
 }
 
 textarea.input {
   resize: vertical;
-  min-height: 6.5rem;
+  min-height: 5rem;
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .hint {
-  font-size: 0.85rem;
-  color: color-mix(in srgb, var(--c-linen) 70%, transparent);
+  font-size: 0.82rem;
+  opacity: 0.55;
   margin: 0;
 }
 
-/* ---------- Navigation ---------- */
 .nav {
   display: flex;
   justify-content: space-between;
@@ -144,14 +124,16 @@ textarea.input {
 .backBtn {
   background: none;
   border: none;
-  border-radius: var(--radius-pill);
-  color: color-mix(in srgb, var(--c-linen) 75%, transparent);
+  color: inherit;
+  opacity: 0.6;
   font-family: var(--font-text);
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
-  padding: 0.6rem 0.2rem;
-  transition: color 0.25s ease;
+  padding: 0.5rem 0;
+}
+
+.backBtn:hover {
+  opacity: 1;
 }
 
 .backBtnHidden {
@@ -159,27 +141,16 @@ textarea.input {
 }
 
 .navBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-text);
-  font-size: 0.98rem;
-  font-weight: 650;
-  line-height: 1.2;
-  padding: 0.9rem 1.7rem;
-  border: 1.5px solid transparent;
-  border-radius: var(--radius-pill);
-  background: var(--c-linen);
-  color: var(--c-ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.8rem;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.navBtn:active {
-  transform: translateY(1px);
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
 }
 
 .navBtn:disabled {
@@ -187,29 +158,12 @@ textarea.input {
   opacity: 0.6;
 }
 
-/* Absenden = Hauptaktion in Ton-Rosé, wie <Button variant="solid">. */
 .navBtnSubmit {
-  background: var(--c-clay);
-  color: #fff;
-  box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.6);
+  border-color: var(--c-key1);
+  background: var(--c-key1);
+  color: var(--c-dark);
 }
 
-@media (hover: hover) {
-  .backBtn:hover {
-    color: var(--c-clay-light);
-  }
-
-  .navBtn:hover {
-    background: var(--c-paper);
-    transform: translateY(-2px);
-  }
-
-  .navBtnSubmit:hover {
-    background: var(--c-clay-hover);
-  }
-}
-
-/* ---------- Abschluss-Schritt ---------- */
 .finalStep {
   display: flex;
   flex-direction: column;
@@ -219,76 +173,40 @@ textarea.input {
 .checkboxRow {
   display: flex;
   align-items: flex-start;
-  gap: 0.7rem;
+  gap: 0.6rem;
   font-family: var(--font-text);
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--c-linen) 85%, transparent);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.85;
   cursor: pointer;
 }
 
 .checkboxRow input {
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-top: 0.15rem;
-  accent-color: var(--c-clay);
+  margin-top: 0.2rem;
+  accent-color: var(--c-key1);
   flex-shrink: 0;
 }
 
-.checkboxRow a {
-  color: var(--c-clay-light);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
-
 .summary {
-  background: rgb(255 255 255 / 0.06);
-  border: 1px solid rgb(255 255 255 / 0.12);
-  border-radius: var(--radius-sm);
-  padding: 0.95rem 1.1rem;
-  font-size: 0.92rem;
+  background: #f0e9dd12;
+  border: 1px solid #f0e9dd26;
+  padding: 0.9rem 1rem;
+  font-size: 0.85rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--c-linen) 80%, transparent);
+  opacity: 0.8;
 }
 
 .summary strong {
-  font-weight: 650;
-  color: var(--c-linen);
+  opacity: 1;
 }
 
 .err {
-  color: var(--c-clay-light);
-  font-size: 0.9rem;
-  font-weight: 600;
+  color: var(--c-key1);
+  font-size: 0.85rem;
   margin: 0;
 }
 
 .success {
   font-family: var(--font-header);
-  font-size: 1.4rem;
-}
-
-@media (max-width: 420px) {
-  .navBtn {
-    padding-inline: 1.35rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progressDot,
-  .progressDotFill,
-  .step,
-  .input,
-  .backBtn,
-  .navBtn {
-    transition: none;
-  }
-
-  .step {
-    transform: none;
-  }
-
-  .navBtn:hover {
-    transform: none;
-  }
+  font-size: 1.3rem;
 }

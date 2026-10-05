@@ -1,143 +1,97 @@
-/*
- * Frei hinzufügbare Bausteine aus dem Website-Editor – Designsystem
- * "Ankommen": Salbei-Flächen mit Papierkarte bzw. Bogenbild, Zitat auf Moos.
- */
+/* Baustein "Text mit Überschrift" */
+.textSec {
+  width: 100%;
+  padding: var(--section-y) 0;
+  background: var(--c-white);
+  color: var(--c-dark);
+}
+
+.textInner {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
 
 .heading {
-  font-size: clamp(1.9rem, 3.8vw, 2.8rem);
+  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
   margin: 0 0 1.2rem;
 }
 
 .body {
-  color: var(--c-ink-soft);
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  opacity: 0.85;
   white-space: pre-line;
 }
 
-/* ---------- Baustein "Text mit Überschrift" ---------- */
-.textSec {
-  width: 100%;
-  padding: var(--section-y) var(--gutter);
-  background: var(--c-sage);
-  color: var(--c-ink);
-}
-
-.textInner {
-  max-width: var(--narrow);
-  margin: 0 auto;
-  padding: clamp(2rem, 5vw, 3.4rem) clamp(1.6rem, 5vw, 3.6rem);
-  background: var(--c-paper);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  text-align: center;
-}
-
-.textInner .body {
-  max-width: 56ch;
-  margin: 0 auto;
-}
-
-/* ---------- Baustein "Bild mit Text" ---------- */
+/* Baustein "Bild mit Text" */
 .imageTextSec {
   width: 100%;
-  padding: var(--section-y) var(--gutter);
-  background: var(--c-sage);
-  color: var(--c-ink);
+  padding: var(--section-y) 0;
+  background: var(--c-light);
+  color: var(--c-dark);
 }
 
 .imageTextInner {
   max-width: var(--wide);
   margin: 0 auto;
+  padding: 0 1.5rem;
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-  gap: clamp(2.2rem, 6vw, 5rem);
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
 }
 
-.imageWrap {
-  width: 100%;
-  max-width: 30rem;
-  justify-self: center;
-}
-
-/* Bild im Torbogen – hochformatig, oben rund. */
 .imageWrap img {
-  display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
   height: auto;
-  object-fit: cover;
-  border-radius: var(--arch);
-  box-shadow: var(--shadow-soft);
+  display: block;
 }
 
-.imageTextBody {
-  max-width: 34rem;
+.imageTextBody .heading {
+  text-align: left;
 }
 
-.imageTextBody .heading,
 .imageTextBody .body {
   text-align: left;
+  white-space: pre-line;
 }
 
 @media (max-width: 780px) {
   .imageTextInner {
     grid-template-columns: 1fr;
   }
-
-  .imageWrap {
-    max-width: 22rem;
-  }
 }
 
-/* ---------- Baustein "Zitat" ---------- */
+/* Baustein "Zitat" */
 .quoteSec {
   width: 100%;
-  padding: var(--section-y) var(--gutter);
-  background: var(--c-moss);
-  color: var(--c-linen);
-  overflow: hidden;
-  --accent-text: var(--c-clay-light);
-  --b-line-fg: var(--c-linen);
+  padding: var(--section-y) 0;
+  background: var(--c-dark);
+  color: var(--c-light);
+  --accent-text: var(--c-key1);
 }
 
 .quoteInner {
-  position: relative;
-  max-width: 44rem;
+  max-width: 40rem;
   margin: 0 auto;
-  padding-top: clamp(3rem, 7vw, 5rem);
+  padding: 0 1.5rem;
   text-align: center;
 }
 
-/* Großer, sehr zarter Bogen hinter dem Zitat. */
-.quoteArch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: min(30rem, 92%);
-  height: 140%;
-  transform: translateX(-50%);
-  border: 1px solid color-mix(in srgb, var(--c-linen) 16%, transparent);
-  border-bottom: none;
-  border-radius: var(--arch);
-  pointer-events: none;
-}
-
 .quoteText {
-  position: relative;
   font-family: var(--font-header);
   font-style: italic;
-  font-weight: 360;
-  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
-  margin: 0 0 1.4rem;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.45;
+  margin: 0 0 1rem;
 }
 
 .quoteAttribution {
-  position: relative;
-  font-size: 0.92rem;
-  font-weight: 650;
-  color: var(--accent-text);
+  font-family: var(--font-text);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
