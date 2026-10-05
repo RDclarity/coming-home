@@ -42,6 +42,7 @@ const SITE_SECTION_LABELS: Record<string, string> = {
   bewerbung: 'Startseite – So einfach geht’s',
   faq: 'Startseite – Häufige Fragen',
   termine: 'Startseite – Workshops & Termine',
+  workshopBuchung: 'Workshop-Buchung (Fenster)',
   abschluss: 'Startseite – Abschluss',
   kontakt: 'Kontaktformular',
 }

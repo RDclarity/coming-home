@@ -20,13 +20,13 @@ import styles from './ServicePage.module.css'
 // eigentlich nur eine einzelne Session oder einen Workshop-Platz wollten.
 const CTA_HREF_BY_CATEGORY: Record<Service['category'], string> = {
   einzelsession: '/#kontakt',
-  workshop: '/#kontakt',
+  workshop: '/#workshop-buchen',
   begleitung: '/#kennenlernen',
 }
 
 const CTA_LABEL_FALLBACK_BY_CATEGORY: Record<Service['category'], string> = {
   einzelsession: 'Anfragen',
-  workshop: 'Platz anfragen',
+  workshop: 'Platz buchen',
   begleitung: 'Kennenlerngespräch vereinbaren',
 }
 

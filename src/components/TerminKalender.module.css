@@ -481,3 +481,24 @@
     align-items: stretch;
   }
 }
+
+/* Schritt 1 (Tag) nutzt die volle Breite, aber nicht mehr als nötig. */
+.kalender {
+  max-width: 30rem;
+}
+
+/* Schritt 2 (Uhrzeit): alle Zeiten als Raster statt schmaler Liste. */
+.slotsRaster {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+  margin-bottom: 1.4rem;
+}
+
+@media (max-width: 760px) {
+  .slotsRaster {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

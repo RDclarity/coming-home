@@ -27,7 +27,7 @@ import styles from './TerminKalender.module.css'
  * serverseitig, dass zwei Personen denselben Slot bekommen.
  */
 
-type Schritt = 'termin' | 'daten' | 'fertig'
+type Schritt = 'tag' | 'zeit' | 'daten' | 'fertig'
 type Monat = { jahr: number; monat: number }
 
 const E_MAIL_MUSTER = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -53,7 +53,7 @@ const slotLang = (d: Date) =>
 const zeitraum = (d: Date) => `${uhrzeitInWien(d)}–${uhrzeitInWien(new Date(d.getTime() + DAUER_MINUTEN * 60000))}`
 
 export function TerminKalender({ onClose }: { onClose?: () => void }) {
-  const [schritt, setSchritt] = useState<Schritt>('termin')
+  const [schritt, setSchritt] = useState<Schritt>('tag')
   const [jetzt] = useState(() => new Date())
   const heute = useMemo(() => tagInWien(jetzt), [jetzt])
   const letzterTag = useMemo(() => tagPlus(heute, BUCHBAR_TAGE), [heute])
@@ -105,19 +105,21 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
     return karte
   }, [heute, jetzt, belegt])
 
-  // Sobald die Verfügbarkeit da ist: ersten freien Tag vorauswählen, damit
-  // sofort Uhrzeiten sichtbar sind – ein Klick weniger bis zur Buchung.
+  // Reihenfolge wie gewünscht: erst den Tag wählen, dann die Uhrzeit. Es
+  // wird bewusst KEIN Tag vorausgewählt – nur der Monat springt auf den
+  // ersten Monat mit freien Terminen, damit der Kalender nicht leer startet.
+  const monatGesetzt = useRef(false)
   useEffect(() => {
-    if (!belegt || gewaehlterTag) return
+    if (!belegt || monatGesetzt.current) return
+    monatGesetzt.current = true
     for (let i = 0; i <= BUCHBAR_TAGE; i++) {
       const tag = tagPlus(heute, i)
       if (freieSlots.has(tagSchluessel(tag))) {
-        setGewaehlterTag(tag)
         setMonat({ jahr: tag.jahr, monat: tag.monat })
         return
       }
     }
-  }, [belegt, freieSlots, heute, gewaehlterTag])
+  }, [belegt, freieSlots, heute])
 
   const zellen = useMemo(() => {
     const erster: Tag = { jahr: monat.jahr, monat: monat.monat, tag: 1 }
@@ -166,7 +168,7 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
       if (status === 409) {
         setHinweis('Dieser Termin wurde gerade vergeben. Bitte wähl eine andere Uhrzeit.')
         setGewaehlterSlot(null)
-        setSchritt('termin')
+        setSchritt('tag')
         ladeBelegt()
       } else if (status === 429) {
         setFehler({ senden: 'Zu viele Versuche – bitte in ein paar Minuten erneut versuchen.' })
@@ -192,7 +194,10 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
           <li>Telefonat – ich rufe dich an</li>
           <li>Kostenlos & unverbindlich</li>
         </ul>
-        {gewaehlterSlot && schritt !== 'termin' && (
+        {schritt === 'zeit' && gewaehlterTag && (
+          <p className={styles.auswahl}>{tagLang(gewaehlterTag)}</p>
+        )}
+        {gewaehlterSlot && (schritt === 'daten' || schritt === 'fertig') && (
           <p className={styles.auswahl}>
             {slotLang(gewaehlterSlot)}
             <br />
@@ -202,17 +207,27 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
       </aside>
 
       <div className={styles.main}>
-        {schritt === 'termin' && (
+        {schritt === 'tag' && (
           <>
-            <h3 className={styles.schrittTitel}>Tag und Uhrzeit wählen</h3>
+            <h3 className={styles.schrittTitel}>1. Tag wählen</h3>
             {hinweis && (
               <p className={styles.hinweis} role="alert">
                 {hinweis}
               </p>
             )}
 
-            <div className={styles.picker}>
-              <div>
+            {belegt === null ? (
+              <p className={styles.leise}>Freie Termine werden geladen …</p>
+            ) : freieSlots.size === 0 ? (
+              <p className={styles.leise}>
+                Gerade keine freien Termine. Schreib mir gern über das{' '}
+                <a href={withBase('/#kontakt')} onClick={onClose}>
+                  Kontaktformular
+                </a>
+                .
+              </p>
+            ) : (
+              <div className={styles.kalender}>
                 <div className={styles.monatKopf}>
                   <span className={styles.monatName}>{monatsName}</span>
                   <div className={styles.pfeile}>
@@ -247,24 +262,19 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
                   {zellen.map((tag, i) => {
                     if (!tag) return <span key={`leer-${i}`} />
                     const frei = freieSlots.has(tagSchluessel(tag))
-                    const aktiv = gleicherTag(tag, gewaehlterTag)
                     return (
                       <button
                         key={tagSchluessel(tag)}
                         type="button"
                         disabled={!frei}
-                        aria-pressed={aktiv}
                         aria-label={`${tagLang(tag)}${frei ? '' : ' – nicht verfügbar'}`}
                         onClick={() => {
                           setGewaehlterTag(tag)
+                          setGewaehlterSlot(null)
                           setHinweis(null)
+                          setSchritt('zeit')
                         }}
-                        className={[
-                          styles.tag,
-                          frei && styles.tagFrei,
-                          aktiv && styles.tagAktiv,
-                          gleicherTag(tag, heute) && styles.heute,
-                        ]
+                        className={[styles.tag, frei && styles.tagFrei, gleicherTag(tag, heute) && styles.heute]
                           .filter(Boolean)
                           .join(' ')}
                       >
@@ -274,50 +284,39 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
                   })}
                 </div>
               </div>
-
-              <div className={styles.slotsSpalte}>
-                {belegt === null ? (
-                  <p className={styles.leise}>Freie Termine werden geladen …</p>
-                ) : freieSlots.size === 0 ? (
-                  <p className={styles.leise}>
-                    Gerade keine freien Termine. Schreib mir gern über das{' '}
-                    <a href={withBase('/#kontakt')} onClick={onClose}>
-                      Kontaktformular
-                    </a>
-                    .
-                  </p>
-                ) : gewaehlterTag ? (
-                  <>
-                    <p className={styles.slotsTag}>{tagLang(gewaehlterTag)}</p>
-                    <div className={styles.slots}>
-                      {slotsDesTages.map((slot) => (
-                        <button
-                          key={slot.getTime()}
-                          type="button"
-                          className={styles.slot}
-                          onClick={() => {
-                            setGewaehlterSlot(slot)
-                            setSchritt('daten')
-                          }}
-                        >
-                          {uhrzeitInWien(slot)}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <p className={styles.leise}>Bitte zuerst einen Tag wählen.</p>
-                )}
-              </div>
-            </div>
+            )}
 
             <p className={styles.fussnote}>{ZEITFENSTER_TEXT} · Zeiten in österreichischer Zeit</p>
           </>
         )}
 
+        {schritt === 'zeit' && gewaehlterTag && (
+          <>
+            <h3 className={styles.schrittTitel}>2. Uhrzeit wählen</h3>
+            <div className={[styles.slots, styles.slotsRaster].join(' ')}>
+              {slotsDesTages.map((slot) => (
+                <button
+                  key={slot.getTime()}
+                  type="button"
+                  className={styles.slot}
+                  onClick={() => {
+                    setGewaehlterSlot(slot)
+                    setSchritt('daten')
+                  }}
+                >
+                  {uhrzeitInWien(slot)}
+                </button>
+              ))}
+            </div>
+            <button type="button" className={styles.zurueck} onClick={() => setSchritt('tag')}>
+              ← Anderen Tag wählen
+            </button>
+          </>
+        )}
+
         {schritt === 'daten' && gewaehlterSlot && (
           <form className={styles.form} onSubmit={absenden} noValidate>
-            <h3 className={styles.schrittTitel}>Deine Kontaktdaten</h3>
+            <h3 className={styles.schrittTitel}>3. Deine Kontaktdaten</h3>
 
             <div className={styles.reihe}>
               <label className={styles.feld}>
@@ -408,7 +407,7 @@ export function TerminKalender({ onClose }: { onClose?: () => void }) {
             )}
 
             <div className={styles.aktionen}>
-              <button type="button" className={styles.zurueck} onClick={() => setSchritt('termin')}>
+              <button type="button" className={styles.zurueck} onClick={() => setSchritt('zeit')}>
                 ← Zurück
               </button>
               <button type="submit" className={styles.submit} disabled={sendet}>

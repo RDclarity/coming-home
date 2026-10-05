@@ -55,6 +55,7 @@ export const jasmin = {
 
 export const orientierung = {
   eyebrow: 'Angebote',
+  naechsterTermin: 'Nächster Termin',
   heading: 'Welcher Weg passt zu dir?',
   cards: [
     {
@@ -63,7 +64,7 @@ export const orientierung = {
       tagline: 'Ein Tag in der Gruppe.',
       offers: 'Tagesseminar Connected Breathwork',
       price: formatPrice(pricing.tagesseminar.price),
-      cta: { label: 'Nächster Termin', href: '/#termine' },
+      cta: { label: 'Platz buchen', href: '/#workshop-buchen' },
     },
     {
       num: '02',
@@ -157,6 +158,16 @@ export const termine = {
     },
   ],
   reserveLabel: 'Meinen Platz buchen',
+} as const
+
+export const workshopBuchung = {
+  eyebrow: 'Workshop',
+  formTitle: 'Platz reservieren',
+  plaetzeLabel: 'Plätze',
+  nachrichtLabel: 'Möchtest du mir noch etwas sagen? (optional)',
+  submit: 'Platz verbindlich reservieren',
+  successTitle: 'Dein Platz ist reserviert.',
+  successText: 'Die Bestätigung ist unterwegs. Ich melde mich mit allen Infos zur Zahlung.',
 } as const
 
 export const abschluss = {

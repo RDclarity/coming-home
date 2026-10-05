@@ -1,7 +1,8 @@
 import { Button } from '../components/Button'
 import { Eyebrow } from '../components/Eyebrow'
 import { Reveal } from '../components/Reveal'
-import { orientierung } from '../data/site'
+import { orientierung, termine } from '../data/site'
+import { WORKSHOP_LINK } from '../lib/terminOverlay'
 import styles from './Orientierung.module.css'
 
 export function Orientierung() {
@@ -20,6 +21,13 @@ export function Orientierung() {
               <h3 className={styles.cardLabel}>{card.label}</h3>
               <p className={styles.cardTagline}>{card.tagline}</p>
               <p className={styles.cardOffers}>{card.offers}</p>
+              {/* Workshop-Karte: das konkrete nächste Datum zeigen – der
+                  Button bucht direkt einen Platz an genau diesem Tag. */}
+              {card.cta.href === WORKSHOP_LINK && termine.events[0] && (
+                <p className={styles.cardDate}>
+                  {orientierung.naechsterTermin}: <strong>{termine.events[0].date}</strong>
+                </p>
+              )}
               <p className={styles.cardPrice}>{card.price}</p>
               <Button href={card.cta.href} variant="outline" size="sm">
                 {card.cta.label}

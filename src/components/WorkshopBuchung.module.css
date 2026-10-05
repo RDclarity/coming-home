@@ -1,0 +1,49 @@
+/* Nur die Teile, die der Termin-Kalender nicht hat: die Platz-Auswahl. */
+.plaetze {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--c-dark) 18%, transparent);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.stepBtn {
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid color-mix(in srgb, var(--c-dark) 22%, transparent);
+  background: transparent;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .stepBtn:hover:not(:disabled) {
+    background: var(--c-dark);
+    color: var(--c-white);
+  }
+}
+
+.stepBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.anzahl {
+  min-width: 1.6rem;
+  text-align: center;
+  font-family: var(--font-header);
+  font-size: 1.6rem;
+  line-height: 1;
+}

@@ -44,7 +44,7 @@ export function Termine() {
 
               <div className={styles.action}>
                 <span className={styles.price}>{event.price}</span>
-                <Button href="/#kontakt" variant="outline" size="sm">
+                <Button href="/#workshop-buchen" variant="outline" size="sm">
                   {termine.reserveLabel}
                 </Button>
               </div>

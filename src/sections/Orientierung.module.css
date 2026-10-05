@@ -113,3 +113,14 @@
     padding: 1.6rem 1.2rem;
   }
 }
+
+.cardDate {
+  margin: 1.1rem 0 0;
+  font-size: 0.88rem;
+  color: color-mix(in srgb, var(--c-white) 72%, transparent);
+}
+
+.cardDate strong {
+  font-weight: 600;
+  color: var(--c-white);
+}
